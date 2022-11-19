@@ -1,50 +1,57 @@
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2078.outbound.protection.outlook.com [40.107.223.78])
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2060.outbound.protection.outlook.com [40.107.96.60])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4233937F
-	for <timestamp@lists.linux.dev>; Sat, 19 Nov 2022 02:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A0336C
+	for <timestamp@lists.linux.dev>; Sat, 19 Nov 2022 02:33:37 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kroEdcMzkprzL74VA3ydvr/umbDD3Os0E6xW2aio50QARUxF1PzmZMMofD1pHjlMqG/BnfvZf81c0Xa25r+4svluGNhOnHvkfiJQr+gFUuu0GSNt7i55U+UTG+syrqClEeXUH/Jlbd430gT92Mpnu+yZLqODSdCWGpkwvg87LOXvmaB/FkST0TZIrJf9pxpkBiWSlUd6YjqbOa9Nwb6kyT+BBI6qGfGRANqMXLM3opk94GCmGup+8YjcmvMax+EKKTwOz99/sModEaasHZcAghwFg1e+kOPBpB76/o8kjihsQnL1ENqcgE9DXk7bCBZbue7DIE/ibudqPrQ4Zu5ihg==
+ b=aXp5Nk+R8l8votvvqtuvZhMpFpqQmoX3eSYpYU92RltVnN3M6ihb8vYjFriAr019GcaoSCJc7LuqxyZMMKyU0hM/dmP3S/Um4P40DHqTTPgPOIqoJaT2S03L0e0hqWO66pH+eqn7GW43tiw19jCF5B7qRzwaMWYTb0Uj5PX8K8OrwFT8oexaWjeMhGfUeBb13+bKbMs8nIbZetGqWxgHR4eErF1VagofTU0OW1inu24FhR0bFQ+7Dlh9cspJJY1SIizimftTs3yDpTC87Y8OMg+X7DMpLytt1xlpPontIgNnI+CAnTXP2eewz0eeCitThNtBxb5vQQnLMy2m2TB1Nw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Q8xVwP12cu3pDjJaDFXJWoxKWob9OFtwkcJ8UWSeCCY=;
- b=HNgBeIXKbyZiQ8wYvOAS1+y1wnUrUFFN5agfBkavC6JDpm2E21psX58hkRqi6pYiF5ZiUw0q+EBUBmAjThi92kW8xa8SV9ZCAOD+qlGKRkWptXBllf9uir/8Unf/h5P2dRYZrw55v4aYL5DYSfPynhndzxicJUAqxIlBClRIKQmCYlpCOJhvAvDodxWYX0XiYoridBIKE0syuDyZo4oEOoxCPzeTGWnkugbmTcHjbfUDW39gxCSEE7v4F6OeHnPYZgCS97/+fZaVtgJ5qWXle+BCsR4pBBOjQYMGCe+fnO9F4SeMFgWLBa4fvBfo0e0YT8bJFetXnKD46SlDIBhIIQ==
+ bh=6UEFSG0OYKlGqjZ/PRWkj0OJ+UzSo/gKsrrXE46jPo0=;
+ b=SwPGtwAXm4QT8+bnj8OdhkGHCDCGuh5iakSnQyyAPHJUuW8QKxTbNIqcIih466tHjFx61ciivGI15/nHiPItKkOFOjwp+JjHOg1sedpnEqHnobp5BZuxY4invOXCfRllg0PId/w/DpGKm0ADFTlGuNVJrwM2Z7SK0D09nSOgDyMU/x7eMuJFWtvc6YS1n6bNUrCcKez25Vuq5Ayg5Kt3w2520db+XEsxTNGPEoBk/Fu/tlwpUBHcQJ0Yl/WK8f2E3XaZ48RFlqDQrvQaZe6YEfDzBLXR1HrNbnx2lmu5F5cDA3UXGRvCpxwQRo6bGYw9nwnS0A2t+lRQcWMkYShS1w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Q8xVwP12cu3pDjJaDFXJWoxKWob9OFtwkcJ8UWSeCCY=;
- b=CfyzK74N0vC7AbBenFxyYn1tE46TI7F3ab69FeaYO7Cs9lOsehFlGym4pVVdAkj630EGDr3K4ucD0hBh9WKo8wa27gyVcn6Sm43WFuEC3oLFbAz+osF29qfgGpBT6Ds0FkBi7Bqk9gUFOaQPgImRYam2W7RHNB52b1AtEwkOAj4VEbRuA6QvTQXR2GUykAOe9/xm00QPpEYq/cQfyNZfLLzi5hQZOGE3WZkn5m+bcwzuLtw6nHqlvbfQvqplOdvvVaEQehfuEktIAyc2WYL1r0GngykBFiR499pb/t29uwpgMIV2D2BgdM8EadqlsTl1x/uo+dsNaaRC3rr9maLIvg==
+ bh=6UEFSG0OYKlGqjZ/PRWkj0OJ+UzSo/gKsrrXE46jPo0=;
+ b=kfO5J9IAQsUPBeBBNfd6klOsVYJv9b/S/7DRt7AI1w/4TsS/u4wdH4r1l3ul7+Hpieb076ngF7ZCYl+Q1ja8sBKHzLuWnZY86sQsBcCU0tSnNKk7KnwI0wNh5YFBwJdqOsIdhxkqlFze4Tmwb49o7vgWLhUVy5yZQOteAmDBwtZHrSERMBF6s+GB60bm+nyDRqPEvxQ7MDF6SUCvMYzuwy8hK95+rLxxuxdx+aK8UkylRkhmmXnn8vlV3c9PRtDYq3/FSa/d20e51qJvNwaF7ld690QHXP9V1YAU7E/fa0vtLk4qpvqEAsHo7hbKzkr1FWqU3SGrs1+EbNQdGtVfIA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from IA1PR12MB6604.namprd12.prod.outlook.com (2603:10b6:208:3a0::7)
- by BL1PR12MB5223.namprd12.prod.outlook.com (2603:10b6:208:315::21) with
+ by SA1PR12MB7317.namprd12.prod.outlook.com (2603:10b6:806:2ba::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5834.9; Sat, 19 Nov
- 2022 02:08:28 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5813.17; Sat, 19 Nov
+ 2022 02:33:36 +0000
 Received: from IA1PR12MB6604.namprd12.prod.outlook.com
  ([fe80::2349:ec6b:2442:8c52]) by IA1PR12MB6604.namprd12.prod.outlook.com
  ([fe80::2349:ec6b:2442:8c52%3]) with mapi id 15.20.5813.018; Sat, 19 Nov 2022
- 02:08:27 +0000
-Message-ID: <b36368d7-8b6f-7426-9f9c-1507b22bbfe8@nvidia.com>
-Date: Fri, 18 Nov 2022 18:08:25 -0800
+ 02:33:35 +0000
+Message-ID: <7de35859-97ab-8e88-f590-d5851b81773b@nvidia.com>
+Date: Fri, 18 Nov 2022 18:33:30 -0800
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: [PATCH linux-next] hte: Use device_match_of_node()
-To: ye.xingchen@zte.com.cn
-Cc: linux-kernel@vger.kernel.org, timestamp@lists.linux.dev
-References: <202211171517291515920@zte.com.cn>
+Subject: Re: Intel timed i/o driver in HTE
 Content-Language: en-US
-From: Dipen Patel <dipenp@nvidia.com>
+To: "N, Pandith" <pandith.n@intel.com>, linus.walleij@linaro.org
+Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "Hall, Christopher S" <christopher.s.hall@intel.com>,
+ "Gross, Mark" <mark.gross@intel.com>,
+ "Sangannavar, Mallikarjunappa" <mallikarjunappa.sangannavar@intel.com>,
+ "D, Lakshmi Sowjanya" <lakshmi.sowjanya.d@intel.com>,
+ "T R, Thejesh Reddy" <thejesh.reddy.t.r@intel.com>,
+ "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+ timestamp@lists.linux.dev, dipenp@nvidia.com
+References: <BYAPR11MB3240F382BD180FF90C7DF0B9E1069@BYAPR11MB3240.namprd11.prod.outlook.com>
 X-Nvconfidentiality: public
-In-Reply-To: <202211171517291515920@zte.com.cn>
+From: Dipen Patel <dipenp@nvidia.com>
+In-Reply-To: <BYAPR11MB3240F382BD180FF90C7DF0B9E1069@BYAPR11MB3240.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR03CA0003.namprd03.prod.outlook.com
- (2603:10b6:a03:33a::8) To IA1PR12MB6604.namprd12.prod.outlook.com
+X-ClientProxiedBy: BYAPR11CA0055.namprd11.prod.outlook.com
+ (2603:10b6:a03:80::32) To IA1PR12MB6604.namprd12.prod.outlook.com
  (2603:10b6:208:3a0::7)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
@@ -53,89 +60,117 @@ List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR12MB6604:EE_|BL1PR12MB5223:EE_
-X-MS-Office365-Filtering-Correlation-Id: bdbc12a7-93b7-44ae-6343-08dac9d2f2a6
+X-MS-TrafficTypeDiagnostic: IA1PR12MB6604:EE_|SA1PR12MB7317:EE_
+X-MS-Office365-Filtering-Correlation-Id: a765d5a2-fffa-4b65-f0bc-08dac9d6756a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	QoxmAdVy0quzQmYDXYzaXmfSDPS2WjqlcOg78BWpV1pWp1nZSjLj+H2yBkly65BPlSHIeYInS65CR1Ft3pLVELZgjoG3+MxDXRMZI5ygUtITsV2P9/1o9VzDaNNNe2gfSO4eHh+WKABqA//0tYvQqsfvMKFTd0skB2XP5PCiy4Le+LZS3FPqseS4L0/PhBplc+DW30uhlJti4EkEKmd5jms7iP2VwgyFpYR+aW5tzHFzY0qO8Yihui/gnKB8/lFO6oPzWKMTeg1K4Cgxh0RXXs2XfPVlVoQP67AnEp9uDJE/EBOIWRbsPnVtvwuxZ6K5MM9YHh7GWN62fFXMoA67WbmbF+5IIL1wOMYiNkEYHLqymaGUF28nkc413sSUyUGizDPHqPUTHlZ1rmF/5EecdWDWUys0rDriXrakZBd9/1Ij8FsmZAtcPcA95GGpxb8j9AZbVmg+XgAguJ8f8g0Hk1fggm+04J7me3IGY7O1blzyRXaFdMbPUWQ/LLhkDjrouvozlrgcH3BqXIzwzTxPhcFsG+BR6FTHQAHkIPnCtoIG6ifHuQmImiVshLJ5WKAzhbWSOAsN4kW6u0AGKyDrss6Nq6sYhsmwxHVzm/yiF6PbeG4o/BbsebW07Pkik5Kl9kXWiKTZTw/AaD1eH8DUKHDmRZoYm7koeYU1JlgXpfCSIcLmlW3ReUlNwaXdvrRrr8ycK+MawRrLCnYONgSfkJjAbRFkJiVDrEnIB5XAZy0=
+	27L7yV+wbt/Bmn0SVnItavO9D9HxcwHyEHGjY9Zc/cshKkqU1jZwoyU2US4FSI87ArnCCQ2/K3EwkEFBABBlZgrnefzADu4z8YcGKDQsm8E20O8AGVlOZCSoD75DyX50wsVv9R6ImVLdaCDTK9xa/iUQkku1yMQuWhsuYnR1wnQfGOviDPoBZB6KAMBa9o0qwD3RzG1czzpQM4Es2O8r4fPASYXHVU3v4yC2u1+r7BV6sHRbgOZpmlg5zyGvRGxLefvG2+KaRZpg2x30Oyq8oDa0KScWMGtGZwx1PBbXeq/qYNPOpxkJzQ+Fd6pIjj7RLuP7Ltm4MuCBdAT+zN2H5DkEN5CrKSqbr82CoFwhIrrVmsKvxR3WImxu1CxBc+CAhTe/6Y3Oww/B4n1+5oM3yCH0R3+GzKNFqGWZXpH/ini/shXtL9/K3xd/Qb1ywih2DbMVA5MeHVAXcFLfQcQ/agjOqC9Y0MDzfbunNXAEPXTpWDMDIa9XPz6KF0MOwYu2I5vkrfHZmaBm2yq0Pjbktx9LkYQr1awwDYkfroBZm5NNnc6/LycP3Swo/j8OT8cduXhv+mrICCOayxMtxZXuege/Lu1bq4NLqNlTDRsZErUJPoe6lloULIApwsDuxzkUM7iVoEDucYnI0hawcdiJbTxGdJOUeeiRZ+nayrNjd1vykxWTnsu5nVg/2FfUl5bTRhunqZbPr/7PGzOFqXyPhgbGmNjR9cMP98meS3wAcnk=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB6604.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(366004)(136003)(396003)(376002)(39860400002)(346002)(451199015)(6506007)(478600001)(316002)(6512007)(66946007)(53546011)(6916009)(31686004)(26005)(66476007)(8676002)(66556008)(6486002)(186003)(4326008)(41300700001)(8936002)(2616005)(5660300002)(4744005)(2906002)(83380400001)(38100700002)(86362001)(36756003)(31696002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB6604.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(396003)(136003)(366004)(39860400002)(346002)(451199015)(6486002)(316002)(107886003)(31686004)(6666004)(478600001)(53546011)(6506007)(54906003)(7416002)(66476007)(2616005)(86362001)(4326008)(36756003)(26005)(8936002)(8676002)(41300700001)(5660300002)(6512007)(66556008)(186003)(2906002)(83380400001)(31696002)(38100700002)(66946007)(45980500001)(43740500002);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?M0NlbWZyeUJOMll2R1hxQlkyRUpNU3o3TEVLbkU1SkJNUUtOVHBtUWNsNjla?=
- =?utf-8?B?dWJYdVJBSDBsdUtPVG54cHFGRnlpZFNiYUVmaU5SQ25xWDZLY0svMzFZZWhK?=
- =?utf-8?B?d2JGbC9TbExxV0xKTmZhTDEzbFB6S09wZ1hEZHRqYTNzSCtVVXZHL3FoWk52?=
- =?utf-8?B?dmVFNFNqOFhzRGg5TmR1dDVINWVncDJiTS92SWpjNnYzTDFrOWoxQVAyb3kv?=
- =?utf-8?B?UW1keExnd3R5dC9nUCsyK1p6UEVlUXpnY3pPdDlTZTJKZ2xXVzhrb0c5c0pQ?=
- =?utf-8?B?SFZza1VHNjVMVU9TNStoNXpMV3pPdmIxUmxjRFVhTURNbkczbGFsOUxsajF2?=
- =?utf-8?B?THBQOHVBOGoxWFFzWEhtR2ZrVHFGVGZ3eGc3U2hQUVJMempQK1JaSEt5cXNu?=
- =?utf-8?B?dm8yM1VMTWp5K0dod1laQnpvQzB5Sjg1MlFWUHVadHdZQ0h5NjhjUGtJVkd2?=
- =?utf-8?B?a2JIWEhtc0h2YUh3KzRjQ1BPS2JHWDh4YkloN2J5MGVyMi9uVGdFUmVIN05I?=
- =?utf-8?B?dWZWMVhha2FhNThQK0o1TjN3dFIydTk3QVVtbEJZcDJUWnhrWmVIazRodXhj?=
- =?utf-8?B?dHZSV21UQ3ZzYThlQXVwZjFVSUxXSy9rWkNNYWlYQWFEYTUxNDR0MWZTdEpZ?=
- =?utf-8?B?UVRLSHRMcXExSGhYZFJaMDZ5WHlGbEl4UGhxcCs5ZDgrWmNITG00alNhUWda?=
- =?utf-8?B?ZGpJUjl5dkVxKzhTOEhsSTN5Smp5Q0dON2xuWUFYelcyd1JPTjhldWtEb3JY?=
- =?utf-8?B?RXl1STJHdFVMRHI1S1pKdUVMc3pKaUMxeUxpd1FKVVluWDNsTHB1RzdmSThI?=
- =?utf-8?B?Ymx3REVOTnN0Z3cxYi9LV3lyUUNYVW11clRMZVFhckR5SFRKeFVDRG94TVpt?=
- =?utf-8?B?RnRyclZRdWYvMEZyUkRwV0ZxRXJKRFNBcE4zR09PUCtYcVdCVFlRVzYweHc4?=
- =?utf-8?B?RVVac2tJQmFMVGVuZGZQSFdCSU5aSlEzWVczZUVpbzA5bHBhU09kVm9PdXpH?=
- =?utf-8?B?aTNxM0Y0dXVENUlETzJSU2FtWlFOUEtzOGx2VnIvb1h5SDh0blBieGpZTFpF?=
- =?utf-8?B?cThSTk9rTUp0b0RRVjl2bzdLdXBSTXZZT20xNVFtbW94bWtXTU5pWjBZS2NZ?=
- =?utf-8?B?TGZUb0hkT0VRUzluVVBsWVNlUjY0UmtwTks3ZTQ4YXNlb0sxR2U1QXJZMyt5?=
- =?utf-8?B?MlFJV2ZlRmY4ZXFRT250T0h5eUZRcC90a1V6MDJCcmZ0ZUdPR0VEZTZTVXJG?=
- =?utf-8?B?SFRxZ0UxRVFFMW5xV2F1ZHVGa2o0dEQxTWw1Y0IxTm9ZOEptZENYUWxCN0pV?=
- =?utf-8?B?ZlJFSG5Gc3dwZGNpdlR0T1VFbC9zc3FDVjg3NU1GNmE3TGVyRTMwZmJsZ1pz?=
- =?utf-8?B?Y3JuRytlS2NUYStqN2NjT3kwbnhTOUlKYTNoVzJGdlpkV0lGbDhBRTlKRDFR?=
- =?utf-8?B?c2ZSTWRsenhsWFdVUjhtQzBGcmFNSTlkL3ZxNnFqOVlkUE1rSkNlY05mRmFP?=
- =?utf-8?B?UGxsS2xGRVFPYnZDb1Rwd0d3aXBXaDJTbit2VlhzYzZZZExFV0ppSDd1OU1L?=
- =?utf-8?B?SUozdVZaRmhkVlJxd3lySGlkS1BwVHVWMFRDS3RNUzUreHpwK3pqUHZqWks2?=
- =?utf-8?B?ZVVHaDZnTnpmZFZ6c3pxaHhXUnlFZ2JjRGVpTXFqLzFpUWwxajZkbEFXTHBo?=
- =?utf-8?B?VWszQ1cvbzJ1dm9pZlVQbWhHU3JvKzdQU25VVVIxT2VmMWcydm5TbGZuN1RH?=
- =?utf-8?B?Y2dxLytJSnIvanFPc1l1ZU41VEJORWV3SHhuekc2QmcxQ2w4SlE5TGZYUWUr?=
- =?utf-8?B?Z0dzNU9zOUlMRUpkcC9yUUwxZi9PMHpTWHhHU0R5Sm9pdWNFeHplS0dGajZW?=
- =?utf-8?B?L0NiZTAyMWg3RFJDZ2dlZURaVHM0WFFCeU9INjV2a2h4Q3JQWlZXdjBSbmZT?=
- =?utf-8?B?N0FuQk4ycnJjNDczM2JqWDVMZHRaSnZzRGVUR1Y1WU1oRHUzMDEyOWlWWUVR?=
- =?utf-8?B?bkdSVnlDa1JTUXRNckx2UFR6bTllUkVFNlRNU2pXVXF1S3ZxRW45eEZkaExB?=
- =?utf-8?B?U2pqYnNpTWZ1dTVaam9obXFPZmtieHVpb3J0L0RCSjA1V1g1OGxESEdVdHJ1?=
- =?utf-8?Q?DCsGQpb+A/MiY9/bRwzo0CJRR?=
+	=?utf-8?B?QWxxTnB1SUV1azdOckEyb3F1aTc2aUJxeVBITHpFZGxFcW4vdFB0RWNuVjJR?=
+ =?utf-8?B?ZUozd2hveElhNEc5Y3B6STVzVVd0ZFdRU1NSTkZTRWhRMVBxa0xUNDdFRk1V?=
+ =?utf-8?B?cGpjYjNXcmpMeXdWWUoxcGJrcWtvb3k5RnZXY2ZzRDZ2cXc5VmhJOEJxVzZR?=
+ =?utf-8?B?UGJ3M2p2V0FuVjVRZDIwVkp2bFVGRS9LNEs5SmMxb2s2S3ZSMHp0Yk41bXRz?=
+ =?utf-8?B?NnJRODVJaWNPaEpvV25kKzdSMld3SERNMnhCcDZGbytkS3BXRTd5RERDeTV3?=
+ =?utf-8?B?bDJ5QjZmdTVpanlvQThkaFBvUmxsRjRzQkk5NHNBd3BkVFF2RlNCNEE2MVpm?=
+ =?utf-8?B?eEdVbVpoYUNCenZMMHRJTWU0d0kveHJZR2JYVzZxWmNPbWdILzd4RFlmcWU2?=
+ =?utf-8?B?NWROQ2EzOHN3SkM1WXdsZ3lvVVp1YTBYWklJZml0eWtoZ2dDRU4vcUJ5NEcr?=
+ =?utf-8?B?T0lWM205UWRnMnhISDFsODc4bzZwWjJsZmdtUzVremdYeHBxN045MElmUFA1?=
+ =?utf-8?B?RmRNa3lEeEtUUDVRRXFlTWo5T2ZmTzJlSGd1K0JZRi9GbWdVZWFOdENYM2FV?=
+ =?utf-8?B?V1hTTjNLOG1oTDZ6c3F2UnlNeFNhYlRzOXFia25qS0tIaWluc1c5ZjBGTDVo?=
+ =?utf-8?B?U1FDNEdXU3VWQVFtc0JzY29iOE9wWXJrc3dFeUs0Ny93UzBEaERncmpldkVT?=
+ =?utf-8?B?bFk2MUxWdHBoeVM3VFN1Q0hzdTUvUWlGdjE4TkZJNW9rZmE2YTR2Y0E3RE1L?=
+ =?utf-8?B?aGI0SzFpR1QzNVlpZmxhVjFLNWIzVUJpTG1OOTVicVY2c1pLWENpS1ZPR21t?=
+ =?utf-8?B?MWRHK0c3bGRETzdlZVliblppbVFlZ2d1S29vZzhuWHFXT1J3a0dPekZ4WUQy?=
+ =?utf-8?B?K05MNWdqQ2FsQ1I1N3dKSVQ0RzFDNHREV0xsTlRHejZJRjU2TkxBdGorRCsr?=
+ =?utf-8?B?N21zb2FXU0lvK3NudFNycVZKT1ZIUHJ1SjVBQ3RqVjlEVlMvT0kyUDBFdmp4?=
+ =?utf-8?B?azBXZ3pGUkdLcFF3YTloV1kvRURXUzg5ZDgrbWRsMEtxT3loaFVLeGt4Skt3?=
+ =?utf-8?B?RWU1b1F4Y0lnbzNDWFJNZFdrY2creEFXRUJMMlh5TjJueWs2SkUxOWdSVUNY?=
+ =?utf-8?B?Zm1vZVhmUTlucmtzaWJEYkdvUWp5bkdMK2o4OC9yanpiTmlFSjlvY2NWSGEy?=
+ =?utf-8?B?eHVNRDVFTmVXMS9IM2VVMVlFdERobUtvWWt5OGNVVXIreUR3WWphOEdzME03?=
+ =?utf-8?B?QURBNmpzRzA2dXNCTkN3cGdFTEc5Y0RNQ3NBTGtpVVlsUDkwUjhZcTdnRG5i?=
+ =?utf-8?B?VkJyanptUFJQd1RuTkFESWtpTmJ2cFEyQS9Fdndwbk9ISGdFZjMydlF5bi9G?=
+ =?utf-8?B?WDhGa2tPNlJmNzFGVksyNWpDODdRT0lMZmF3cFBoRk9hUDJyNVl1bmhoOFU3?=
+ =?utf-8?B?RkRjUjVScldjTHlZdDFHRmYwYWlzVEQweWhYaml0U1FHY0NNK2lDWTBoR2RZ?=
+ =?utf-8?B?cE5WZ3lwYXZxTjJSUVd0OTFZNTRUTVU4SVA4WmxYV3g3Yy95YXhXUHVoeTNH?=
+ =?utf-8?B?VTZZTGlKaUxVOEQ4cldvdTVPVDNzOGVybWh5V2JRQzJQckZ0alBVM29TZktK?=
+ =?utf-8?B?d3Bza1hNeTQydkRwRVVnZ0RtLzI2dE5kTEx3V1RpQy8wcFdjUlZRSTBSZWZD?=
+ =?utf-8?B?UXZ6NEFZL2lXLzhtOVUyMWNmQ01Vc0ViajZLSGYrejdtRmNuN2tsNXY5VWZy?=
+ =?utf-8?B?K0IzdHhCWTg0YlEyVkZMMlpxbG1ZZDRuaDczMXZlN2FlQmEra0Y1bGFyZ3NL?=
+ =?utf-8?B?U0JhSDFxcVRXS2R1aWo4eThiMFFKdFA1NVkrQXBSN29VSG1FZGRuWUY5WWlI?=
+ =?utf-8?B?d1RFTXMyaVhTUm5XZ2w1aDdXMG9LeW5SbGhyMWd3L0hRZFBSZWlNbGk4TzY5?=
+ =?utf-8?B?ZTF5eWVGdjNFMzlBUUcrQ2pGQXRsWWVIVjBxbHVpdkVFZ1JHOEVlQ3daelh3?=
+ =?utf-8?B?dDVrTm5oK3k4UjViZEdLU0NGbWJCVGpYQklZVDRTQWdWVGZPQ3Fid1V2alBi?=
+ =?utf-8?B?ckd1OFJMZFFPMzU0UlZGdU0wSEIyeHMwUWhLRnhIUUV4MGE3WVFOeElUcmtL?=
+ =?utf-8?Q?a3MciAMqBYdpf+SRa9t0Fy1+e?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bdbc12a7-93b7-44ae-6343-08dac9d2f2a6
+X-MS-Exchange-CrossTenant-Network-Message-Id: a765d5a2-fffa-4b65-f0bc-08dac9d6756a
 X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6604.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2022 02:08:27.9214
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2022 02:33:35.8504
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9Dv1PWInhkOVZc2Hyjv07yZee7OPSGktbWuCnrE+RMLzvPzJTiyOqYl925bDdsEoddNS720TJesrE7xYOKy7uA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5223
+X-MS-Exchange-CrossTenant-UserPrincipalName: +6beDXYv/jT/5dO5JnVZ7hdLlAltGer6fE6Wh2pqrb7v5K27B+EUyu6YyKDCoH49ucr1l0VigPD2YwNi/GmEqw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7317
 
-On 11/16/22 11:17 PM, ye.xingchen@zte.com.cn wrote:
-> From: ye xingchen <ye.xingchen@zte.com.cn>
+On 11/17/22 10:47 AM, N, Pandith wrote:
+> Hi Dipen,
 > 
-> Replace the open-code with device_match_of_node().
+> To support Intel timed i/o driver, it was suggested by Linux community to enhance hte framework.
+> However, we see some limitations to support complete Intel timed i/o device.
 > 
-> Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
-> ---
->  drivers/hte/hte.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> 1. The current framework supports Nvidia IP, which has two IP blocks (hw timestamping engine interfaced with GPIO)
+> Intel timed i/o is a single IP block handling multiple functionalities like:
 > 
-> diff --git a/drivers/hte/hte.c b/drivers/hte/hte.c
-> index 7c3b4476f890..5ae81fb31683 100644
-> --- a/drivers/hte/hte.c
-> +++ b/drivers/hte/hte.c
-> @@ -444,7 +444,7 @@ static struct hte_device *of_node_to_htedevice(struct device_node *np)
+> 	a. Input timestamping with event counter.
+> 	b. Timed output  - single shot or periodic pulse train.
+> 	Uses TSC(Timestamp counter) for timestamp or generate events, which could be translated to system time.
+> 	c. Implement PPS functionality to export time.
+Isn't 1c similar to 1b, where IO (mostly GPIO) is programmed to toggle/periodic pulse train at 1s.
 > 
->  	list_for_each_entry(gdev, &hte_devices, list)
->  		if (gdev->chip && gdev->chip->dev &&
-> -		    gdev->chip->dev->of_node == np) {
-> +		    device_match_of_node(gdev->chip->dev, np)) {
->  			spin_unlock(&hte_lock);
->  			return gdev;
->  		}
+> This requires new functionality(interface) to be developed in hte framework specific to timed-io device.
+I can see 1a is straight case for the HTE.
 
-Will pull changes to hte tree...thanks
+For 1b, the timestamp part can be added as hte provider. I see opportunity to enhance hte framework to provide
+translation facility between the domain, system time in this case. However programming interface to facilitate
+timed IO output can not fit into HTE the way it is right now. May be one possible way is to enchance HTE with API something like
+hte_configure_timestamp_periodic/timed could be possible in which case HTE does something more than just timestamping the event.
 
-Acked-by: Dipen Patel <dipenp@nvidia.com>
+I have to see how in GPIO case that proposed API works out, if it will bypass gpio framework etc...
+
+Adding Linus W into the discussion....
+
+> 
+> 2. The current hte framework has a provider and consumer concept.
+> Consumer is responsible for user space interaction.
+> Currently Nvidia is using GPIO for input timestamping  (by adding hw timestamps in gpiolib-cdev.c)
+> 
+> For Intel timed i/o functionalities, current gpio user interfaces cannot support event counter
+> or output modes.
+Can you elaborate on event counter and output mode?
+
+> Rather than jigging hte consumer into other subsystems to support timed i/o device. 
+> Any possibility of developing a native consumer in hte subsystem, which could handle user space interactions for timestamping engines.
+yes, feel free to send patches to me and cc timestamp@lists.linux.dev, I guess you can register your IP as one of the provider.
+
+To explain why GPIO was treated specially, there was already a
+user facing framework i,e gpio-cdev and range of userspace tools which could be leveraged for the HTE GPIO consumers. However this does
+not prevent kernel space GPIO HTE consumer from using HTE core directly.
+ 
+> 
+> I cannot think of an existing subsystem that handles Intel timed i/o functionalities 1a, 1b and 1c (mentioned above).
+> 
+> Regards,
+> Pandith
+> 
+> 
+> 
+> 
+Best Regards,
+Dipen Patel
