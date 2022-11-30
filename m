@@ -1,130 +1,93 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491B07C
-	for <timestamp@lists.linux.dev>; Wed, 30 Nov 2022 03:43:54 +0000 (UTC)
-Received: by mail-pl1-f180.google.com with SMTP id p24so11679148plw.1
-        for <timestamp@lists.linux.dev>; Tue, 29 Nov 2022 19:43:54 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48AF7A42
+	for <timestamp@lists.linux.dev>; Wed, 30 Nov 2022 09:01:02 +0000 (UTC)
+Received: by mail-yb1-f180.google.com with SMTP id i131so20664140ybc.9
+        for <timestamp@lists.linux.dev>; Wed, 30 Nov 2022 01:01:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Q2iyrgtYDuQKt/kE7+C53HCWQJvUcvpFAzkZEkz/5Fk=;
-        b=arIafAEMNCqxxUJ6A8NnFQ1SoS9OnNxJfCm0VwcbDkv2lL2Clx8ewRYqQsEHNp6a+o
-         CWy6BkJol8zZo2XRRAyqSsvf5qmIeI/AYSnXJhIjd2RNSR8SuUJ1FIqXt39e0SQUeyO+
-         RT5BZkQDKd+UFdqHgmSCYtLUsznQf7QB2LtRgvf7qDNiUFraKaCt6M411grsfG0EzdkZ
-         L+c7FpPe/3jlZGh9TFsb6lzm5b4IUNm0T4z6mNmVIu4JSZ/wI8HTn0X7MI89GIQNxtf8
-         xUjGICCQmMJToDxY9Fyym4SGqZIQjjf0hhCq6OdC1olzrhM4MI6P5gCO7PILN3o/2htV
-         6UZw==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cbVbgsH3XRTQv4786z5ER1yQeEoNdKbadkVm9l1r2WM=;
+        b=jpfGnLgK/1cG6bBQcrKLMuOQiKzdWPOvTlsnIw4uqyLKQB3Y35J6A+P9dz0cdrlcqL
+         HZhqFeQZeMvQvtxffy0pO4SFOOtTnfGiHz1pI4HXacAFsoCyixjxNkZeTRAkvwOWNt8H
+         0oFPHx+yka4PGucML2TC7WFhenIczYDCYPuKrGShpC2xUii2XIkDcdTbN6tX7QI7hU6d
+         Z3jHz5Ke9gOYxM1shAuaNoHaGfnqgBrSo0Lc/qVPlibA/20nT3U+BgiwxJlNmeAO0Y1x
+         fZyiy16VZspf44UMuMkocJp6vfI/JNBdV1uvZzKxBJXgccR5LLuX1gMY3az9/Lp36mzj
+         jdCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q2iyrgtYDuQKt/kE7+C53HCWQJvUcvpFAzkZEkz/5Fk=;
-        b=3TF6x70tz31WaK8nlkzqxjfMnHTxvRS9bjp+mxitkdNnTXNoF8qHql3JhPK4OMDRVc
-         V8zTxi4OEZepZEu8hnlR1QGfMxks9I4Oku/k5Z+tlhxCps0+lOJIOsGvgKJTq8MQp10q
-         nkrwKSgnhEzOyz/VFv278JQAiuxRznzgVFILA/UNcR1X3hOn/3DjxKTSH9x7V0Wb3gNU
-         hvYWI7cnTfgNjhfuH9Rk+fDkMENlr8ncdJ+VADiX5W1gDljN2LBEdwtasnoVaF9NgxIj
-         QbpDcNPYYeW7Q3NhVpvlWI5K7LmLV0AkK0MODPiqxLMbOUNf0mP3Kg1cCWTp3SOZc9Xx
-         fcYw==
-X-Gm-Message-State: ANoB5pkDuZX5PcuMhgBeho8bsYmi4lP3zcllaAWJBQKONW/XrJ+Gh6LN
-	qX2zVseEpm2w9TcSVreCkMY=
-X-Google-Smtp-Source: AA0mqf6RgG4UbvdUAsdQcRV2TiZBLISWyGOQCPavRvxQ949guJf0YWnsneE94lxtpEV8RpHBZcMBHQ==
-X-Received: by 2002:a17:902:7d89:b0:188:4ba9:79ee with SMTP id a9-20020a1709027d8900b001884ba979eemr40717697plm.83.1669779833723;
-        Tue, 29 Nov 2022 19:43:53 -0800 (PST)
-Received: from [192.168.43.80] (subs32-116-206-28-61.three.co.id. [116.206.28.61])
-        by smtp.gmail.com with ESMTPSA id j6-20020a170903028600b00189758e2babsm88850plr.125.2022.11.29.19.43.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Nov 2022 19:43:53 -0800 (PST)
-Message-ID: <d6f53bbc-34b9-dcef-b37f-d4babb8b7a4d@gmail.com>
-Date: Wed, 30 Nov 2022 10:43:47 +0700
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cbVbgsH3XRTQv4786z5ER1yQeEoNdKbadkVm9l1r2WM=;
+        b=sw9gw2hcrwoiiRAV1Cbb3Sdo5OlZ9NnAmArv2SHa5ZomY2PuCpKgYZME2ziIJYnUzP
+         4xrACtC3IU+m1x/b462K6+cEGY9AEPzO4uPw0MK//ivT9C0VrRcm5p8KRjxDiQk1JDa4
+         /tDMh1WkxacSHSATla9K8p6OEkwqitOrQkf7vHrVFQ/uepBWElHlC8A3C4OjF0LUGTiW
+         8xvJnO6Mpc5rN9DzH96UNDv27fmrvxP9g5pWGhR4SsM3PncQhlmXtA0/Ht1aE8VB8bAR
+         RVFUSDmcRvY79eiZi6eVwJboHYzsOrlFCL6VGBMpKk1FwU417lERRITIPg/jkNvlu7+5
+         BsJA==
+X-Gm-Message-State: ANoB5pkFuX0y6linWeK9HHDLP+5FiExrU2bfG5PHP+BoTKjoPtQF4tu3
+	yXgG1GWedIwyCAlu9VIOzI9oKncXefbUQ8mgpNM06g==
+X-Google-Smtp-Source: AA0mqf5nvJFCwC+Bm8UuGEcbvyqnBNs8xlBIAHq6KVDu3vmowiOFuVe2nCDzI5eQr+k/J/6u/NaNpmdNaQvvxoaXX/I=
+X-Received: by 2002:a25:a241:0:b0:6ee:e865:c2e2 with SMTP id
+ b59-20020a25a241000000b006eee865c2e2mr36593660ybi.206.1669798861231; Wed, 30
+ Nov 2022 01:01:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH 5/7] hte: Re-phrase tegra API document
-Content-Language: en-US
-To: Dipen Patel <dipenp@nvidia.com>
-Cc: thierry.reding@gmail.com, jonathanh@nvidia.com,
- linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
- linux-gpio@vger.kernel.org, linus.walleij@linaro.org,
- devicetree@vger.kernel.org, linux-doc@vger.kernel.org, robh+dt@kernel.org,
- timestamp@lists.linux.dev
-References: <20221103174523.29592-1-dipenp@nvidia.com>
- <20221103174523.29592-6-dipenp@nvidia.com> <Y2XZj4j/NQH2igvJ@debian.me>
- <5145d9d3-d3ae-e95a-6583-803f31d6d9b7@nvidia.com>
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <5145d9d3-d3ae-e95a-6583-803f31d6d9b7@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <BYAPR11MB3240F382BD180FF90C7DF0B9E1069@BYAPR11MB3240.namprd11.prod.outlook.com>
+ <7de35859-97ab-8e88-f590-d5851b81773b@nvidia.com> <BYAPR11MB32405F4FA22BB47BD03C8F18E10C9@BYAPR11MB3240.namprd11.prod.outlook.com>
+ <CACRpkdbY5aU3OTufA0q+N7Pwm0shGgnjScAGR_96oo9XdgBDhQ@mail.gmail.com> <BYAPR11MB3240CE6547117D138B1A112DE1129@BYAPR11MB3240.namprd11.prod.outlook.com>
+In-Reply-To: <BYAPR11MB3240CE6547117D138B1A112DE1129@BYAPR11MB3240.namprd11.prod.outlook.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 30 Nov 2022 10:00:49 +0100
+Message-ID: <CACRpkdbOPbqot+Yf6i_EayPrRn2S+ZTA1FzZ-0OkjXjR5UZvqw@mail.gmail.com>
+Subject: Re: Intel timed i/o driver in HTE
+To: "N, Pandith" <pandith.n@intel.com>, Johan Hovold <johan@kernel.org>
+Cc: Dipen Patel <dipenp@nvidia.com>, 
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
+	"Hall, Christopher S" <christopher.s.hall@intel.com>, "Gross, Mark" <mark.gross@intel.com>, 
+	"Sangannavar, Mallikarjunappa" <mallikarjunappa.sangannavar@intel.com>, 
+	"D, Lakshmi Sowjanya" <lakshmi.sowjanya.d@intel.com>, 
+	"T R, Thejesh Reddy" <thejesh.reddy.t.r@intel.com>, 
+	"andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>, 
+	"timestamp@lists.linux.dev" <timestamp@lists.linux.dev>
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/30/22 10:34, Dipen Patel wrote:
->> I think the wording can be better:
-> I do  not understand, can you please elaborate?
+On Tue, Nov 29, 2022 at 7:10 PM N, Pandith <pandith.n@intel.com> wrote:
 
-Exactly where? Please quote appropriate hunks from below where do you not
-understand.
+> Intel  timed i/o is mainly intended for couple of functionalities.
+> 1. Input event capture with timestamping
 
->>
->> ---- >8 ----
->>
->> diff --git a/Documentation/driver-api/hte/tegra194-hte.rst b/Documentation/driver-api/hte/tegra194-hte.rst
->> index 85e654772782c1..13c45bfc03a75e 100644
->> --- a/Documentation/driver-api/hte/tegra194-hte.rst
->> +++ b/Documentation/driver-api/hte/tegra194-hte.rst
->> @@ -5,11 +5,11 @@ HTE Kernel provider driver
->>  
->>  Description
->>  -----------
->> -The Nvidia tegra HTE provider also known as GTE (Generic Timestamping Engine)
->> -driver implements two GTE instances: 1) GPIO GTE and 2) LIC
->> -(Legacy Interrupt Controller) IRQ GTE. Both GTE instances get the timestamp
->> -from the system counter TSC which has 31.25MHz clock rate, and the driver
->> -converts clock tick rate to nanoseconds before storing it as timestamp value.
->> +The Nvidia tegra HTE provider, also known as GTE (Generic Timestamping Engine)
->> +driver implements two GTE instances: GPIO GTE and LIC (Legacy Interrupt
->> +Controller) IRQ GTE. Both GTE instances get the timestamp from system counter
->> +TSC which has 31.25MHz clock rate, and the driver converts clock tick rate to
->> +nanoseconds before storing it as timestamp value.
->>  
->>  GPIO GTE
->>  --------
->> @@ -19,17 +19,17 @@ needs to be configured as input. Only the always on (AON) GPIO controller
->>  instance supports timestamping GPIOs in real time as it is tightly coupled with
->>  the GPIO GTE. To support this, GPIOLIB adds two optional APIs as mentioned
->>  below. The GPIO GTE code supports both kernel and userspace consumers. The
->> -kernel space consumers can directly talk to HTE subsystem while userspace
->> -consumers timestamp requests go through GPIOLIB CDEV framework to HTE
->> -subsystem. The hte devicetree binding described at
->> -``Documentation/devicetree/bindings/timestamp`` provides an example of how a
->> -consumer can request an GPIO line.
->> +kernel space consumers can directly talk to HTE subsystem while requests from
->> +userspace consumers go through GPIOLIB CDEV framework to HTE subsystem. The hte
->> +devicetree binding described at ``Documentation/devicetree/bindings/timestamp``
->> +provides an example of how a consumer can request an GPIO line.
->>  
->> -See gpiod_enable_hw_timestamp_ns() and gpiod_disable_hw_timestamp_ns().
->> +To toggle hardware timestamp, use gpiod_enable_hw_timestamp_ns() and
->> +gpiod_disable_hw_timestamp_ns().
->>  
->>  For userspace consumers, GPIO_V2_LINE_FLAG_EVENT_CLOCK_HTE flag must be
->> -specified during IOCTL calls. Refer to ``tools/gpio/gpio-event-mon.c``, which
->> -returns the timestamp in nanoseconds.
->> +specified during IOCTL calls. Refer to ``tools/gpio/gpio-event-mon.c`` for
->> +example.
->>  
->>  LIC (Legacy Interrupt Controller) IRQ GTE
->>  -----------------------------------------
->>
+I understand this part, and it is handled by the HTE subsystem.
 
-Thanks anyway.
+> 2. Generate single shot or periodic pulse train
+(...)
+> c. Most importantly, precise time synchronization between devices/sub-systems
+> Ex : Share precise time from a GPS receiver to the network or
+>        Synchronize processor clock with external signal.
 
--- 
-An old man doll... just what I always wanted! - Clara
+So I think this is the actual use case of the output mode. The
+pulse train output by HTE is to share precise time to GPS receivers.
 
+So what about putting that part into drivers/gnss?
+GNSS Global Navigation Satellite Subsystem like GPS etc
+
+If this is the only usecase, that is where it should go, along
+with the serial or whatever transport driver is used with the
+GPS. I don't think this is a generic functionality (such as
+GPIO) at all, but rather a very application-specific use case
+which will only be used for GPS time synchronization.
+
+If the timed output has other use cases - and I mean HAVE
+other use cases, not COULD HAVE other use cases - then
+we can discuss generalizations. There is no point of designing
+upfront abstractions that never get used.
+
+Yours,
+Linus Walleij
