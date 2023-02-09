@@ -1,170 +1,161 @@
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2080.outbound.protection.outlook.com [40.107.244.80])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC88A2A
-	for <timestamp@lists.linux.dev>; Wed, 28 Dec 2022 00:43:55 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TJZXJ49/1df7d6X/MQZ9AHKE/9p0Sp3lX8V+ka0sZhwtpDzMkQJjFPiLEhwhpdwHwHCUNXdK0TqgLNVGSm0jaXFAMJ4oLNmcUlVW8XAn/FGUZmkbtpQGXzPEfoYXQmKL74vzPxRA1Yprsgcc5JJ2JTK1/ZlP4YPH9VOJAdjyYnVKAvGhUhbtrZCPeb1IzIj3+pTkmJApzCyl8TwhCbjvrFKtzRZDxEcB7g/hopMifPrhRhGxWNOe7BORKOgPpOGRfQad7tFuktedTBkS5lQpRDN/lgwO1OQa9Zy3NrYUSxt5enGaQzuGkD8u5FNXqNwmkUO+4JFpZ+KyFN4IBOCYfw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7rT+rgQ5vfWVaCy6f6i9n6m9hI2ftZ+9nQiIfH2idIw=;
- b=CKRySxLZX6jZn3YwKvKzAWxITMeQrCoLxwT6uIcoFGqYHRKvmcMoLQrRXTLvFsIGXWNtOEv2gc21W7tjzH+auxCxswjEqpPcRRA1eyh2lWPjg/89c3+ujPORK9RqOTBBR5va6dBN/Y/YijPU+QUkVb/XdGTSo6lNNe4MGA3ssbzE6kjC5h6EwfNhgvMaWf5Ay21NOUtBtdn5/DrPJlfSLK9TfX7I6rxLfDQ++66TryAG1bEBVCBjnR2ybx6JK+ZulKFeOfY7++QHHZLFXPTPNjF5NspItUVaBOgffmyIcUjJSrO6d2+x20Np/BkZ0D7wUr8TNKPzk8QdisnGCSxgWA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7rT+rgQ5vfWVaCy6f6i9n6m9hI2ftZ+9nQiIfH2idIw=;
- b=E8GmlFBzp0ddxo3NURFLjF14m2dVzIX32lefdZOp/MG9YGOcGObErfm2Z3o8csGPZb8PmygDFsS2PxrOgw2ziRp8vWu1Y9KWxKnyF+K+ozqr12tjswwyrnqIgcv0uikhNzF8bmjcx/qQ78eyncoA7+l2vwdfuvNGrWkvJEGapfl7ZIiLT7tHhKWat8V/DSbtKCmyZGHBxbltmZPDjhg/WRJe+LRErrRUAICuVRNLJSrRKdypbUSgi0tx5yyg87+tWFt4gr81cumOvK2r8mmaqopVsegUlLYNjryxz/g1pR3xrAT2s77EhAtt0Tz2yXIRbSR8kBaaPif8CGPg4OCVog==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from IA1PR12MB6604.namprd12.prod.outlook.com (2603:10b6:208:3a0::7)
- by BL0PR12MB4996.namprd12.prod.outlook.com (2603:10b6:208:1c6::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5944.16; Wed, 28 Dec
- 2022 00:43:52 +0000
-Received: from IA1PR12MB6604.namprd12.prod.outlook.com
- ([fe80::72da:3d0c:a811:be88]) by IA1PR12MB6604.namprd12.prod.outlook.com
- ([fe80::72da:3d0c:a811:be88%9]) with mapi id 15.20.5944.016; Wed, 28 Dec 2022
- 00:43:52 +0000
-Message-ID: <2cc8378a-3f74-d4b5-613d-f9112806ec92@nvidia.com>
-Date: Tue, 27 Dec 2022 16:43:48 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH 2/7] hte: Add Tegra234 provider
-From: Dipen Patel <dipenp@nvidia.com>
-To: Thierry Reding <thierry.reding@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FB4371
+	for <timestamp@lists.linux.dev>; Thu,  9 Feb 2023 09:02:36 +0000 (UTC)
+Received: by mail-wm1-f54.google.com with SMTP id bg26so970636wmb.0
+        for <timestamp@lists.linux.dev>; Thu, 09 Feb 2023 01:02:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FC97GopJvrXLbn2PKKUSbpHzg6otGN8/TmQ45fLzCwg=;
+        b=LGXbmHpD82SwO7t5GHJRbL9D9tnGJBSbJlXfWcp/0FH9N84f2Sa13M0Re9YHbDoyhg
+         YPINzA85tPnpsiS45W+IRgN8BP7ND5XOFV8iri4ZAyz9uDeaK4qQbL1BXngATrjsua5i
+         NSKPbaEH9+rAVkrRRMGb9fTB3PUUPutZBWzYztXMlo0eInA0cWi8U4Q7mgEmhUivgjpO
+         ehJiOPvzW7Fa0H0YsS+0gNjEF3MciPQ2ZY1wcuDxBQznbhm1iVtNn0uAt0dqryAGpE0C
+         rkkJahjNJOR82mfmYbg2jDdpktGf+ifYLxNksidRLVjKl98KZU0nmFBFxb8Dlecb8nzu
+         oJ+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FC97GopJvrXLbn2PKKUSbpHzg6otGN8/TmQ45fLzCwg=;
+        b=YngvvVyAIACFkGpdWwEhAaUIeY6GGXCtAZWaKalZh5/Xz3FdsKyHNZH0lw67tqN1Z4
+         4nDU+RraN4zieh508c3kVHqfeoA54Ok8fEZhI5AqHn6pIP8h6RnSuaCwPIUOU53y+CiF
+         IwTNa8+ck9fISkoBSWM21F62YTouvlre8pQ/7uuJPj4Sm0ERcrbjIQc1xt7J4q8dE4Ni
+         B82D7Ks5A3bkLkGctqAiinJ3flDm9h6zqd03mBiq5S6Hk3U38+nS1M6mPlYMkf9PZMii
+         rGXVwqk39PyrEfq1UEasj31vFeO71n6L48lHT7A+XFOETZy2ZMv/JfjipJ5LidRN/iHA
+         yjrw==
+X-Gm-Message-State: AO0yUKV9NUWlO9hSfd/5wh3mSTaZ9AMPAjwm7TNAQ1Ry2dBNtZj3XLJw
+	Um3GMT5f+Ve1pIgwJakpigw=
+X-Google-Smtp-Source: AK7set/OIOma0JSIKRu7iGW0p18KEvtZnF5RX5xn4Okviz+X/IXGT3ecqTS1iIBjUDnxtjjbArLbzA==
+X-Received: by 2002:a05:600c:4f85:b0:3df:f127:efa7 with SMTP id n5-20020a05600c4f8500b003dff127efa7mr3746626wmq.22.1675933354740;
+        Thu, 09 Feb 2023 01:02:34 -0800 (PST)
+Received: from orome (p200300e41f201d00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f20:1d00:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id m1-20020a7bce01000000b003e0010a9f67sm4394680wmc.44.2023.02.09.01.02.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Feb 2023 01:02:34 -0800 (PST)
+Date: Thu, 9 Feb 2023 10:02:32 +0100
+From: Thierry Reding <thierry.reding@gmail.com>
+To: Dipen Patel <dipenp@nvidia.com>
 Cc: jonathanh@nvidia.com, linux-kernel@vger.kernel.org,
- linux-tegra@vger.kernel.org, linux-gpio@vger.kernel.org,
- linus.walleij@linaro.org, devicetree@vger.kernel.org,
- linux-doc@vger.kernel.org, robh+dt@kernel.org, timestamp@lists.linux.dev
+	linux-tegra@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linus.walleij@linaro.org, devicetree@vger.kernel.org,
+	linux-doc@vger.kernel.org, robh+dt@kernel.org,
+	timestamp@lists.linux.dev
+Subject: Re: [PATCH 2/7] hte: Add Tegra234 provider
+Message-ID: <Y+S2qES83S4pZKOb@orome>
 References: <20221103174523.29592-1-dipenp@nvidia.com>
- <20221103174523.29592-3-dipenp@nvidia.com> <Y25x9gc4tpF1f022@orome>
+ <20221103174523.29592-3-dipenp@nvidia.com>
+ <Y25x9gc4tpF1f022@orome>
  <1a186be2-498a-a63b-a383-c165a9f8e732@nvidia.com>
-Content-Language: en-US
-X-Nvconfidentiality: public
-In-Reply-To: <1a186be2-498a-a63b-a383-c165a9f8e732@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BY5PR17CA0022.namprd17.prod.outlook.com
- (2603:10b6:a03:1b8::35) To IA1PR12MB6604.namprd12.prod.outlook.com
- (2603:10b6:208:3a0::7)
+ <2cc8378a-3f74-d4b5-613d-f9112806ec92@nvidia.com>
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR12MB6604:EE_|BL0PR12MB4996:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4b2c8a38-5335-4e26-dc50-08dae86c9753
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	H99hE9Zx7L+z7F5MjTBK3s4pIqHJCrFTmLlYtm1/CaphU+ruO5gWRfSfsqb3bfqaIJc8jTDNhnP639k2DSlTZkbqdWlAN+WWjVQ6tHPUhiNajSs+YpTnch0wKw1vOfvEps3g4MeTdVBCKCe4d6vJVuj+KLjxRKklCvCAi7H/1jjMXu5H8CtlGn3x5+COAMFdeobxN7FLXJJpi5F3fXTBxjvrGferGa+cFiiwEG3tBswWvaJWht7UAdTKHKWGF9YaZQ8YSgXOkg7g9rOAmGdZfic3sJHnGNjtz2Kml68P6cLAn0XxUSbBK7UU+0fc8ozb0A0mDBtbHHUPPIHAW35uuqyPj+AHM77fd9svvJxeuHqVUfVjQFenOjR7fDoFoSaj6KIgufs/bovVuB4Knhp2fQXXKeGxEr2jo4fwQwTDywSu9i6Jq8vo1WOL7c7AU7Lpw8wKRuC7thSZqv1fCYcDP1HflFacZTMgA4q3FSZ0I0+Cjw/RaEezo2gnPu3finDQrQNrUw4LKQOvEABiM8Mtsigb6+VUzGRGfrhyCK3ttegXQQ/sWQ2vpCwOrhMsdM+ysi2zUmaB/IjuOi8H2TS09XZnAWg+61cs5jiDkO0uY+N9iG1kluuR6AEAARXiMTw9GIvZKiiSE2vLkFbPJXLd9HGVjXH66Zi+ImJ2nrm9iIIKXoydL96DL7RAqHlixmA8ovk63NN5Kk71DSgc/eBOQtnmtC/Ar+6kMPsju95iq4w=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB6604.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(39860400002)(396003)(376002)(366004)(136003)(346002)(451199015)(38100700002)(83380400001)(31696002)(86362001)(4326008)(8676002)(66946007)(66556008)(41300700001)(316002)(66476007)(6916009)(2906002)(5660300002)(8936002)(186003)(2616005)(6512007)(26005)(478600001)(6486002)(53546011)(6666004)(6506007)(31686004)(36756003)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Y0lOcGpCdW9SM3JaaFZqUENkd2FqdjkyRVVDN0pyUWJaRzFJN2pqR3ZZdEYv?=
- =?utf-8?B?N0VSNnFtUnBRQmNPYlhPcTNXQ1lVTkpOdkVlNnF2eHIvT0NHenBkakxHdlpD?=
- =?utf-8?B?Vmt0ejF4L2F3a0NzTFVBWmYrY1pTVFNEaTlSYlhSQ1FodytJNlZtTjZjMURy?=
- =?utf-8?B?aVNUbG9RUmRkL3VXaVo1UHRsVjZCaWxORDQ3dld3RHI0SmUrcFhmR3ArWWZR?=
- =?utf-8?B?MVdCRGxrVm8wQndZK2FIaXUrdWhMbVAxczI1c05xQnIwY1NtVmpxWlZKdDA4?=
- =?utf-8?B?S1h5ZERxNDhtVytjVkxhUkd6QVNZV0VrY3NlVnRRdDkwRTZzaSsvbzQ0NHYw?=
- =?utf-8?B?aUJObWRkY2Z1bDVxQks3UW5nRjMrWWgwNmhQdGgyVFZibkdIRlRFTkFBdzVW?=
- =?utf-8?B?aElGcEpVZlc5N2hmOTBFZUZPc25LblM3SVZNVHlINm0vdU1KL015YkNHZk83?=
- =?utf-8?B?MnNZc2Z3MEFMVU93amZianluTkRFcENtd2t2Zm1HU3JibWhCaTZFTWxENTNZ?=
- =?utf-8?B?azNtcUlpWUh6V0MyWEQyWlpVV1VQYzBUZk5SQWpLOWk5RTNDUlRyUEJjcW5Y?=
- =?utf-8?B?eW9HWk5YZGpYT2hmeDdCNjdWM1Y0eHdWWkIxT01yUXhDZDY5WU1OMFJkWFNx?=
- =?utf-8?B?dVRIS1ZFNFJlbzF0WElpT0ZUeElpU0dPNDQyV3VUamgrWnY5UkNjZUgwV2Fi?=
- =?utf-8?B?VE94eEIxbGR3dnI5cnBreWdOZW9WUlJ0aDlUZ1dzSW9KN2dXNERWZ3V4dHRQ?=
- =?utf-8?B?TVh6R012Mzc0MFQvVnFmUFMvOXhrNndPWXlxQnNXZ1p0TndIT1JNN0NtS2tu?=
- =?utf-8?B?VFpwRGpPQnY0cjNnSnNSNGFhU2hGODQyd0taY2VaY3phbHB2ODZIZjZLSVhV?=
- =?utf-8?B?YzZ3amlFb3czYmc3QTlyUUdXWndQSkhxZWhSY3ZXN2kyNW1Obkw2YnhDQ2FT?=
- =?utf-8?B?Skx6bDFHcGlRRTF3MDNpZTUzaDIrOVlaaVV6K3NibEpXYUVGWDBqSXVac3k2?=
- =?utf-8?B?a0dwZDZWbFU1VDNFSGJaWjN2a0VWVXhXQ1ppdlhUUFFVTW9aVFp5c21sVnZB?=
- =?utf-8?B?cGlsMDlQY1F4YTVyZUI5Qm9OWUZsZkJvMHFVa1JJL01MWnp2TUVTb2ZoQWZl?=
- =?utf-8?B?OTM1eHptZENiblJTdnFUdWxNek55K3RJNWtEZzF3SmptV0lYVTNoMVUrNTFq?=
- =?utf-8?B?TVp4MS9TRDVmLzRTTGdJUmFxUTk3U1BseDdGNnc3aENNT2NEdjBUT2loN3Rp?=
- =?utf-8?B?bjRuQmRFWlZMUHpYTjVPaS9ENlZ1RFFBYVROSEJGVk1hZlNiekE2cURzK3Rj?=
- =?utf-8?B?QlJuN0lXQTJ0YXpRVEEzWDhNdzlEa1ZkaEJjcmZzNUpmYS9UbGhTcFFWcllh?=
- =?utf-8?B?YVdQQUovV08wWmtCQjdmY3NIT1hWdStwcURuOFcyY24xMXhLd080SHRwZVd4?=
- =?utf-8?B?N2t6MXJJZmdiU2lUTjVRVkI4NzRreXI1aUx0UTFuQXFoOGJJb0dvUHVvZXVK?=
- =?utf-8?B?M3RGUTR0WW00S2h0bCswdkRuemVlSmdqZUpMM2NnUzlLYSs1UWFqbVpVQzQx?=
- =?utf-8?B?K21ObkVIZFdxZUlzMDNrWDV3Rm1HTk1Ydi91amN2bXdyM1pxdk41ZUlCb2lM?=
- =?utf-8?B?amNsMWNiWnN3SUkrcHhPT3pYVEdnYUhmRnFyc0xPWUpxMTgwY04xb1lNaFpi?=
- =?utf-8?B?MERidzdXSWdJblJ4RFJFd1M2L2RiTFRFWjZLemNVYmdsanhDekhuTEhKZXF5?=
- =?utf-8?B?bE9XZkFLRFpXQmppOGlad25NQzZaSVhmSndkbUF1VkZEWGo5NFlOekNpWC9K?=
- =?utf-8?B?TGR2SFdwdmViRGM3Y0xLZGtaNFFMSFV3WlptUGtCUGJlMVdLSlNlTWNNWDhF?=
- =?utf-8?B?Z0lRVmpaenJaajlnOFB1NXU0Mjk5Z1l0TldLUG45UVREdjRpSG1ic0lwS3BQ?=
- =?utf-8?B?bmlIUUdUc1A0S3NWOFBaV2U2ZytYNDRwRDU4eUF3bkttT1I0c2hYNUZlRitt?=
- =?utf-8?B?djhESmNkcWFjVmJYdVBnRXh5c2t3NXg1WS9zNFBrUTk1dmIzL1BsaGc0NGJn?=
- =?utf-8?B?WS9KRUlUbEE5WHRzNHhNWTF4ZExmblVVNjBDc2lTa1Q5TmNRWGdtNDJVTG1K?=
- =?utf-8?Q?9IS+nkttzjIr2vZ9+bD9rJKq0?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4b2c8a38-5335-4e26-dc50-08dae86c9753
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6604.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Dec 2022 00:43:52.1501
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JW0oIIS8I5icDfqPXJVZPhfCiqxcr0owp4sym/S+VG7ggkZ4p9QMOpYTX3WGbO45VkehZiQfPBwcgXy37oR4JQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR12MB4996
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="3s7xSXdBBpM6Hx5L"
+Content-Disposition: inline
+In-Reply-To: <2cc8378a-3f74-d4b5-613d-f9112806ec92@nvidia.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 
-On 11/29/22 7:00 PM, Dipen Patel wrote:
-> On 11/11/22 8:01 AM, Thierry Reding wrote:
->> On Thu, Nov 03, 2022 at 10:45:18AM -0700, Dipen Patel wrote:
->>> The Tegra234 AON GPIO instance and LIC IRQ support HTE. For the GPIO
->>> HTE support, it requires to add mapping between GPIO and HTE framework.
->>>
->>> Signed-off-by: Dipen Patel <dipenp@nvidia.com>
->>> ---
->>>  drivers/hte/hte-tegra194-test.c |   2 +-
->>>  drivers/hte/hte-tegra194.c      | 124 ++++++++++++++++++++++++++++++--
->>>  2 files changed, 121 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
->>> index 5d776a185bd6..d79c28a80517 100644
->>> --- a/drivers/hte/hte-tegra194-test.c
->>> +++ b/drivers/hte/hte-tegra194-test.c
->>> @@ -16,7 +16,7 @@
->>>  #include <linux/hte.h>
->>>  
-<snip>
->>>  MODULE_DEVICE_TABLE(of, tegra_hte_of_match);
->>> @@ -635,8 +742,17 @@ static int tegra_hte_probe(struct platform_device *pdev)
->>>  
->>>  		gc->match_from_linedata = tegra_hte_match_from_linedata;
->>>  
->>> -		hte_dev->c = gpiochip_find("tegra194-gpio-aon",
->>> -					   tegra_get_gpiochip_from_name);
->>> +		if (of_device_is_compatible(dev->of_node,
->>> +					    "nvidia,tegra194-gte-aon"))
->>> +			hte_dev->c = gpiochip_find("tegra194-gpio-aon",
->>> +						tegra_get_gpiochip_from_name);
->>> +		else if (of_device_is_compatible(dev->of_node,
->>> +						 "nvidia,tegra234-gte-aon"))
->>> +			hte_dev->c = gpiochip_find("tegra234-gpio-aon",
->>> +						tegra_get_gpiochip_from_name);
->>> +		else
->>> +			return -ENODEV;
->>
->> I'm wondering: instead of doing this cumbersome lookup, perhaps it would
->> be easier to create a direct link to the right GPIO controller with a
->> phandle?
-> Possible, need to see if gpiod framework has API exposed to get the gpiochip from
-> the phandle.
 
-Thierry, I can not find any API which can help retrieve gpio_chip from the GPIO controller
-phandle. I need gpio_chip->base to map GPIO line to GTE mapping.
+--3s7xSXdBBpM6Hx5L
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->>
->> Thierry
-> 
+On Tue, Dec 27, 2022 at 04:43:48PM -0800, Dipen Patel wrote:
+> On 11/29/22 7:00 PM, Dipen Patel wrote:
+> > On 11/11/22 8:01 AM, Thierry Reding wrote:
+> >> On Thu, Nov 03, 2022 at 10:45:18AM -0700, Dipen Patel wrote:
+> >>> The Tegra234 AON GPIO instance and LIC IRQ support HTE. For the GPIO
+> >>> HTE support, it requires to add mapping between GPIO and HTE framewor=
+k.
+> >>>
+> >>> Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+> >>> ---
+> >>>  drivers/hte/hte-tegra194-test.c |   2 +-
+> >>>  drivers/hte/hte-tegra194.c      | 124 ++++++++++++++++++++++++++++++=
+--
+> >>>  2 files changed, 121 insertions(+), 5 deletions(-)
+> >>>
+> >>> diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra1=
+94-test.c
+> >>> index 5d776a185bd6..d79c28a80517 100644
+> >>> --- a/drivers/hte/hte-tegra194-test.c
+> >>> +++ b/drivers/hte/hte-tegra194-test.c
+> >>> @@ -16,7 +16,7 @@
+> >>>  #include <linux/hte.h>
+> >>> =20
+> <snip>
+> >>>  MODULE_DEVICE_TABLE(of, tegra_hte_of_match);
+> >>> @@ -635,8 +742,17 @@ static int tegra_hte_probe(struct platform_devic=
+e *pdev)
+> >>> =20
+> >>>  		gc->match_from_linedata =3D tegra_hte_match_from_linedata;
+> >>> =20
+> >>> -		hte_dev->c =3D gpiochip_find("tegra194-gpio-aon",
+> >>> -					   tegra_get_gpiochip_from_name);
+> >>> +		if (of_device_is_compatible(dev->of_node,
+> >>> +					    "nvidia,tegra194-gte-aon"))
+> >>> +			hte_dev->c =3D gpiochip_find("tegra194-gpio-aon",
+> >>> +						tegra_get_gpiochip_from_name);
+> >>> +		else if (of_device_is_compatible(dev->of_node,
+> >>> +						 "nvidia,tegra234-gte-aon"))
+> >>> +			hte_dev->c =3D gpiochip_find("tegra234-gpio-aon",
+> >>> +						tegra_get_gpiochip_from_name);
+> >>> +		else
+> >>> +			return -ENODEV;
+> >>
+> >> I'm wondering: instead of doing this cumbersome lookup, perhaps it wou=
+ld
+> >> be easier to create a direct link to the right GPIO controller with a
+> >> phandle?
+> > Possible, need to see if gpiod framework has API exposed to get the gpi=
+ochip from
+> > the phandle.
+>=20
+> Thierry, I can not find any API which can help retrieve gpio_chip from th=
+e GPIO controller
+> phandle. I need gpio_chip->base to map GPIO line to GTE mapping.
 
+gpiochip_find() should allow you to implement that. So instead of
+tegra_get_gpiochip_from_name() you could implement a function that
+matches on the phandle that you've read from the HTE node.
+
+You could probably add such a helper to the GPIO core, since it seems to
+me like it would be universally helpful.
+
+Actually there's of_find_gpiochip_by_node() in gpiolib-of.c already, so
+you could propose to export it for external users.
+
+Thierry
+
+--3s7xSXdBBpM6Hx5L
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmPktqgACgkQ3SOs138+
+s6EpbxAAk28C3+2tpKxyVTrcXW2ws04VXUjVf2QP535J0kRWuq9f9bo81P0Fd4XZ
+gQocbe5T1MRIePkqRYvZcXE5omLA7ATUVOxZHSiBOUkM0QtHe14WAN7xQ3AFeK5b
+2R9Tx3HNmj2BOE666UCflda/OqkOOCqSf8R1Y0JL+efzK+80ve4nutR1ycJTJG7R
+IWYwKTAraLvlUKmDhMtTerojVM7tknVKI1vYjeZKaXKfcDCgbUmgd3AkP4Bvu5HZ
+bx/pBuscvukEcoTR7hofMnaHrBSSFeWIiNga6GgiWqdbubHathCVRZWFqvMifD1k
+j5Cxi1LPUa4sNBBCiD+kt2lmlO2QAD2vL3ra9KHKhQ4G0fO1OTfMnd1f+ZBKP6u2
+BQ7U3CrmF+v8DkDxCENIjMPzbwu5HlNKKfROEXBjGx5zwqdzjkoO6pOSUliOGJAH
+jaormuuNAt+meL+o6SxpxHkHhwFdN+zv2cTU2SLM5s0ju7JwGriRyB5MbqhTQNoA
+iAL8DW0pLxbr5fdJZMj9YBScq29eLfm62CDRn8l3mUOteDbGF0eDUquaKLDZFo0f
+iPcQW5Z6ujzjue/95CiqnXDAgCZ/NNOlrVBc+HiWr7WxVP3vIrfzEsz/g6Dx4LTf
+EO/ZwokCmEMsfY7OsWX6ZNyVERbLLpsfznAzMAVKg0p+FwjZ4FU=
+=RZDR
+-----END PGP SIGNATURE-----
+
+--3s7xSXdBBpM6Hx5L--
