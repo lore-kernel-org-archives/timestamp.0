@@ -1,161 +1,129 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2063.outbound.protection.outlook.com [40.107.102.63])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FB4371
-	for <timestamp@lists.linux.dev>; Thu,  9 Feb 2023 09:02:36 +0000 (UTC)
-Received: by mail-wm1-f54.google.com with SMTP id bg26so970636wmb.0
-        for <timestamp@lists.linux.dev>; Thu, 09 Feb 2023 01:02:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FC97GopJvrXLbn2PKKUSbpHzg6otGN8/TmQ45fLzCwg=;
-        b=LGXbmHpD82SwO7t5GHJRbL9D9tnGJBSbJlXfWcp/0FH9N84f2Sa13M0Re9YHbDoyhg
-         YPINzA85tPnpsiS45W+IRgN8BP7ND5XOFV8iri4ZAyz9uDeaK4qQbL1BXngATrjsua5i
-         NSKPbaEH9+rAVkrRRMGb9fTB3PUUPutZBWzYztXMlo0eInA0cWi8U4Q7mgEmhUivgjpO
-         ehJiOPvzW7Fa0H0YsS+0gNjEF3MciPQ2ZY1wcuDxBQznbhm1iVtNn0uAt0dqryAGpE0C
-         rkkJahjNJOR82mfmYbg2jDdpktGf+ifYLxNksidRLVjKl98KZU0nmFBFxb8Dlecb8nzu
-         oJ+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FC97GopJvrXLbn2PKKUSbpHzg6otGN8/TmQ45fLzCwg=;
-        b=YngvvVyAIACFkGpdWwEhAaUIeY6GGXCtAZWaKalZh5/Xz3FdsKyHNZH0lw67tqN1Z4
-         4nDU+RraN4zieh508c3kVHqfeoA54Ok8fEZhI5AqHn6pIP8h6RnSuaCwPIUOU53y+CiF
-         IwTNa8+ck9fISkoBSWM21F62YTouvlre8pQ/7uuJPj4Sm0ERcrbjIQc1xt7J4q8dE4Ni
-         B82D7Ks5A3bkLkGctqAiinJ3flDm9h6zqd03mBiq5S6Hk3U38+nS1M6mPlYMkf9PZMii
-         rGXVwqk39PyrEfq1UEasj31vFeO71n6L48lHT7A+XFOETZy2ZMv/JfjipJ5LidRN/iHA
-         yjrw==
-X-Gm-Message-State: AO0yUKV9NUWlO9hSfd/5wh3mSTaZ9AMPAjwm7TNAQ1Ry2dBNtZj3XLJw
-	Um3GMT5f+Ve1pIgwJakpigw=
-X-Google-Smtp-Source: AK7set/OIOma0JSIKRu7iGW0p18KEvtZnF5RX5xn4Okviz+X/IXGT3ecqTS1iIBjUDnxtjjbArLbzA==
-X-Received: by 2002:a05:600c:4f85:b0:3df:f127:efa7 with SMTP id n5-20020a05600c4f8500b003dff127efa7mr3746626wmq.22.1675933354740;
-        Thu, 09 Feb 2023 01:02:34 -0800 (PST)
-Received: from orome (p200300e41f201d00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f20:1d00:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id m1-20020a7bce01000000b003e0010a9f67sm4394680wmc.44.2023.02.09.01.02.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Feb 2023 01:02:34 -0800 (PST)
-Date: Thu, 9 Feb 2023 10:02:32 +0100
-From: Thierry Reding <thierry.reding@gmail.com>
-To: Dipen Patel <dipenp@nvidia.com>
-Cc: jonathanh@nvidia.com, linux-kernel@vger.kernel.org,
-	linux-tegra@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linus.walleij@linaro.org, devicetree@vger.kernel.org,
-	linux-doc@vger.kernel.org, robh+dt@kernel.org,
-	timestamp@lists.linux.dev
-Subject: Re: [PATCH 2/7] hte: Add Tegra234 provider
-Message-ID: <Y+S2qES83S4pZKOb@orome>
-References: <20221103174523.29592-1-dipenp@nvidia.com>
- <20221103174523.29592-3-dipenp@nvidia.com>
- <Y25x9gc4tpF1f022@orome>
- <1a186be2-498a-a63b-a383-c165a9f8e732@nvidia.com>
- <2cc8378a-3f74-d4b5-613d-f9112806ec92@nvidia.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDCC107B7
+	for <timestamp@lists.linux.dev>; Tue, 14 Feb 2023 11:56:10 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ZzOFYvMKc1p5O/AtRhlM58xhKarxD5bNMdXkP0F69rbiG3BTpxRXzGAz6uHtxodXdL+eFp+T7SwYykl524ea2e45/8sI8/SamJW47IC35FhNbl1Qx+27ogCJE+B2JRFg3DN/oz83PFsYqMFtWN6DveUYKAApXyeFGhaOI+Rv7y7KB3aug3XGAW0USipj1mVIG34sRHOshnVyNvHHDplJBEjl0vCgzwGEvboeO+EqCx7HzG/Zb8GAfvEp8PnHkpugJ6SMAxc85WQ3SUUScCfAaBU8dv3MCFuA+UEffW34MPFH254vTdGF4SUjCtHl8H3NaKOvcjMmKcL1knIapym/wg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=h/bIqGIBEeUXK6p8nYtsw7fN8M+djAOqsKobKwmnTFQ=;
+ b=Mw/bv4+IZ1JyQ5vdtZpxQ+B23u856J93bbL+wcQlBSzIiJiF+xfvnLiEJOIRivDTJFdHKfHeTdz2wsPGKnkNDg0lLarjD9N1mmEP0RHArcxw8NHdQZ0dFZTG0aFpKAXN/cv+AqwIHqm6iArEIjnpy8yF7it9FTqksgkMFniAuIpehCq4LhYtwL+EtZzl/Q2GtsE7hLV/4jnPGLvTFcG4l36l3EY4K4MDEMZmq1TPmeCfMZ60gHrpGuA6Dt7YNW5b/V0izhhj1WTWlCUuuJlEfraX5vKbjIS4hi/U38YMOIuciNXN5N1FbLeJNyJDXg5+vtIy5Eay+JSOWGCYlv9UeA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=h/bIqGIBEeUXK6p8nYtsw7fN8M+djAOqsKobKwmnTFQ=;
+ b=CETuclUA8kIZluw6pptMbnWDiOJM0cjAd7j0mH008HHQQxPUO55EwLYESUWg+pZzndkHTdnhA2yE2obvmFmyciiQYhsn0CPEUSJXeAabSkbej+V3B6Amq00yixBuSw7EzwNoFxsZOMknp2kguhJdu+u+BBiVMC1JLX1J8sKFWLL9Im/y+YDQnQdHX8GA7gzzel4iJ4c0ktSm1e3RS3fqAcR9i/uBy6lW6QW2OPF5wgjDWJdO5W6R1djJAOdgXLIhqFHAdKgfJ/KYlQqdm0kaTUVLmCNRWAgEpAmrBFIzL3xFv0tFpAyv+KXfdjEy8EU11mvU2w/FZeM9VHfQXLQwHQ==
+Received: from MW4PR04CA0064.namprd04.prod.outlook.com (2603:10b6:303:6b::9)
+ by SA1PR12MB5615.namprd12.prod.outlook.com (2603:10b6:806:229::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6086.22; Tue, 14 Feb
+ 2023 11:56:07 +0000
+Received: from CO1NAM11FT017.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:303:6b:cafe::d) by MW4PR04CA0064.outlook.office365.com
+ (2603:10b6:303:6b::9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6086.24 via Frontend
+ Transport; Tue, 14 Feb 2023 11:56:07 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CO1NAM11FT017.mail.protection.outlook.com (10.13.175.108) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6086.24 via Frontend Transport; Tue, 14 Feb 2023 11:56:07 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 14 Feb
+ 2023 03:55:59 -0800
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 14 Feb
+ 2023 03:55:59 -0800
+Received: from dipenp.nvidia.com (10.127.8.10) by mail.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server id 15.2.986.36 via Frontend
+ Transport; Tue, 14 Feb 2023 03:55:59 -0800
+From: Dipen Patel <dipenp@nvidia.com>
+To: <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
+	<linux-kernel@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
+	<linux-gpio@vger.kernel.org>, <linus.walleij@linaro.org>,
+	<devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+	<robh+dt@kernel.org>, <timestamp@lists.linux.dev>
+CC: Dipen Patel <dipenp@nvidia.com>
+Subject: [PATCH V2 0/6] Add Tegra234 HTE support
+Date: Tue, 14 Feb 2023 03:55:47 -0800
+Message-ID: <20230214115553.10416-1-dipenp@nvidia.com>
+X-Mailer: git-send-email 2.17.1
+X-NVConfidentiality: public
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="3s7xSXdBBpM6Hx5L"
-Content-Disposition: inline
-In-Reply-To: <2cc8378a-3f74-d4b5-613d-f9112806ec92@nvidia.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1NAM11FT017:EE_|SA1PR12MB5615:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0229ce95-98e4-4cf2-7ebf-08db0e8274f3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	84avv/5FS6AFhw38rI/WubT1SJ1kA9sE+krcccqYOpVqCfndtZXcRHn7iqaclVl7Kf+URaf9NYv/UHVIz+A29pTLxKuk/4qNkTN3YL+6dNNWQ+PNIJ9GHu6aJluDbMNTbDZs/unXlYKcywi7VucH17k5OJB0np9T5EU/kfKMKK+iWinKMH00SYaPOvvZcMnZD3U3KrLnbp8apQSRLbGIgSJJ+HUVvCTxP0BCmVUclilo1oSY8GJV5XeOEXgiglk4M6i3eMRstXngXq6jt+liGmUCgwFp0aBBNalLv00rjM/UpaAZ5xlGZqu9F/EoLIsNZzBOZFdk/nbv//yVHh4Ogr0pCvNsRLFXNB9g5jIHW6kI6WP3FdF0jJhQ8fbvyAM0ptb8QnkNcfBdUIBJ2cTnn48xvhpilZL3K9Xn+JJW06cx/ZxiO8RWZ+kfPN5VFuhEOzVIuSPfhmmgFYrsrJwDyPe3QxmCjPubMQLfQNRNlFqhSoUNEMypKnebn+rAQA9nTD3vGiKe0xtcaoiVtQZvgaFXzrFvjTbtXEpjoHiKuBupzGEOhnsKAnTc0NVKHbcY59QaqCWxXaIsVdJGdoKb/K+/Lcf6VD1enWcbqo84RfLJpqN+T1urJH6krylFbu4MGa1V/a6hpJAbV9KoSTExT6G/HrXrowSJKmAI0wx3gtzr+zM5vbmiopmkViVQvCAXSsv/p/pJer5mXU6D/5fQQxDl2KIAPvbDtG9HQ2rhCOnzfUJsC/lETkRgE9ZE3ILRDDSozzfd7OLQaBcDQzvUDg==
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230025)(4636009)(396003)(136003)(39860400002)(346002)(376002)(451199018)(36840700001)(40470700004)(46966006)(7636003)(82310400005)(82740400003)(40460700003)(86362001)(40480700001)(356005)(36756003)(921005)(4326008)(2616005)(8676002)(70586007)(110136005)(316002)(70206006)(478600001)(1076003)(6666004)(186003)(107886003)(26005)(7696005)(2906002)(36860700001)(8936002)(426003)(47076005)(41300700001)(336012)(5660300002)(83380400001)(2101003)(83996005);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2023 11:56:07.2303
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0229ce95-98e4-4cf2-7ebf-08db0e8274f3
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1NAM11FT017.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB5615
+
+The V1 patch series:
+- Adds tegra Tegra234 HTE(timestamp) provider supports.
+- Updates MAINTAINERS file for git tree, mail list fields.
+- Updates devicetree and API documentations.
+- Enables HTE subsystem, Tegra194 and Tegra234 HTE providers
+by default in arm64 defconfig and dts files.
+
+The V2 patch series:
+- Changes in dt bindings to remove slices property
+- Adds nvidia,gpio-controller dt property
+- Add GTE node for the Tegra234
+
+Dipen Patel (6):
+  MAINTAINERS: Add HTE/timestamp subsystem details
+  hte: Add Tegra234 provider
+  gpio: tegra186: Add Tegra234 hte support
+  dt-bindings: timestamp: Add Tegra234 support
+  hte: Re-phrase tegra API document
+  arm64: tegra: Add GTE nodes
+
+ .../timestamp/nvidia,tegra194-hte.yaml        |  30 ++--
+ Documentation/driver-api/hte/tegra194-hte.rst |  33 ++--
+ MAINTAINERS                                   |   3 +
+ arch/arm64/boot/dts/nvidia/tegra194.dtsi      |   3 +-
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi      |  19 +++
+ drivers/gpio/gpio-tegra186.c                  |   1 +
+ drivers/hte/hte-tegra194-test.c               |   2 +-
+ drivers/hte/hte-tegra194.c                    | 153 ++++++++++++++++--
+ 8 files changed, 198 insertions(+), 46 deletions(-)
 
 
---3s7xSXdBBpM6Hx5L
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+base-commit: 1b929c02afd37871d5afb9d498426f83432e71c2
+-- 
+2.17.1
 
-On Tue, Dec 27, 2022 at 04:43:48PM -0800, Dipen Patel wrote:
-> On 11/29/22 7:00 PM, Dipen Patel wrote:
-> > On 11/11/22 8:01 AM, Thierry Reding wrote:
-> >> On Thu, Nov 03, 2022 at 10:45:18AM -0700, Dipen Patel wrote:
-> >>> The Tegra234 AON GPIO instance and LIC IRQ support HTE. For the GPIO
-> >>> HTE support, it requires to add mapping between GPIO and HTE framewor=
-k.
-> >>>
-> >>> Signed-off-by: Dipen Patel <dipenp@nvidia.com>
-> >>> ---
-> >>>  drivers/hte/hte-tegra194-test.c |   2 +-
-> >>>  drivers/hte/hte-tegra194.c      | 124 ++++++++++++++++++++++++++++++=
---
-> >>>  2 files changed, 121 insertions(+), 5 deletions(-)
-> >>>
-> >>> diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra1=
-94-test.c
-> >>> index 5d776a185bd6..d79c28a80517 100644
-> >>> --- a/drivers/hte/hte-tegra194-test.c
-> >>> +++ b/drivers/hte/hte-tegra194-test.c
-> >>> @@ -16,7 +16,7 @@
-> >>>  #include <linux/hte.h>
-> >>> =20
-> <snip>
-> >>>  MODULE_DEVICE_TABLE(of, tegra_hte_of_match);
-> >>> @@ -635,8 +742,17 @@ static int tegra_hte_probe(struct platform_devic=
-e *pdev)
-> >>> =20
-> >>>  		gc->match_from_linedata =3D tegra_hte_match_from_linedata;
-> >>> =20
-> >>> -		hte_dev->c =3D gpiochip_find("tegra194-gpio-aon",
-> >>> -					   tegra_get_gpiochip_from_name);
-> >>> +		if (of_device_is_compatible(dev->of_node,
-> >>> +					    "nvidia,tegra194-gte-aon"))
-> >>> +			hte_dev->c =3D gpiochip_find("tegra194-gpio-aon",
-> >>> +						tegra_get_gpiochip_from_name);
-> >>> +		else if (of_device_is_compatible(dev->of_node,
-> >>> +						 "nvidia,tegra234-gte-aon"))
-> >>> +			hte_dev->c =3D gpiochip_find("tegra234-gpio-aon",
-> >>> +						tegra_get_gpiochip_from_name);
-> >>> +		else
-> >>> +			return -ENODEV;
-> >>
-> >> I'm wondering: instead of doing this cumbersome lookup, perhaps it wou=
-ld
-> >> be easier to create a direct link to the right GPIO controller with a
-> >> phandle?
-> > Possible, need to see if gpiod framework has API exposed to get the gpi=
-ochip from
-> > the phandle.
->=20
-> Thierry, I can not find any API which can help retrieve gpio_chip from th=
-e GPIO controller
-> phandle. I need gpio_chip->base to map GPIO line to GTE mapping.
-
-gpiochip_find() should allow you to implement that. So instead of
-tegra_get_gpiochip_from_name() you could implement a function that
-matches on the phandle that you've read from the HTE node.
-
-You could probably add such a helper to the GPIO core, since it seems to
-me like it would be universally helpful.
-
-Actually there's of_find_gpiochip_by_node() in gpiolib-of.c already, so
-you could propose to export it for external users.
-
-Thierry
-
---3s7xSXdBBpM6Hx5L
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmPktqgACgkQ3SOs138+
-s6EpbxAAk28C3+2tpKxyVTrcXW2ws04VXUjVf2QP535J0kRWuq9f9bo81P0Fd4XZ
-gQocbe5T1MRIePkqRYvZcXE5omLA7ATUVOxZHSiBOUkM0QtHe14WAN7xQ3AFeK5b
-2R9Tx3HNmj2BOE666UCflda/OqkOOCqSf8R1Y0JL+efzK+80ve4nutR1ycJTJG7R
-IWYwKTAraLvlUKmDhMtTerojVM7tknVKI1vYjeZKaXKfcDCgbUmgd3AkP4Bvu5HZ
-bx/pBuscvukEcoTR7hofMnaHrBSSFeWIiNga6GgiWqdbubHathCVRZWFqvMifD1k
-j5Cxi1LPUa4sNBBCiD+kt2lmlO2QAD2vL3ra9KHKhQ4G0fO1OTfMnd1f+ZBKP6u2
-BQ7U3CrmF+v8DkDxCENIjMPzbwu5HlNKKfROEXBjGx5zwqdzjkoO6pOSUliOGJAH
-jaormuuNAt+meL+o6SxpxHkHhwFdN+zv2cTU2SLM5s0ju7JwGriRyB5MbqhTQNoA
-iAL8DW0pLxbr5fdJZMj9YBScq29eLfm62CDRn8l3mUOteDbGF0eDUquaKLDZFo0f
-iPcQW5Z6ujzjue/95CiqnXDAgCZ/NNOlrVBc+HiWr7WxVP3vIrfzEsz/g6Dx4LTf
-EO/ZwokCmEMsfY7OsWX6ZNyVERbLLpsfznAzMAVKg0p+FwjZ4FU=
-=RZDR
------END PGP SIGNATURE-----
-
---3s7xSXdBBpM6Hx5L--
