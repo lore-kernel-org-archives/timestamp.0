@@ -1,61 +1,51 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2051.outbound.protection.outlook.com [40.107.92.51])
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2042.outbound.protection.outlook.com [40.107.100.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7265D516
-	for <timestamp@lists.linux.dev>; Fri, 10 Mar 2023 17:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1B2D516
+	for <timestamp@lists.linux.dev>; Fri, 10 Mar 2023 17:22:23 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dnLyngpBmhZMr/ZL9lZH9+Ka+XqpPJ5F5m+th3aaNz2gWfq3j7RNvWjKW82j4HKV3fdnBchZvINXgVPNZ1uig+/XZw+9hgG+ZcZwFa8yo3MAUiueNyTpUcdsbf34cSUIGVgtBX6dNqeAtjtZZPt5ITgQGGJ7wsbbOq6pTna2LkcCyflTt1PpNETMtttjTQyxuxnQD6Hr9XywGJgmITDFDkHUzTd3Fj5qHSwsexCyaY6x37MtvqfeXJz9v4UrSoYQouvHvrgTZJfhUs90dB3VWnwkoaHHaXiMpZ8hrBQrqyDMtD3ywhQrHRE7yASkD4Uh3ImrjgrQp6i6cSzgfmFEDg==
+ b=FvDYM3nTEGtBLS+8MguOBTEBreNfoEzzEwC7B+loXz1FmAe4FjEdsL8SgI8XLcQeyb+E2G3Rh094V4dFj1AWmCOn1uGNtBzrY88qZRY9AXN4IgVovBe1qksiuBmVOlaZ/0QEFu9+pqZmAurllDvvPP67VZO9UMOidpPGwJMKL57rk8WrSOfl8TG840tZni9pyKU9s8gtkvZtSHX6Ug96cBH0YTsT0xLs6iGX2MHrwFnONtQfoRLNnm7LBDWv9WcoVlGNsHA52qlyIWPj1EaNjRUfOC1sbrK9zFchYpTPfbnQ9GGvgfSiKQZGZTiTQdiaY5zlc33AXQ3hT31S6COuGQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lxmw4vzCywWNhNAI/Ux6ko/DUPYLZCeyotWHI8xzczo=;
- b=lKxeGAqE5BR+L6d+S86VqVG/wH4FwCJOihn3Efr5V6OruSEjFTZAZ0Wpe1ETiW2CKabvSjZ1Taysm55CGFqmiIIFniH/OSIifUUxjxXBu0UnRnVNQOftH033pLWwdPtt3Q3AeLcKIgNSCjbetLz23BCgVRKXnYNO8NXJJ9w1xsNr9SN+Ih1/3/pItPXqfitB5aJH3xzaLbE2HWjLxLkvgksSF/9qcFnGdmN1STNGHD5bm6vjl9W8/5zku2oBrnKDcIuA3boFEOPlKObgJTXZkG7gDvoRndbpNQcGMy41o82prdGV3/XBiOlGlwt7T6W5DNbtf9OlCUvr2VH9+5VWsg==
+ bh=WU6YVPu5WAHNz0l2ScFuYu4jvBsuPzFuUf1j2fI7IJU=;
+ b=gnckeBSsZquhkXE8odvRqghP2+ak2mO89TORDMl/mtrgMwbkpiUhC2qRpNyNpPzGjalS0f7IukB/BN1RP3l8kSAyHbKDSro8jtPPtGprEkoGqOKqvO/lvTeUpk960L0y61/f56Z/UQKKF70z7+FgGy3rnTygjKay+laAJXopT/toyt/Ve/nrD3wP1ufH/qUAP1VFUeEgdnfSQf6nYaktxc1ruOvoqtR5xGtBw1W56GtVya5DW4IvO0vQ4IedJMUQA7ZPSNs/wdZdBYkJL25KQllwZgZQcdd11Rkyn+b70Dq1HSwcANr0Yv5o4m3EKo8gvPHeOj3j2vVvNfVX4/ukRA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lxmw4vzCywWNhNAI/Ux6ko/DUPYLZCeyotWHI8xzczo=;
- b=RTap02BqlrWwyCVZxAutJ/VDFpIvZ5qSWTbfFr3UEh3DVlSFnimSwaDNQB4ohFHcc6zNS3BDxOtt9YIYIVU4Rvl2OidDuzpunjFcTyFEcV10F7thxNtvLyJSR0HSLBEX+J7lgeDCprhvcAdfq6ND9u1IAxKNXB7FQpgw73hc75MCpgBNEB6Xu4iQsBEtx1r/s+wyMGk0hBvnZ2K4b3GTiJzVwmZdNbqplZKtH7sRd75uwutxFFxcj2D5YOjqIHNYdqM6zxwnlvU4UR1FFWcvGAfF6SOgWitrH+buxfDsiSi09UzSPi4N7/M40j0ggf/J/ADBKzOyj/rYXpeQ7xwO6A==
+ bh=WU6YVPu5WAHNz0l2ScFuYu4jvBsuPzFuUf1j2fI7IJU=;
+ b=h32b92nGz/cglmbEydZAOx8pwb9VpbMLdP8Y5jz+5EG7L6R4b8a4+R8k7uLuZ7JP9zhXTqLqaUB2SkmxHC0DHBnclEsiE6nqTP+YJfLRgJX7/hxnyvcjdd9vTZLUz71IsuBQ6hNvhBbgnXsllk2GnhNMx9u3upmWSyeNsT2En4ONVm+gSk8N4T3qPsE/S9c1NjKidE3mLmi8P6TdDOyxsShAqOKtPebxtKl9v0GYJYcH/zdxeLLMJpFBr5wQVDTYq1oILRq95WN0zNMAe0s3ctQvZfo2TQDHOlwPCuL3geIDbVsD/ADzikIWRAzuzIjqDlqOiD8ktn5FaMgKzp8i9Q==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from IA1PR12MB6604.namprd12.prod.outlook.com (2603:10b6:208:3a0::7)
- by PH0PR12MB8149.namprd12.prod.outlook.com (2603:10b6:510:297::7) with
+ by SA0PR12MB7073.namprd12.prod.outlook.com (2603:10b6:806:2d5::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.19; Fri, 10 Mar
- 2023 17:19:18 +0000
+ 2023 17:22:20 +0000
 Received: from IA1PR12MB6604.namprd12.prod.outlook.com
  ([fe80::735c:fa9:2043:279a]) by IA1PR12MB6604.namprd12.prod.outlook.com
  ([fe80::735c:fa9:2043:279a%4]) with mapi id 15.20.6178.019; Fri, 10 Mar 2023
- 17:19:18 +0000
-Message-ID: <6733c921-3cca-cd7b-3846-0ab6ce172c14@nvidia.com>
-Date: Fri, 10 Mar 2023 09:19:14 -0800
+ 17:22:20 +0000
+Message-ID: <791bbd24-3146-a5ce-db7d-ff0b95a08e6b@nvidia.com>
+Date: Fri, 10 Mar 2023 09:22:16 -0800
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.8.0
-Subject: Re: [PATCH V2 4/6] dt-bindings: timestamp: Add Tegra234 support
-To: Krzysztof Kozlowski <krzk@kernel.org>, thierry.reding@gmail.com,
- jonathanh@nvidia.com, linux-kernel@vger.kernel.org,
- linux-tegra@vger.kernel.org, linux-gpio@vger.kernel.org,
- linus.walleij@linaro.org, devicetree@vger.kernel.org,
- linux-doc@vger.kernel.org, robh+dt@kernel.org, timestamp@lists.linux.dev
-References: <20230214115553.10416-1-dipenp@nvidia.com>
- <20230214115553.10416-5-dipenp@nvidia.com>
- <3c0ad963-ce69-bd5b-20cd-888e5fbdecaf@kernel.org>
- <7a8027c9-dc73-3684-c5f2-3071f315b3cd@nvidia.com>
- <a5e897e5-4cb9-d50f-47a8-ffb8bd8774cb@kernel.org>
- <18f9a6ca-a61b-4cbb-b729-1fdb6d48651a@nvidia.com>
- <ab9f7730-d399-0786-67e5-aad57716809e@kernel.org>
- <c1a78a59-c8ae-81e5-b641-a7cb75062ab3@nvidia.com>
- <f661f27f-f367-2948-1435-5b5fa43a3b46@kernel.org>
+Subject: Re: [PATCH] hte: Use of_property_present() for testing DT property
+ presence
 Content-Language: en-US
-X-Nvconfidentiality: public
+To: Rob Herring <robh@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ timestamp@lists.linux.dev
+References: <20230310144706.1542365-1-robh@kernel.org>
 From: Dipen Patel <dipenp@nvidia.com>
-In-Reply-To: <f661f27f-f367-2948-1435-5b5fa43a3b46@kernel.org>
+In-Reply-To: <20230310144706.1542365-1-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR03CA0142.namprd03.prod.outlook.com
- (2603:10b6:a03:33c::27) To IA1PR12MB6604.namprd12.prod.outlook.com
+X-ClientProxiedBy: SJ0PR03CA0024.namprd03.prod.outlook.com
+ (2603:10b6:a03:33a::29) To IA1PR12MB6604.namprd12.prod.outlook.com
  (2603:10b6:208:3a0::7)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
@@ -64,161 +54,77 @@ List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR12MB6604:EE_|PH0PR12MB8149:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1ba7e050-1f96-43cf-f501-08db218b94c0
+X-MS-TrafficTypeDiagnostic: IA1PR12MB6604:EE_|SA0PR12MB7073:EE_
+X-MS-Office365-Filtering-Correlation-Id: d226e1c5-c188-4e6d-12f3-08db218c00f9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	9hF2lecW3v/clw/6FAkdUVjxA/H3642txB2mdtc8gfe3rD1cjdPVRku3rvGYAsUI3N5AfImYIky2W5VEBMcwIrGF/8IbegQO0oEG62gfbjf25Nk6moZMaWsvDrqVKc5qvLK3kZoBPXOWwfvjcoEZYgaTGsk8UnPNg17LfSWjGOJd8SonF1squZemVXRdICNb2bPCIqa5su+Memyo0qzMeBzkixED0nba1MF5VhHLAHHst8QzW2zUOA+iLGSrVKOa7KuXdV8G//z8/3Kn5/mEDdM2ZEAYuyJsgrOetx8o7ksVOI8qOYHH/nMF6Hghw95TC6bPxD/qP7o0MkKI4HP9vU9TQLOg9NcbWhYhQM2X03QoOFQAxp+2HJYJoP6kwuCkPydMIK7oTSeXSzLVp73bTLaFV3r4osWiyRaW1h0ByHNxQqhfctxeSJmqj1N4GNSLe+BVeTzy7cI6iBoOAyFo0BCBgqLC2pIFpuM+neiPE2i0kWmdMtPrZeyu6999oWTT8zXd8L31yhgFOZL7DtaGLJsqvNap6i6Wlzo0r3lPxoyc6dC6potD7lljNrRzZpHXjqKp/AyuNq0JmRvQa5K5orOzPtA9RhtArUcl8YxGqgpyUSEFZg9IlHg8XDXh52oWOUuP9epZFFbM2A12YY+NJQd3ifEAKW8iRZeMF22zvUmi6epOcCq8BiJJrZGPU1KGIe0EoGYqAgJxz9b1utXhOSE6SFpwuxN7/tR/WWT+205fXnmVhAejG238qxUNO6n4eJXLY6VBvcDfGfLrabGxnM1dbZMqVrVQlLLrLp50mHrivhG+EQaGgnVjxN+ca45eeEfawX5UU95ETyuTNyI7rA==
+	umKMC4hWD4lbkGl2wXKEQVbteT2ZAgx54tQ3inLRM7B7GQY3kzvq6Hk171v3Z4HcSSnm0xPaNlx+aFoBKAX2eoiUKMebVkJcEfy9BBXj7eaHJhGDvnJA0lLQEpQ4rzzOdNjo9s7TJO7eKi8F3II6XPEGhwqRZJ0jRyQHXXrpz7qKfgXWMSLboLjT1P0QQyLzH0RuaOHNK/U+k3BWAQ/HOWsb/hPHvjzh0BIECpcN0ceam9WFRhYfM173wJQMimjoT9RykbY0aKjkX5QtaduyXsngyz6pZIysjJfchGTkOATffp1VjUGC73T7A67/+bH+QjlrxHK5TMCBKW92Q0F6qDxMw2+SSdoufpPdmnf3nX8zCyB6nbCA909iHnTKbAfzOR8uIV6PAEw/VJYjjmyes3qfyE8ZjWdub9es98+7oiiPetChtunzlEK8iNUDxgbu164w4bzvkDqXjEkfEoRP1p1uIxyX+wKu/6OamOT0WXR7tBfn1bj8+Q0dW1YPzAL2nKWwgkfIh+fMQaOrOqJZvjp5SHkgM+eJ3IHwlIP2fRSJjKbs7o+hDrtnOKTq2bdOskJCgYt+STAKcJ2YrmA54s3EJ7Gc5NYvyy8oN41IRQB8L06nsF6SwZFmXqAvU9sjPGra08ayHwGaHsQmbGZLG5Q1EoS3jWlNt4WPEtncNK8YC3WdM9XcD6u3s6cmV1e/OEOssPqsPAZF9Qtzz9/ZctS3xEB/ljWBINNz3adDCK4=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB6604.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(39860400002)(346002)(366004)(396003)(136003)(376002)(451199018)(36756003)(478600001)(966005)(6486002)(316002)(7416002)(5660300002)(921005)(66476007)(66946007)(66556008)(8676002)(41300700001)(2906002)(53546011)(31696002)(86362001)(26005)(38100700002)(2616005)(6506007)(186003)(6666004)(6512007)(83380400001)(8936002)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB6604.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(396003)(376002)(136003)(366004)(346002)(39860400002)(451199018)(31696002)(36756003)(86362001)(478600001)(53546011)(66556008)(8676002)(66946007)(66476007)(186003)(316002)(31686004)(6666004)(6512007)(6506007)(26005)(6486002)(2906002)(6916009)(38100700002)(4744005)(2616005)(83380400001)(8936002)(4326008)(41300700001)(5660300002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UjVwckd4VHVwRXBoWVVNcTUyME9uWU5BSytZNU1jN3lHWmUwY3pmTGZ5Uk5o?=
- =?utf-8?B?SzJtNm5xTENyTi9yNDB5bFlCUTBDbUlhZ3hrTWp0SmV3OUpIUVVYSERXWUt3?=
- =?utf-8?B?dENJczd2NGNlU0I4SUtKL3BTdlNzWjFrU3pxUFVzbkFJVEQxb3RMRWNXM2pz?=
- =?utf-8?B?ZGM0RmhOeEI3ZEw3dWI2WU1jZVdjUjJPNHVPZXRRUXpySUxhTTlJSjdZWmVK?=
- =?utf-8?B?MmVJV0Q4WjFWNnJUUFo0WE1GZGwyQ1dhMy9uNy95VXl3eW1ZM05jVWZnckp5?=
- =?utf-8?B?RUduTmN0Y2FySnJpa1YvWHJCVUlEOXNrTVZ0ZVVZVmF3WEUra2JFM0h3WXJ3?=
- =?utf-8?B?RzBnN3pSUE14d3lsQVp6R2tMRzl4cno4VXlUR2trdXlGTkFVK2VweGY4MGcv?=
- =?utf-8?B?ZVJWQkZyUVFRdjRoUjkvWHBObUIyS3lwUWJkS0t6Tms3SkhvTGFkT3lQd3Bt?=
- =?utf-8?B?RkpBdnNUb2tBSnNjOURoYjIxMEwyMHkrdjl4M3hHZjVCQWpmMkZST2dPVExM?=
- =?utf-8?B?UndYQk5XODZTdGxmV0dnWU9zS04ycStBVnluNk1GeXVYVlY1RCtpZk5sTjdk?=
- =?utf-8?B?VHp1YzFBbDFrZ01YWUQvUVdsclg5RG02Zm5tZ0hjUDQ3QnJaVW9GVDNDczJI?=
- =?utf-8?B?RXBFczY5VUJSRFloSGw3aFBWd0w5djFySjNEdEhEREtIQjlCRGdlOGw0VVFm?=
- =?utf-8?B?b1FzR1R1THBxLzJQZ0hoSloyVWY4RmpMcVB2aDRPUmZDVG9MMGc5Q21nS0M2?=
- =?utf-8?B?RUJROGVKZlFNeEVlUE5HTGxDT0hEaU10UnFGZkQ3dWw5MmwxT21tQ1dWRnBa?=
- =?utf-8?B?K1lBMm1qZnloMmNnclFNK2cvOWhLeFBzbjB1V3dyNVAzc0xhZzVuMFpIbjdj?=
- =?utf-8?B?K3NMVW12bi91TEJUb1QvdGhaYWlSdFo3TU9uT2cwOFFiK2d3ckxtcG84bnUr?=
- =?utf-8?B?em83SWkwY1F3em9sMFR6UHN4S1RnN1JiRnpKQUdTZmp1NkcvaUJwNU8xZVp3?=
- =?utf-8?B?UHo3STFnejZHdkw2R2dVeVgxajlsNmRuK1VVdG1UcDZVdWNrbGtHTFo5YjV4?=
- =?utf-8?B?YkFJb1VoWE5OYlZRK0V0eitVdzgvWTNCUHo4MCtldkt4T1BYL3lFU2NOL1pV?=
- =?utf-8?B?bkZNbWsrbzJCTk5uOXp4K3NCeFZIaVhxSWxyWUI2ZGhlNUlobVR2VktRaDlC?=
- =?utf-8?B?ZHpJZGw1b3lXTlJLYXFpTUl4aVRhVW5PSEF3TnBsZ0hUZGlQMlJ2eW5rNmph?=
- =?utf-8?B?UndocmFldzc4ZDR3d1VvY0xwV213SnE5ZGUwbFppTW9sRzh0c2t5emlzRlho?=
- =?utf-8?B?TU5JaWNjOXJvOVk5MTc2cUR6ZUdaOFc1NW1XN3B0aGlZNkRlanNJT05DK1RV?=
- =?utf-8?B?b3Jnd1poKzZsM3B5cEUxbTlWank0Z3NTcUFDeGVyOHRLUEdXUHkydFl3dEJG?=
- =?utf-8?B?MFBIZytQQVNSeDg1anBDbGNGUzhCT2srRWZ1bi90OE4rWGNZVlA4d1NZWitX?=
- =?utf-8?B?WHZ1RGEwTXdRVFd0VWtZWEZ4bVlCMHkrMDB6V2FwWitiZi9aU3hIV0xWbjB4?=
- =?utf-8?B?VUxaemtSZkpmNDZOU2djNlppK0ZHc2FkK0ZzRldPSnc3UkRTREdTSTN3Unhj?=
- =?utf-8?B?S2d5YnBWYzg4ZlpvYzFMYk1Gb2JWYWdmeS9VN2RiMFdhUS91V3JOZHRwOFls?=
- =?utf-8?B?VnVBb29GdTZidVNVTU1SNUg0NWJGajZ5Z2lOWWZuQzFlMXFLc3Q4VW14TEky?=
- =?utf-8?B?S243aW1oZHFGMEFCVlk1N0FjTmhYTGRRL2FEZEdiZmozT0NYeklCTTF6ZGZz?=
- =?utf-8?B?dlJMZXlkM0d6M0RzSkgraGlhaUFuSFRJUFdtZkdwTDU4d3ZNT1l5TVcrVEx3?=
- =?utf-8?B?aFV1K3JtNGJxWGFtTWtRU1p6bUcwbmcweDAxYTd2RVBhMEMyRWpzSXEwRGRy?=
- =?utf-8?B?RjRPVStISkZwbGZ6TVN2Vmxma1U3WkNXdmlzenJ6RVRTcWJ5R3o0N3lnQk5x?=
- =?utf-8?B?bDh3QVJVcm9jQWYyV2FscE9Hc3M1NWtzSjJEeHFNUUlQM2t3cDRWYWtVTk0y?=
- =?utf-8?B?dzJEc3p0WDJhMy9wbHd6UzB1UXlJL1l5NXVoZ3RrZHJidFRKWmpuNyt4QWpq?=
- =?utf-8?Q?9yIcnnorHSmSzX3647s48UFNV?=
+	=?utf-8?B?aTYvU2RRUmlPS2tiLzVyS2hESmpVVDdGdnRHN1UxdHdYU1BMZEx0MDFERHkz?=
+ =?utf-8?B?SkVKZnk3OTVlY1VqNDIrV0lsOEs1THBHZHY3d2ZSSWJpMGV2ZGNGZjVFZzND?=
+ =?utf-8?B?bUJ6Vzk2YzF3WkVRRVVtNDZhdmNGWHE1V3MvVEE0ZXBwcnNOR2tZc2UxY0pt?=
+ =?utf-8?B?b1JZci9xRkJRWVBoVnVDOXY4RXF0Sm45cjB4MHV6eGNBaGJKMk55WU1URWlC?=
+ =?utf-8?B?Mjc2eWduakNwMnZqYXZWdkpzbWRQcDJSMkxqN0I2WUkrZUt2TWxya0tLTWpu?=
+ =?utf-8?B?NEJ0NzB1ZEo5M0hNNFFzdTh5VWVpdnAzR2o3eUh4Ymlxc0swRXpaL2hrdnRM?=
+ =?utf-8?B?eWs3QUpBU2tMR2FxZU4ydzVhdlhUN3ZLRnhuNi94WUdseVN3bzdlaXJUTmQ0?=
+ =?utf-8?B?MzlEUnVxb3VHMzdkY3YwSUJQTXBCVG5OMTlqTFo1a3RBSlNZMkg2b0NNVk1X?=
+ =?utf-8?B?dndmZ0EzYnkvR0NEU0FRODVwNERUdjRrT2FKa0tqaW8yaVdMK3o0bHUzOUNR?=
+ =?utf-8?B?RFRwTkdlUWpDK1BoNVVRYkRjRXZzYnFpVUlPRzU2aHg0c2V0eDdlVmplMDF4?=
+ =?utf-8?B?UkZFWGxsUHo2akV1MkVWUlBySzNUMTAwaTFtZ3pOTUJpOW5USzk3SFdNem40?=
+ =?utf-8?B?c25hR0QzbmhheW9vNTBLaXE5bHp2ZkJuOGhjWTI3dnFGbTlGS3N2ams5SHhC?=
+ =?utf-8?B?TnVGRXp2V3p3anRSVnNzS1Y2YUl5Wlp6RVgra1hqLzVDL0lXaS9PaG1vTElF?=
+ =?utf-8?B?TDlXNUFWZC9hNnlGcE1aUXVqRU9MNkJkY3FseGJvVHdONUc3QnplSVpjMzZT?=
+ =?utf-8?B?ZXVUZGE3K0dKcVJDU2RxTWVGRGJkUmpnVTNuQ1FZVDRHT0hDR0dmWXFCbk1N?=
+ =?utf-8?B?NDR5czJLZWZ6M3FPeFVzRkpNSHlOUjFFU29QZldjWmdjRUZOWkVjbFZQZ2di?=
+ =?utf-8?B?Mkxxa25kRVpVa0hIWU1IOWc2b2tmbklObFZPb0FXV2FjSno5QU9uV0hBd0ZU?=
+ =?utf-8?B?bVBRUDdidU1lM3hmL3VCck1NZi9SdVRldzJoUzFNSTViNzdldTZ2ZGRjcE9U?=
+ =?utf-8?B?YWIrNWFqUkJLanVOdlBhRGhJUkdmWWZ3ME5zYjVIdHNlZlZXbE0rLzl5NU95?=
+ =?utf-8?B?L1piRXVWZ1Z0TG9MR1ArRzZsUFRUSTZMK1NCbG5TU1Q3UGEwalZ4TGk2VWFm?=
+ =?utf-8?B?eXNzdHduUSs3a0pOMmowZ3poRzlsVGJDQXQ1R2J4Nm5TY0VpeStKWHE3UDl2?=
+ =?utf-8?B?dUZYb3ltdVlNdVMrYnJqZW9Vdi9tMC84aTZHeTlxbEtiQlNDa2k3L2pwcjVU?=
+ =?utf-8?B?dDN1aFNMcXVPL0RrMXU5blJqL0l3YTVoNnUyVjkySlJPTUc5Q2kxMS93VEZ2?=
+ =?utf-8?B?dldQWE9hS3J5emVJc0wwSEFQKzF3bGkvNmV6RWNjcmJTMHlzV1Q2RDAwSzNT?=
+ =?utf-8?B?MFpJZzRtQkx6Z1FFWW1KT20yMFJsVGlJQnlWZXZraHI5RTE4dnNSSXdQeEhN?=
+ =?utf-8?B?VHVYTlE2SytVMS9lMEVqVHFodERIVE1lM2VWMEd2UWYxZzVJYy85QkF5TDV6?=
+ =?utf-8?B?emZCZlc2RzBHZGZkNEJDdkxHY01ZcitpN3l6OXoyM1lpTHM4QXhkejNKTlZK?=
+ =?utf-8?B?aTNRNktqckd5RUFCMXJvaU9BdVY0L21nallvL0hrTGNOY28wY1BXc1N1NmhP?=
+ =?utf-8?B?TTNFdEtmYUlxbDYreTVUbnhGK0hHZndkWm1GcTNTcmZoRVJreE9uczZiaW9U?=
+ =?utf-8?B?azZiVmx5MmVIYWRjOU1sbGcxVFVWdExodFRDbUREbERYYmRRTHFJWUtrSlNz?=
+ =?utf-8?B?TE9zVUVpUkZSbGF3VUV3amFzN3BBdmZ1UFFiWEM0QitUV05KUmNwRzQ4VTEv?=
+ =?utf-8?B?UExwamF4TUZxZEQzQ0U1Uk02WFBnL0Y2T0RBWGFBL2xSK3phYmJPbVhKdmxv?=
+ =?utf-8?B?TERlSnNWOVpvbXRHd0M1bDI3ZmovVkRvYi9wMkh4OGRqT0dIUVp2dklQWVov?=
+ =?utf-8?B?Y3lYK2w2ek51aGNJdXFyZkl5RFBmWUoyUU83dHZVNnROZ0FyODB6c3FLQ2VI?=
+ =?utf-8?B?VXpCVHYzeG5nQVQvMVlNZXlxWTRPekV2MVp5OVVqZVhpTU01Rmc1ZjVlS1kr?=
+ =?utf-8?Q?xEvWExOro32JzIr5hV5KU2IFt?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1ba7e050-1f96-43cf-f501-08db218b94c0
+X-MS-Exchange-CrossTenant-Network-Message-Id: d226e1c5-c188-4e6d-12f3-08db218c00f9
 X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6604.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2023 17:19:18.6494
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2023 17:22:20.0841
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: MktYrI+QAUqrAKUJfyMBEJrWp7b2jz+V6lSQbE+czBHQrgg+67e1J4hMT2VvbcfCErBnV2lPEEb24SMpTXlM3w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8149
+X-MS-Exchange-CrossTenant-UserPrincipalName: Q+Pfcr77X1E60lTi+G//PHsgbAgtF+g4PAh13NHkAC4nieBBHhV4MLFhatvOo235lwmwN8mdj080JCqoWCBDkg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB7073
 
-On 3/10/23 12:45 AM, Krzysztof Kozlowski wrote:
-> On 09/03/2023 19:49, Dipen Patel wrote:
->> On 3/8/23 10:16 PM, Krzysztof Kozlowski wrote:
->>> On 08/03/2023 21:09, Dipen Patel wrote:
->>>> On 3/8/23 11:05 AM, Krzysztof Kozlowski wrote:
->>>>> On 08/03/2023 19:45, Dipen Patel wrote:
->>>>>> On 2/16/23 6:17 AM, Krzysztof Kozlowski wrote:
->>>>>>> On 14/02/2023 12:55, Dipen Patel wrote:
->>>>>>>> Added timestamp provider support for the Tegra234 in devicetree
->>>>>>>> bindings.
->>>>>>>
->>>>>>> 1. Your commit does much more. You need to explain it why you drop some
->>>>>>> property.
->>>>>> ACK, will address it next patch
->>>>>>>
->>>>>>> 2. Bindings go before its usage (in the patchset).
->>>>>> Ack...
->>>>>>>
->>>>>>> 3. Please use scripts/get_maintainers.pl to get a list of necessary
->>>>>>> people and lists to CC.  It might happen, that command when run on an
->>>>>>> older kernel, gives you outdated entries.  Therefore please be sure you
->>>>>>> base your patches on recent Linux kernel.
->>>>>> It is based on recent linux at the time patch series was sent...
->>>>>
->>>>> That's good but then why you do not use scripts/get_maintainers.pl? The
->>>>> hint about recent kernel was just a hint... Just do not invent addresses
->>>>> by yourself and use the tool to get them right.
->>>>>
->>>> I will take a note for the next patch series to add any missing people. The current
->>>> list of people/group is what historically helped review this new timestamp/hte subsystem.
->>>>
->>>>> (...)
->>>>>
->>>>>>>> +  properties:
->>>>>>>> +    compatible:
->>>>>>>> +      contains:
->>>>>>>> +        enum:
->>>>>>>> +          - nvidia,tegra194-gte-aon
->>>>>>>
->>>>>>> This is an ABI break. Does your driver handle it?
->>>>>> yes, handling patch is part of this patch series.
->>>>>
->>>>> Can you point me to the code which does it? I see "return -ENODEV;", so
->>>>> I think you do not handle ABI break. I could miss something but since
->>>>> you disagree with me, please at least bring some arguments...
->>>> Refer to patch https://patchwork.kernel.org/project/timestamp/patch/20230214115553.10416-3-dipenp@nvidia.com/
->>>> which has compatible properties added and also code changes to reflect addition/deletion of some
->>>> properties.
->>>
->>> I referred to the code which breaks the ABI.
->>>
->>>>
->>>> I am not sure I have understood about ABI break comment. How else one should handle if
->>>> there is no related gpio controller property found?
->>>
->>> In a way it does not break existing users? There are many ways to handle
->>> it, but I don't know your code to point you.
->>
->> It is new subsystem and has only one driver which uses it so far. 
+On 3/10/23 6:47 AM, Rob Herring wrote:
+> It is preferred to use typed property access functions (i.e.
+> of_property_read_<type> functions) rather than low-level
+> of_get_property/of_find_property functions for reading properties. As
+> part of this, convert of_get_property/of_find_property calls to the
+> recently added of_property_present() helper when we just want to test
+> for presence of a property and nothing more.
 > 
-> We do not talk about subsystem, but Tegra SoC, which is not new. Unless
-> you meant this is new SoC/DTS?
-> 
->> This was a decision taken
->> after review comments (By Thierry, also in the mailing list) to add this property (nvidia,gpio-controller)
->> and necessary changes have been made to existing user. From now on, it has to follow this change.
-> 
-> What is "it" which has to follow? There are rules for stable ABI and
-> commit msg does not explain why they should not be followed.
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  drivers/hte/hte.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-"It" here means hte-tegra194.c HTE provider which is the only one and not being used by any entity
-yet.
-
-> 
->>
->>>
->>>> I am assuming you are referring to the
->>>> below code from the patch 2 (link above) when you said "return -ENODEV".
->>>
->>>
->>> Your bindings patch points to ABI break without any
->>> explanation/justification. Then your code #2 patch actually breaks it,
->>> also without any justification.
->> I am going to add explanation/justification in the commit message in the next patch series. But to give
->> you context, discussion happened here https://patchwork.ozlabs.org/project/linux-gpio/patch/20221103174523.29592-3-dipenp@nvidia.com/
-> 
-> Either too many messages (and I missed something) or I could not find
-> why ABI break is accepted and justified.
-
-https://patchwork.ozlabs.org/project/linux-gpio/patch/20221103174523.29592-5-dipenp@nvidia.com/#3000908 and
-affected code/comment at https://patchwork.ozlabs.org/project/linux-gpio/patch/20221103174523.29592-5-dipenp@nvidia.com/#3000908.
-
-Will it help if I send new patch series with detailed commit message?
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+Acked-by: Dipen Patel <dipenp@nvidia.com>
 
