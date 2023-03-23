@@ -1,73 +1,111 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227B4320A
-	for <timestamp@lists.linux.dev>; Thu, 23 Mar 2023 08:38:46 +0000 (UTC)
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-544787916d9so382776947b3.13
-        for <timestamp@lists.linux.dev>; Thu, 23 Mar 2023 01:38:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679560725;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y1cIEqXClsIkjDNlYez3V926czPhumNF8sofNyJFFdA=;
-        b=eUTIHwb9gHiKe80gCXINbKnZwZKRxQ9pCErWt8YiVhFdExfyg6azrWWNruAziA3WY5
-         +Sm+oMyhOCxn4XhLzVHa3dDRskexRoUtiWfxEEZrpnGIHJdahOLjorgzYJtIhCAXoDdN
-         +NUGr6PHcKZdNqaAvXc25OCDVatxFA5JYhPWjS3P6Hiul3AsWzClzjlJwLYndxcYiX9K
-         JOjA0k+//SCJcc7whw5XEyvjpGrtLGzm+Vnno8YgalqgzgSqCfX7gIEd31dCMBrXfLnB
-         APxTJDnIXHpIL6v1Yy8Fe5unGJAi3tg53SBJPVLM6/qGdCsdlUDz8GHex+iycfgzQdE1
-         nSCQ==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7F6944E
+	for <timestamp@lists.linux.dev>; Thu, 23 Mar 2023 13:58:40 +0000 (UTC)
+Received: by mail-oi1-f182.google.com with SMTP id bm2so7287586oib.4
+        for <timestamp@lists.linux.dev>; Thu, 23 Mar 2023 06:58:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679560725;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y1cIEqXClsIkjDNlYez3V926czPhumNF8sofNyJFFdA=;
-        b=0lbYOENcP2c6fC5uq810bmCRdN1fgrrkmiACt7V6C0FPzNbJ3zdaH/Zb6q8KYJP+gn
-         0GSK1aLJ4RP+uDCHd2RG0STZ3sLNSk8ZoYVMWzzNwEOadseZ63eubYk6pVMTAxlCe89m
-         YBY/88EEu4wRBBbGbmjh3yLrHnHSCwVMpyvdUH43QP1mWlMDbaoyqIzujmYPfeIuNso3
-         SfRVmhM3jJ0livDPsJ/HaIpkJNou1J6jLGREFrnk7yhtIrNslexSFxUDwPKTDnq1/kB4
-         CFYLEiluZ2IUu2b3QOdvPQoVb9Mp6ncCxkjbmy8k9Jd6S2V0e/NcYm4qtlOwQZT5uyZh
-         f3Xg==
-X-Gm-Message-State: AAQBX9eVDnKOEwxEQXMv/yS94VX9kh3T3LYFYnNcMxsbb0vqvaIF99EI
-	0kXcB/X6QE0f935WbWuclpBUYqZxzmhfAXSx2VHdBA==
-X-Google-Smtp-Source: AKy350YpQG1QeS/JHf1yz/+Mbi9pos/zlzsSJzy4Cm1WDOD9XB83zWfD4msAOPcBGwB9h63MVlcOeGakOFuzLin2Osw=
-X-Received: by 2002:a81:b603:0:b0:545:883a:544d with SMTP id
- u3-20020a81b603000000b00545883a544dmr730788ywh.9.1679560725079; Thu, 23 Mar
- 2023 01:38:45 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679579919;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=JVw/HyiqQinxdmesEdwJBI8XqbksiKkvSMPWgnEyvB0=;
+        b=HCM+3tF9AA6Olew4+haleCiyTi1EwjZepva4FMyY9ovYtymDQKulGgy40qUCXuA4jp
+         gc0Jd/IgFmmEoZw8ubbeBbXtn+3OYWidv39os90wFC0H0HAp77ozq1o8aSO7wFncOrcv
+         5Uwhe2cpj4shsaCqHM05xvNzbysrpAxcmGQrwREpC0wTz7py8wHOyM93Jzn7tfLj+Nyb
+         +4pvXh5udQWnUGDE5yYpNxt0FqCFdLAVs484UIyWlWfevJYIcaljdz7/VBtz0xBNj5kA
+         eEPEn5HUiyBnLPZ5RrUsU3oT9ddVifGPK7H4SYJgXsZRWi28G7jDBgK8URc6Xz12VAv9
+         HyXw==
+X-Gm-Message-State: AO0yUKVnav0PJY3Suk4QzuSRgavWgTuAB6AtpU5tizXKK9B573m8kptR
+	9MtfaE3LTQPkqrn1Ns0sdQ==
+X-Google-Smtp-Source: AK7set/M5HHQwM6tdu9DT7OW94VOkCo2pd0A9F13matxGUFM6Kj1MGiUiuoa8Vc7kGOWUK7VJ/fchA==
+X-Received: by 2002:a05:6808:a09:b0:387:558e:c06e with SMTP id n9-20020a0568080a0900b00387558ec06emr1601283oij.43.1679579919325;
+        Thu, 23 Mar 2023 06:58:39 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id h22-20020a9d7996000000b0069d9a319817sm7531521otm.12.2023.03.23.06.58.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Mar 2023 06:58:38 -0700 (PDT)
+Received: (nullmailer pid 3103737 invoked by uid 1000);
+	Thu, 23 Mar 2023 13:58:37 -0000
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230323012929.10815-1-dipenp@nvidia.com> <20230323012929.10815-11-dipenp@nvidia.com>
-In-Reply-To: <20230323012929.10815-11-dipenp@nvidia.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 23 Mar 2023 09:38:33 +0100
-Message-ID: <CACRpkdapq1cR5id3K3zASprmUbTmh+QixyUEZFjNqYZPjWw2qw@mail.gmail.com>
-Subject: Re: [PATCH V4 10/10] gpio: tegra186: Add Tegra234 hte support
+From: Rob Herring <robh@kernel.org>
 To: Dipen Patel <dipenp@nvidia.com>
-Cc: thierry.reding@gmail.com, jonathanh@nvidia.com, 
-	linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-doc@vger.kernel.org, robh+dt@kernel.org, timestamp@lists.linux.dev, 
-	krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl, corbet@lwn.net, 
-	gregkh@linuxfoundation.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: brgl@bgdev.pl, devicetree@vger.kernel.org, timestamp@lists.linux.dev, linux-doc@vger.kernel.org, corbet@lwn.net, jonathanh@nvidia.com, krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org, linux-gpio@vger.kernel.org, robh+dt@kernel.org, thierry.reding@gmail.com, linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org, linus.walleij@linaro.org
+In-Reply-To: <20230323012929.10815-5-dipenp@nvidia.com>
+References: <20230323012929.10815-1-dipenp@nvidia.com>
+ <20230323012929.10815-5-dipenp@nvidia.com>
+Message-Id: <167957962972.3095212.10275948205449867756.robh@kernel.org>
+Subject: Re: [PATCH V4 04/10] dt-bindings: timestamp: Add
+ nvidia,gpio-controller
+Date: Thu, 23 Mar 2023 08:58:37 -0500
 
-On Thu, Mar 23, 2023 at 2:29=E2=80=AFAM Dipen Patel <dipenp@nvidia.com> wro=
-te:
 
-> To enable timestamp support for the Tegra234, has_gte variable needs
-> to be set true.
->
+On Wed, 22 Mar 2023 18:29:23 -0700, Dipen Patel wrote:
+> Introducing nvidia,gpio-controller property from Tegra234 SoCs onwards.
+> This is done to help below case.
+> 
+> Without this property code would look like:
+> if (of_device_is_compatible(dev->of_node, "nvidia,tegra194-gte-aon"))
+> 	hte_dev->c = gpiochip_find("tegra194-gpio-aon",
+> 				   tegra_get_gpiochip_from_name);
+> else if (of_device_is_compatible(dev->of_node, "nvidia,tegra234-gte-aon"))
+> 	hte_dev->c = gpiochip_find("tegra234-gpio-aon",
+> 				   tegra_get_gpiochip_from_name);
+> else
+> 	return -ENODEV;
+> 
+> This means for every future addition of the compatible string, if else
+> condition statements have to be expanded.
+> 
+> With the property:
+> gpio_ctrl = of_parse_phandle(dev->of_node, "nvidia,gpio-controller", 0);
+> ....
+> hte_dev->c = gpiochip_find(gpio_ctrl, tegra_get_gpiochip_from_of_node);
+> 
+> This simplifies the code significantly. The introdunction of this
+> property/binding does not break existing Tegra194 provider driver.
+> 
 > Signed-off-by: Dipen Patel <dipenp@nvidia.com>
-> Acked-by: Thierry Reding <treding@nvidia.com>
-> Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+>  .../timestamp/nvidia,tegra194-hte.yaml        | 31 +++++++++++++++++--
+>  1 file changed, 29 insertions(+), 2 deletions(-)
+> 
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Yours,
-Linus Walleij
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.example.dtb: timestamp@c1e0000: reg: [[0, 203292672], [0, 65536]] is too long
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.example.dtb: timestamp@c1e0000: reg: [[0, 203292672], [0, 65536]] is too long
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.example.dtb: timestamp@3aa0000: reg: [[0, 61472768], [0, 65536]] is too long
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230323012929.10815-5-dipenp@nvidia.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
