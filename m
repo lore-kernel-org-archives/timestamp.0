@@ -1,52 +1,52 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F1E320A
-	for <timestamp@lists.linux.dev>; Thu, 23 Mar 2023 08:38:04 +0000 (UTC)
-Received: by mail-yb1-f181.google.com with SMTP id p204so12776624ybc.12
-        for <timestamp@lists.linux.dev>; Thu, 23 Mar 2023 01:38:04 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227B4320A
+	for <timestamp@lists.linux.dev>; Thu, 23 Mar 2023 08:38:46 +0000 (UTC)
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-544787916d9so382776947b3.13
+        for <timestamp@lists.linux.dev>; Thu, 23 Mar 2023 01:38:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679560683;
+        d=linaro.org; s=google; t=1679560725;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Uq8iULvcx+/Gb+0OFAUtoLewabyi+bElNPlA9W28jjU=;
-        b=QE23HGJQHnGAd09QtB+TQS3Q2R0AzQuCJycDS0LJ3CvnhtMzqkExBmjQuj/DUSULwW
-         CdTUyRpJfr0BxLeiqJk77HGiEpcXePcfNRVwAuvI4fjDQMcfKVbD5YDefCwoepOjxwZs
-         CRKobbEslFR4+47TabRND3zS6BWHhNJQPmXbEQsdpKGm0+ZIf0RjTtSzFo1V0GM4z8iO
-         t8YpWg2zcFpkTKc8apwndzQ5TnHNOY/z+enoDLOK1JvEzONxhz0ECaTqBZ98ytvb76mU
-         C7s7uOR2SKQANO394Ed6N34I7/1N8dPGan68/QCltgPt0qY65XouFSoJLketbqzkmIx8
-         o4BA==
+        bh=Y1cIEqXClsIkjDNlYez3V926czPhumNF8sofNyJFFdA=;
+        b=eUTIHwb9gHiKe80gCXINbKnZwZKRxQ9pCErWt8YiVhFdExfyg6azrWWNruAziA3WY5
+         +Sm+oMyhOCxn4XhLzVHa3dDRskexRoUtiWfxEEZrpnGIHJdahOLjorgzYJtIhCAXoDdN
+         +NUGr6PHcKZdNqaAvXc25OCDVatxFA5JYhPWjS3P6Hiul3AsWzClzjlJwLYndxcYiX9K
+         JOjA0k+//SCJcc7whw5XEyvjpGrtLGzm+Vnno8YgalqgzgSqCfX7gIEd31dCMBrXfLnB
+         APxTJDnIXHpIL6v1Yy8Fe5unGJAi3tg53SBJPVLM6/qGdCsdlUDz8GHex+iycfgzQdE1
+         nSCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679560683;
+        d=1e100.net; s=20210112; t=1679560725;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Uq8iULvcx+/Gb+0OFAUtoLewabyi+bElNPlA9W28jjU=;
-        b=GLpFNsZlRW21JgotQxOlqtGbJbkb304oQIBLXYu5M2GqlrfTsnDWFMk1QoeXSf80Yh
-         GumxHc1BNeKReMOEw8JZmYC/pZ0/4+ENa0Lyvx0ezEdYd0q5yFPGn+BDuKJbO3NAP2GG
-         y3/miskZIXi4QOJ9ksZBIyYy9IMuVTE8JRHN8LrGBd2HzNdV5I8LgGtg0Wk7+ZyY/beK
-         vZ/WpSicz06IzJwW7jV/IUncOX8FdRRAHZg3VgQ0JAG1Q8pq/gDZzbiBg/tE8iW7jDjE
-         KhGg4FBU1F6Dzox/tP6dd0lCJ9wVYTvaRFdLWrIfN7uYrwSn5nUierrXQsmWCCexWtj8
-         slvw==
-X-Gm-Message-State: AAQBX9dLiJ9PYwbWqM2P12VwUjHGY9qAV4sDwsBv5Q9q86QIm+l56EVG
-	itsBdVDqGY8F+EYdSSXuG5JFbhQ+8xyhhq87TfrV0A==
-X-Google-Smtp-Source: AKy350Y1PGIFybckLNdnrmn7B3+z+PO42zpuO3LlrftnXKkUHf5Mxe7g7DsahcR71Hcc5jkg0FrjjJg/mpuCBsLCn1U=
-X-Received: by 2002:a05:6902:124a:b0:b74:77fa:581d with SMTP id
- t10-20020a056902124a00b00b7477fa581dmr1459338ybu.4.1679560683403; Thu, 23 Mar
- 2023 01:38:03 -0700 (PDT)
+        bh=Y1cIEqXClsIkjDNlYez3V926czPhumNF8sofNyJFFdA=;
+        b=0lbYOENcP2c6fC5uq810bmCRdN1fgrrkmiACt7V6C0FPzNbJ3zdaH/Zb6q8KYJP+gn
+         0GSK1aLJ4RP+uDCHd2RG0STZ3sLNSk8ZoYVMWzzNwEOadseZ63eubYk6pVMTAxlCe89m
+         YBY/88EEu4wRBBbGbmjh3yLrHnHSCwVMpyvdUH43QP1mWlMDbaoyqIzujmYPfeIuNso3
+         SfRVmhM3jJ0livDPsJ/HaIpkJNou1J6jLGREFrnk7yhtIrNslexSFxUDwPKTDnq1/kB4
+         CFYLEiluZ2IUu2b3QOdvPQoVb9Mp6ncCxkjbmy8k9Jd6S2V0e/NcYm4qtlOwQZT5uyZh
+         f3Xg==
+X-Gm-Message-State: AAQBX9eVDnKOEwxEQXMv/yS94VX9kh3T3LYFYnNcMxsbb0vqvaIF99EI
+	0kXcB/X6QE0f935WbWuclpBUYqZxzmhfAXSx2VHdBA==
+X-Google-Smtp-Source: AKy350YpQG1QeS/JHf1yz/+Mbi9pos/zlzsSJzy4Cm1WDOD9XB83zWfD4msAOPcBGwB9h63MVlcOeGakOFuzLin2Osw=
+X-Received: by 2002:a81:b603:0:b0:545:883a:544d with SMTP id
+ u3-20020a81b603000000b00545883a544dmr730788ywh.9.1679560725079; Thu, 23 Mar
+ 2023 01:38:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230323012929.10815-1-dipenp@nvidia.com> <20230323012929.10815-10-dipenp@nvidia.com>
-In-Reply-To: <20230323012929.10815-10-dipenp@nvidia.com>
+References: <20230323012929.10815-1-dipenp@nvidia.com> <20230323012929.10815-11-dipenp@nvidia.com>
+In-Reply-To: <20230323012929.10815-11-dipenp@nvidia.com>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 23 Mar 2023 09:37:52 +0100
-Message-ID: <CACRpkda9A-1qKqUPMC=9JKN5uotUmTt2CGQZv5Z91wgrSmwtHw@mail.gmail.com>
-Subject: Re: [PATCH V4 09/10] hte: handle nvidia,gpio-controller property
+Date: Thu, 23 Mar 2023 09:38:33 +0100
+Message-ID: <CACRpkdapq1cR5id3K3zASprmUbTmh+QixyUEZFjNqYZPjWw2qw@mail.gmail.com>
+Subject: Re: [PATCH V4 10/10] gpio: tegra186: Add Tegra234 hte support
 To: Dipen Patel <dipenp@nvidia.com>
 Cc: thierry.reding@gmail.com, jonathanh@nvidia.com, 
 	linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org, 
@@ -60,17 +60,13 @@ Content-Transfer-Encoding: quoted-printable
 On Thu, Mar 23, 2023 at 2:29=E2=80=AFAM Dipen Patel <dipenp@nvidia.com> wro=
 te:
 
-> The dt binding adds nvidia,gpio-controller property from Tegra234 SoC
-> onwards to simplify code handling gpio chip search. The gpio chip search
-> is needed for the AON GPIO GTE instances to map the hardware timestamp
-> GPIO request (coming from the GPIO framework) to the tegra HTE
-> providers. The patch also adds new gpio chip match function to match
-> from the fwnode instead of the gpio controller label. The addition
-> of the property does not break ABI for the existing Tegra194 code.
+> To enable timestamp support for the Tegra234, has_gte variable needs
+> to be set true.
 >
 > Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+> Acked-by: Thierry Reding <treding@nvidia.com>
+> Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Yups just like this!
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
 Yours,
