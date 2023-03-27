@@ -1,148 +1,202 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2051.outbound.protection.outlook.com [40.107.237.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FBE20EE
-	for <timestamp@lists.linux.dev>; Sat, 25 Mar 2023 11:09:55 +0000 (UTC)
-Received: by mail-ed1-f50.google.com with SMTP id h8so17326184ede.8
-        for <timestamp@lists.linux.dev>; Sat, 25 Mar 2023 04:09:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679742593;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jBwqQkoxZI57Vzr0zIVnZtVc1J4mnm5f9fimCO8c5gs=;
-        b=hLP5Z/Dugm3vw2Qf32RD0liUnDOnByuA17Bb3uxVp2msOftFa6Mgd1vwXq5HReohBt
-         absSLHSZoTvo+IwIVWsgLG0FkR6WOEFNLP1TIQvPys6vxWrTNqVTTB/ahLSJSXetSp8k
-         fdnF+NrTLi9DVtqKTVj9JP52MZv9kKlE6LXnExMd0au7j6tsIGZSWIyraVgXx/OssziR
-         0yQl0uEsdbcQAvlIPs/QByTqwe0vySQU9JwdREWdT8wcCbJDPp4EYZht68baIs5cz3FJ
-         HXB6sH1ykg/uuo5ssZJSAbyGeJVllC4ifXTxUgAkjgy5MR892XZ5Y8H3IR+czf/MYyN1
-         1q7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679742593;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jBwqQkoxZI57Vzr0zIVnZtVc1J4mnm5f9fimCO8c5gs=;
-        b=sRAu987zwsa9yxEYmxxuC2jVFbUf39yx2grJ1EjW8h6YcoPeiTKfuB9kchoX/3mp2c
-         pilX4YRjYFpDyzSp5iFFFzCUoZqdq3FRtX9oXoHogpqKnxkPKUeUO2MkoiiXclkBhdi7
-         tWsFeKXy8BmcD9J7K9mBQD52koa+YipOBrwQsDz3WSPKWT42WC2APKWvYaGEAvlmzMDp
-         +ulZrfBp6S3TXChJmwuEOPqr0g4MUHvhgU6aoTYRkct9qpJdNEHLc2QzuVdxyaoS53LU
-         lGLWEZ2yzzSxF8dRf44oCynAIOYMLJ5oBK4qm0LW3NXav49hGPNAmRGkcM2jqk2LmP/C
-         sCpA==
-X-Gm-Message-State: AAQBX9dA3zSEY8q1dpG7AGnvtpDrXGjlGGK+TxXB1YcNNVIbVXUhkk+6
-	xb1fsRcpISTpbNvWl52zBw2sBQ==
-X-Google-Smtp-Source: AKy350bcqMdxiFyTXv1+IkDaQqY/BxuBsoKAK9hcooyB1w/1DZrAM06ChGoIsGtouY+3D25R1odVfA==
-X-Received: by 2002:a05:6402:1012:b0:4fb:7ccf:3b33 with SMTP id c18-20020a056402101200b004fb7ccf3b33mr5816340edu.31.1679742593294;
-        Sat, 25 Mar 2023 04:09:53 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:d230:b2c7:d55:c9c8? ([2a02:810d:15c0:828:d230:b2c7:d55:c9c8])
-        by smtp.gmail.com with ESMTPSA id k24-20020a50ce58000000b004fc9e462743sm11985137edj.91.2023.03.25.04.09.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Mar 2023 04:09:52 -0700 (PDT)
-Message-ID: <19b71fef-614a-d678-2e73-95db8f226e61@linaro.org>
-Date: Sat, 25 Mar 2023 12:09:51 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301D163B6
+	for <timestamp@lists.linux.dev>; Mon, 27 Mar 2023 16:58:28 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Q2eT1YxKqWCk9lA2wV8QMkywa7HeF7kzi7SfQWIE+jp/c0n2elN5fPf6CLZ5k1/HXkr2ytaS2jkFizX+ByJ5JeOr1U97GvJIPunrLkQxAcTA/rwNXab1qF2Jq2OpRsWVdJPhJZNfRhmPwl6lXXIhdQs+Xe9319BYEu8U02Rjj1Hz3/uqA4MY6uXsOOSLdFO8gV1/oKlKUoPQqH9bY6t5TjTwmRVkJ1TGH5gXNg+RWGXJ51bEK+5z83SCeQODzmlkkHv4M8NhLdw5fYxxMTs55YLso/EYwX5hnJlr11l7GcV8QAIa+SpUzB5gDbwRp7WoJnxwN29QELVRKRO03MAmKA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0M7XTiL9Rsp+Sy1ymkZK5t76TN0snq+YRbsXewzsf1Y=;
+ b=f1fOlmiCYxWBwmNyMoqobYeu+Bxbe4RM1A0JfMPpBTC0ZhSZDMDfS8xNZM65ALnVKNB6SKsPyIuH+0fukDA87jum4HDkioTmF8rVwBeLSCY1z1VO0kvEVb/8b02Obj/WmlS2EzLE8rrdRvBEC7XuW4Awr/QAspZ1aV3lywe7XNL4+b6dEEUG+bwU+TtSx27+xc+j7Z34wC0HxBHbA6L7qiuD6XEs/eeDApVLxIiOHDHdR9uHhNe0zWZoa1/IYrV+shvE05e8KofGb16gtdk2HXKpPOu7fJmWsb+HFZqZ9iTK95m6RESI47UbPDkHHWyuWw5VYLEbqyYD3gMUlXC8/g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0M7XTiL9Rsp+Sy1ymkZK5t76TN0snq+YRbsXewzsf1Y=;
+ b=GQDaPegSOhXGZepo7+H5cABT7uMUkBWmYDm6phEI7a3LFvhTY7hN+TD53RRsDRkQS3I2ugHXHrpLIbmy9gPFWXM4N/3659X/on0dbFDEcUFmxI9dl3suEI5v3F55Q9otDkpixz98vIbXXmf1t8CMRZ0t/SOJczJi8J+WJS00dCmuBkO+b2rfCdQT4P2ngjQwPmVQ5r87e6IqYct6kFBRH94JLDNcQkpvlLl4nXVBe17/P7mMINK7MIYhczRt94pgN+mtvPEoQSf2o1OqwIgveLyVlNm+TtZFpAeZnlwBLRMBrHMW0Z2MoJgHycF2mCaKYpIk4498fAlJrvDGpaikAQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA1PR12MB6604.namprd12.prod.outlook.com (2603:10b6:208:3a0::7)
+ by IA0PR12MB8325.namprd12.prod.outlook.com (2603:10b6:208:407::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.38; Mon, 27 Mar
+ 2023 16:58:26 +0000
+Received: from IA1PR12MB6604.namprd12.prod.outlook.com
+ ([fe80::265:64aa:fb3e:288]) by IA1PR12MB6604.namprd12.prod.outlook.com
+ ([fe80::265:64aa:fb3e:288%4]) with mapi id 15.20.6222.028; Mon, 27 Mar 2023
+ 16:58:25 +0000
+Message-ID: <a7539193-8374-cda6-f535-360a4a8eab22@nvidia.com>
+Date: Mon, 27 Mar 2023 09:58:19 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.0
+Subject: Re: [PATCH V4 04/10] dt-bindings: timestamp: Add
+ nvidia,gpio-controller
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ thierry.reding@gmail.com, jonathanh@nvidia.com,
+ linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linus.walleij@linaro.org,
+ devicetree@vger.kernel.org, linux-doc@vger.kernel.org, robh+dt@kernel.org,
+ timestamp@lists.linux.dev, krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl,
+ corbet@lwn.net, gregkh@linuxfoundation.org
+References: <20230323012929.10815-1-dipenp@nvidia.com>
+ <20230323012929.10815-5-dipenp@nvidia.com>
+ <f523c155-7d05-2034-27ea-e2e56881c0bb@linaro.org>
+Content-Language: en-US
+X-Nvconfidentiality: public
+From: Dipen Patel <dipenp@nvidia.com>
+In-Reply-To: <f523c155-7d05-2034-27ea-e2e56881c0bb@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0P220CA0017.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:a03:41b::27) To IA1PR12MB6604.namprd12.prod.outlook.com
+ (2603:10b6:208:3a0::7)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH V4 04/10] dt-bindings: timestamp: Add
- nvidia,gpio-controller
-Content-Language: en-US
-To: Dipen Patel <dipenp@nvidia.com>, Rob Herring <robh@kernel.org>
-Cc: thierry.reding@gmail.com, jonathanh@nvidia.com,
- linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
- linux-gpio@vger.kernel.org, linus.walleij@linaro.org,
- devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
- timestamp@lists.linux.dev, krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl,
- corbet@lwn.net, gregkh@linuxfoundation.org
-References: <20230323012929.10815-1-dipenp@nvidia.com>
- <20230323012929.10815-5-dipenp@nvidia.com>
- <20230324171329.GA2062332-robh@kernel.org>
- <7f2dc5cf-78b5-81c6-0012-26b1adce1c86@nvidia.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <7f2dc5cf-78b5-81c6-0012-26b1adce1c86@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB6604:EE_|IA0PR12MB8325:EE_
+X-MS-Office365-Filtering-Correlation-Id: a03d6718-78d9-4148-bd40-08db2ee47b11
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	JFFZji0Ig2uAa6AOrkta99bY/NmHBBwVVkY50LapncSguH5/BtV5ZFmJu3IkhClLf9hyz2tSkFDp0sBTgoY3IOZXATpfJIOMW2cifrzb4JZ1FDsG7QKP+bQOAR/D0TIUthDjpy7ZXfWlMUtXJtUnu/omh5xbLUZkrgMrYKxiEvZ7w3NDzpgShQ7bw0mybdYWaFN8a4YgcclpTKayJug4oxqEtwh0k1fvL4adcA2C20AO6SrZYStfdAuVPFM9acp/jUgF4WxpuSvIlzmdNSMuW/jkRGSZCpQI0dduclbqRof+j41NPJIAeFbIT8wYvLctSjnThc+xbQTMpAKH909rfZ3+7hiXTeJAORUi4I2virVYvnO8JIifnDJImHSEXwRFamnGDOM9HA9UmWoNFoRXGlGCwZRiHMM0iBql9RxBJgSB3RM4xxZQ/om9FdldlM+V6BMP5q6ac9CCasn8CYASwXOdVjSiDq12h8CM7hKjfZUiJOAIgs9NHKM7j6Eb092bbSamNN2DgXQgsFqof2sjP8EXTC4FjdNnlkQa6LKpUGFf8eanGoCZIvZBoslHmGCp47iqmIfn7/QLZkQkySNTyC28eWo6TQY1oKJCvhrka2eDxQnqtv1gjvwJZlVXR6zHz6HjKDsk5DP7llMUD3FPy3s8FYBwcOB9jE4B3gyOolg=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB6604.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(346002)(366004)(396003)(136003)(39860400002)(376002)(451199021)(53546011)(921005)(2906002)(36756003)(186003)(316002)(6486002)(31686004)(38100700002)(6512007)(26005)(31696002)(83380400001)(2616005)(6666004)(66556008)(8676002)(66946007)(66476007)(86362001)(8936002)(41300700001)(478600001)(5660300002)(7416002)(6506007)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?WWJZd0tUY2FuR2RJbVRnOS9ZMGl5d0NsMytneUdKREtjTi9rQk80VWt4d1g1?=
+ =?utf-8?B?NWVock9oeHpSdVprQUFhYVE3eTNsb1N5WDZPblYreFBwUnRwUDFPYTFzV2Fw?=
+ =?utf-8?B?NERsOGM5SmlwK0JXK2xSeGhRUTV0OCt2d2VSakM5c29WWUJNOGFPOTRtRW91?=
+ =?utf-8?B?SXVCcTZLKzh1MTdabzZDRTA3c1lHWXdKN2hlV1VvRFZUalZEeVdYeURtRjZy?=
+ =?utf-8?B?RFhpVkFOMkFRbTF6bklJMHBGUHJHUlBvN0NJRDl3QmJuK3I4YUkwU0tRTWRk?=
+ =?utf-8?B?RjZ4dURqUUNBbGhNY2xMVk5pNnVYZGJEUVJKZVpPamkzWGhjZXR2bHJyYjBE?=
+ =?utf-8?B?STBjUkdNQXd6TmZMMGU3bTJlUldieFNVQ1UzbTZOblZNUFdhejVlSThwdjJ3?=
+ =?utf-8?B?bEd2Q05sUmZyUDB6djEzUEhDWVlveWNlbEcxRFB4Uml6Y2NiNWh3dkZDWU5u?=
+ =?utf-8?B?WWk0WStmcVN0U3ZSRC9OUXo3MjBPSEdyaHpDRGVKeDV1ZktEVjVrWnJIbVMz?=
+ =?utf-8?B?cmZaZWVaVDdVbnE2bHRiVElFNEtRSXYrZWU5K0kwMzVHWHIyWlgxVlYzRzJH?=
+ =?utf-8?B?VlI2blJ6NWh5Tks3S0hXWUtncitJbFJaQkdOaDBaSHdhektRSElpMmxSdU5P?=
+ =?utf-8?B?SS9pWVkvUy9hejBDOUhuVDJpeFBiWWVLQWViLzJXZEt0aUJqVWdpVGE3c1p0?=
+ =?utf-8?B?aGFtMEtnTEJENkpCTjZMYUViTGFJbHhlZlA0Q1pWbXdvT2thQjJadGlGN2Vz?=
+ =?utf-8?B?YVlsVjkvc2EvZzFtSlZ3VFhpNmRnQ2VOdEF2VjBiRis5SXVSNWd5NEFhNXBY?=
+ =?utf-8?B?WUI5ZHB5amdQN2lWbEdwK2pjai9CdkpOMzJoeU9aMGZaU3BVeGNZWE5weTJo?=
+ =?utf-8?B?d1VGZTFhR3FrMGc3UC9MVmtpSWhWd1ljYnJza2liUzVBdkhPUTJzVVVkNk02?=
+ =?utf-8?B?dTRYTU5YNnprWGEyU2t5am5HU3c0SlQrL09qa0phbmZjZURLR2lnL3hqVW1B?=
+ =?utf-8?B?VXl0VzFERFlaS0VLOUVPcDhLM1pMV2pyYmdna1lVOTEwODBsMnc1cmlmWUJY?=
+ =?utf-8?B?ZVV3TjRLcTl4TlB2VWhOVnF0aTJPUCtLeVpKRUFlZXlGY0I4YUZIQkROcWF5?=
+ =?utf-8?B?WmozdkFiVzBDM1dCckxLTS9pWW54Yy9OaWQ4ck4wemZZNllGSnRncDk5VXY2?=
+ =?utf-8?B?S0x0UXN5b3cxb3liOFJ1dnUvbDZRalBJd1N2dGdKTEkyQkJyRmV0MFQxa1Zn?=
+ =?utf-8?B?WmNiQ243Y0RCWm13MFhuNkFkcTZXWlNXWE16WVczMWlzS3FMajJrUkFKbGh2?=
+ =?utf-8?B?RnlXQmRMSHNmbTJ1cXRrL0tKaGVkVkptWlRrZ3F3NHdCL216N2N5NGdPQ0Uy?=
+ =?utf-8?B?RVgvVDduOUluY3hOLzNYQzE3dTdEdDJISUcvZDJlL2Vnblo0S0NYNU5QTHdT?=
+ =?utf-8?B?aEJaU2F2enVsWnZ6Y1VFZGdsQmZrVHVDdXhVVWhJOUs4RzRDVGU5UDRoSUhs?=
+ =?utf-8?B?ajRtSnIySjF1ZmxmUW9aeHlyYWRSdDBBbzRZcnlBd2lVNE5zY2N3bkprQTdm?=
+ =?utf-8?B?SExmT1FrcWFBNEZhU1FsN28wZHNzdytGVlN4NnpkRThEbUtMeEV4K3hqRE9Y?=
+ =?utf-8?B?MFVMZHVIYjdiL3FGVUxhK1BwSUVnMnp3RVl4Smd3L2tScDB2bnpQamdaQUlh?=
+ =?utf-8?B?dlZ0WWFRdFFvNS9JQmVrM1ZlWlRCQ3ZmLy9PaXRTcXlONXVqanpqcXR5bmY4?=
+ =?utf-8?B?bThpV1lGM2t0U2x2eU91elJMQUJsVVYxWTB5SVdyYUpNSjd3MnVEZ0hxUjU5?=
+ =?utf-8?B?MVFLaHR2dWxWRDVucDR1bDZ2UnF5OGp1WDRLN013MC9za2JrWXBqODRXcG02?=
+ =?utf-8?B?Nm5KQ0VzUGhXL0phVHlpb2RUNmJMbHFWMnhmeW54N2VxNk5tVnpsUStNaHBM?=
+ =?utf-8?B?NC9jcHVleG13UlZ4dUIrTVkxNjVkQUtXRU12T0lkelU4OTNDNkJ6dDIwaE1V?=
+ =?utf-8?B?V3ZyR0JPWVgveGJuS1YwQ3B2K1JqYW1UTm1iQ2FuandJKzNtTVlMc25iV3Fx?=
+ =?utf-8?B?TVN3NFNRcnBIdWt5R0o0WGtUcDZwbW5UeEtRMy9BZ1J1bnBkOTZhZ3loR251?=
+ =?utf-8?Q?gdYHrE9cske7QRlgfddiNx55/?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a03d6718-78d9-4148-bd40-08db2ee47b11
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6604.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2023 16:58:25.7934
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: T0DNxkfJn8/pcETd383TL8J5MhpFMc2YqMGyS3diV5zkCgGiLMmGgmMRIO8i1d4jY22pLX0NCwPAAZfZu5cCAw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8325
 
-On 24/03/2023 19:51, Dipen Patel wrote:
-> On 3/24/23 10:13 AM, Rob Herring wrote:
->> On Wed, Mar 22, 2023 at 06:29:23PM -0700, Dipen Patel wrote:
->>> Introducing nvidia,gpio-controller property from Tegra234 SoCs onwards.
->>> This is done to help below case.
->>>
->>> Without this property code would look like:
->>> if (of_device_is_compatible(dev->of_node, "nvidia,tegra194-gte-aon"))
->>> 	hte_dev->c = gpiochip_find("tegra194-gpio-aon",
->>> 				   tegra_get_gpiochip_from_name);
->>> else if (of_device_is_compatible(dev->of_node, "nvidia,tegra234-gte-aon"))
->>> 	hte_dev->c = gpiochip_find("tegra234-gpio-aon",
->>> 				   tegra_get_gpiochip_from_name);
->>> else
->>> 	return -ENODEV;
+On 3/25/23 4:07 AM, Krzysztof Kozlowski wrote:
+> On 23/03/2023 02:29, Dipen Patel wrote:
+>> Introducing nvidia,gpio-controller property from Tegra234 SoCs onwards.
+>> This is done to help below case.
 >>
->> Or you just put the name in match data.
+>> Without this property code would look like:
+>> if (of_device_is_compatible(dev->of_node, "nvidia,tegra194-gte-aon"))
+>> 	hte_dev->c = gpiochip_find("tegra194-gpio-aon",
+>> 				   tegra_get_gpiochip_from_name);
+>> else if (of_device_is_compatible(dev->of_node, "nvidia,tegra234-gte-aon"))
+>> 	hte_dev->c = gpiochip_find("tegra234-gpio-aon",
+>> 				   tegra_get_gpiochip_from_name);
+>> else
+>> 	return -ENODEV;
+>>
+>> This means for every future addition of the compatible string, if else
+>> condition statements have to be expanded.
+>>
+>> With the property:
+>> gpio_ctrl = of_parse_phandle(dev->of_node, "nvidia,gpio-controller", 0);
+>> ....
+>> hte_dev->c = gpiochip_find(gpio_ctrl, tegra_get_gpiochip_from_of_node);
+>>
+>> This simplifies the code significantly. The introdunction of this
+>> property/binding does not break existing Tegra194 provider driver.
+>>
+>> Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+>> ---
+>>  .../timestamp/nvidia,tegra194-hte.yaml        | 31 +++++++++++++++++--
+>>  1 file changed, 29 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml b/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
+>> index eafc33e9ae2e..841273a3d8ae 100644
+>> --- a/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
+>> +++ b/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
+>> @@ -51,6 +51,12 @@ properties:
+>>        LIC instance has 11 slices and Tegra234 LIC has 17 slices.
+>>      enum: [3, 11, 17]
+>>  
+>> +  nvidia,gpio-controller:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle
+>> +    description:
+>> +      The phandle to AON gpio controller instance. This is required to handle
+>> +      namespace conversion between GPIO and GTE.
+>> +
+>>    '#timestamp-cells':
+>>      description:
+>>        This represents number of line id arguments as specified by the
+>> @@ -65,22 +71,43 @@ required:
+>>    - interrupts
+>>    - "#timestamp-cells"
+>>  
+>> +allOf:
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - nvidia,tegra234-gte-aon
+>> +    then:
+>> +      required:
+>> +        - nvidia,gpio-controller
+>> +
+>>  additionalProperties: false
+>>  
+>>  examples:
+>>    - |
+>>      tegra_hte_aon: timestamp@c1e0000 {
+>>                compatible = "nvidia,tegra194-gte-aon";
+>> -              reg = <0xc1e0000 0x10000>;
+>> +              reg = <0x0 0xc1e0000 0x0 0x10000>;
 > 
-> Not sure I have understood this comment, but "name" the first argument is
-> already there to supply to callback to match data. Also, this if else is
-> needed to know which "name" to provide.
-
-The point is that of_device_is_compatible() do not really scale and make
-code more difficult to read. Your variant-customization should in
-general entirely come from match/driver data.
-
-
->>
->>>
->>> This means for every future addition of the compatible string, if else
->>> condition statements have to be expanded.
->>>
->>> With the property:
->>> gpio_ctrl = of_parse_phandle(dev->of_node, "nvidia,gpio-controller", 0);
->>> ....
->>> hte_dev->c = gpiochip_find(gpio_ctrl, tegra_get_gpiochip_from_of_node);
->>>
->>> This simplifies the code significantly. The introdunction of this
->>
->> typo
+> This is not really explained in commit msg... are you sure you tested it?
+I have to revert this part back in next patch as when I upgraded dtsschema it gave me errors.
 > 
-> ACK...
->>
->>> property/binding does not break existing Tegra194 provider driver.
->>
->> Making a new property required is an ABI break.
-> The driver code for the Tegra194 binds by old binding and does not need
-> this new property, the relevant code is part of this patch series.
->>
->>> Signed-off-by: Dipen Patel <dipenp@nvidia.com>
->>> ---
->>>  .../timestamp/nvidia,tegra194-hte.yaml        | 31 +++++++++++++++++--
->>>  1 file changed, 29 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml b/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
->>> index eafc33e9ae2e..841273a3d8ae 100644
->>> --- a/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
->>> +++ b/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
->>> @@ -51,6 +51,12 @@ properties:
->>>        LIC instance has 11 slices and Tegra234 LIC has 17 slices.
->>>      enum: [3, 11, 17]
->>>  
->>> +  nvidia,gpio-controller:
->>> +    $ref: /schemas/types.yaml#/definitions/phandle
->>> +    description:
->>> +      The phandle to AON gpio controller instance. This is required to handle
->>> +      namespace conversion between GPIO and GTE.
->>
->> Explain what the GPIO controller is needed for rather than how this 
->> changes the driver.
-> Doesn't "This is required..." statement addresses why GPIO controller is needed
-> for part? Or do you want detail explanation which is already part of the commit?
-
-Your bindings commit msg focused on driver and it is not really what it
-should be about.
-
-Best regards,
-Krzysztof
+> 
+> Best regards,
+> Krzysztof
+> 
 
