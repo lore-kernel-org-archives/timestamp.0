@@ -1,190 +1,211 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2062.outbound.protection.outlook.com [40.107.237.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BA27C
-	for <timestamp@lists.linux.dev>; Tue,  4 Apr 2023 10:30:42 +0000 (UTC)
-Received: by mail-ed1-f50.google.com with SMTP id r11so128605144edd.5
-        for <timestamp@lists.linux.dev>; Tue, 04 Apr 2023 03:30:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680604240;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qPQJYuYVqddrLpsUiSF4JuC6g9/L1+GNYqEeCmgaIpw=;
-        b=Qf9ZiLsHWa67q5d6OwOb196jz2WhK7YOr7O9+et+VWP9XJTg4eS7ZGmo/pp76jWFPt
-         4Kbtvtu5S3zMCsF9eVSA/S/YNXm5ggVhITb/Ngz7+umuz+DRrtYBdfzKTl3UrdN7NzWW
-         O6IY8bxFhED+SxeYizHcRY3SwLERm5ZUtQuHN1aGTwiysQ10WcIUcldVRbRtkYiswHlM
-         nTETOQuueRAEtt0TgKyZgsrozphoT+IYOtKCMD3aGLrr4m8j5PNzK6Je3J+NQ2mth/Tq
-         N2V070Ic0y6tNpVzzPzhp6zx5ZpOQ5fxDFW2cAWXz/Wy2BIlRhwiAXRk4jwemb2Ozkk8
-         aGJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680604240;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qPQJYuYVqddrLpsUiSF4JuC6g9/L1+GNYqEeCmgaIpw=;
-        b=kV/vHk3hTQunF2MM0Zwp+HlTV1btU/7SchAlUQpX+Twqr+oQHgN+laig+ICB0/ylQY
-         5xmvU4p7n/NuBWHMxYziHTIeNrmNNNKnnWA/cObpck9e65+rjpzwKui9ni2LpWrUOgrj
-         TpZFUNWOsjM/5P8yXmo9z55zkzlEJ3WN3hhKUwA53W+V3EMzjUp8pteZvqzGCPODKMQG
-         cxe5ZqtWIUN9dwNp+r55TguJCmPq5FWM4v+5vC7WHujTxMxzDLqxbN/bEwfforK0hS2F
-         TzbC6B1HwjxnPKdvvUnvFm45wDvTs+1z7Fy4dfU44n7RimqjcUIMKcf4kFNaQv+DrAE6
-         AbTw==
-X-Gm-Message-State: AAQBX9e5lwLbfV545LMVhdf/3AkHX8A0RUgX2JR7DR8YnGKoYxGoTvJv
-	+4bIytAnvC3EsvtQPQKWr2cPidlYq0U=
-X-Google-Smtp-Source: AKy350br99HCbCDIQiZj8fwuuU0BjyJC/AwN7IrayX6NNSgMYELNtziysmKohGWt/IYRz9rEEj8/bQ==
-X-Received: by 2002:a17:907:8b87:b0:8e1:12b6:a8fc with SMTP id tb7-20020a1709078b8700b008e112b6a8fcmr1480812ejc.4.1680604240440;
-        Tue, 04 Apr 2023 03:30:40 -0700 (PDT)
-Received: from orome (p200300e41f1c0800f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f1c:800:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id qp24-20020a170907207800b0093f822321fesm5737690ejb.137.2023.04.04.03.30.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 03:30:40 -0700 (PDT)
-Date: Tue, 4 Apr 2023 12:30:38 +0200
-From: Thierry Reding <thierry.reding@gmail.com>
-To: Dipen Patel <dipenp@nvidia.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	jonathanh@nvidia.com, linux-kernel@vger.kernel.org,
-	linux-tegra@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linus.walleij@linaro.org, devicetree@vger.kernel.org,
-	linux-doc@vger.kernel.org, robh+dt@kernel.org,
-	timestamp@lists.linux.dev, krzysztof.kozlowski+dt@linaro.org,
-	brgl@bgdev.pl, corbet@lwn.net, gregkh@linuxfoundation.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBCB28F3
+	for <timestamp@lists.linux.dev>; Tue,  4 Apr 2023 17:21:10 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=F/vCm0f+PR0waeGB0QY9SkC30ZFAIT444DSaSVsxxjL+cowIjqMOpdbyhNWJfxGCsyA+OS4mjymWb1PUcO6QWakZllVE1464aD8nh/H+2krZmYqYiKx8ZT5Likdaf1UJZA50zaey+gMnKTzkeUMMvRaJD95HdVJCILetjh3beZqxAQ49aIG7UeGlV3K8LSv9dMK8O6NQASpCEpGjylmcGvKWYn5o/7tbRbgulugqlpF+Ko5Fr1t/sji/A5JInkK4fITyAhc5wiSL5eMMS52ruzXuCgR9o4xWPyrktDahyAXOofe/osrgB+IT8TKrLuLr3kLGtmH9weh5gNHy7elqgQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vb5pGZoqwfiQ6591zAB0Q3c3BH8x0Lp4DAZGH5u78UQ=;
+ b=DYsLlliJuN2ixtP9Pke4SfwysxdPvdjMn1vbEyXybtVwTLCy9ipg/mmyg2kweCqs+KYvjC2oxCnhbCWJH8f59jYI+beBt3DACZg/WfdBB36YEYWO/YsiOxxDGDkBW2pn8DUafBfwg/FfRdbb3aiqQ7NlLCC5zCgdIkAA2uvogBrLGwwvtnvGcS+ScadkZKHx4I2hs1SUmMFaHQMfPOO7Li5nS0DbD+dpUwCWIqPYiM50GmA9wqLFBAs3vxnh8poodJsjvLHTUS2TfEfoMfHWWbhg6ijyqcZg9cLurE/Mb34sjRhNiaDu9uQqLWO+ESkJdaHZqaE8ZTbO5ngAdIAY7g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vb5pGZoqwfiQ6591zAB0Q3c3BH8x0Lp4DAZGH5u78UQ=;
+ b=tArZzN9NivofleY+Ww5b59TBvxwG3caC1bAdjw2HnQr4z7HHSP8PEK2oG+BbLk1twnORJnNC2dwvYcYr/Ns5r6HPt6QYkY6oBLGCVzmuXsvYe+DrQY7Igz8zT28AISjiIDqhhX3ghakbyV2kPdlKONrLXX0W/jgWRBhR/BHHcwViZwWAIfrdfUS2E3/8oGdy5OjeidFFGaD+AU8+nX3jX2eSDIz/Y2jR8fnPVRqYxrg8MghqHAM5X0nxjG8gJLKF55GHVaz0Wj8ngwiHp43PwqABhzO0NVv4EaWFDVJKixhna5AahcUqhWuWbBj2AT0lTD89D6a77N7MtSfvd31kSw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA1PR12MB6604.namprd12.prod.outlook.com (2603:10b6:208:3a0::7)
+ by PH7PR12MB6466.namprd12.prod.outlook.com (2603:10b6:510:1f6::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6156.27; Tue, 4 Apr
+ 2023 17:21:04 +0000
+Received: from IA1PR12MB6604.namprd12.prod.outlook.com
+ ([fe80::265:64aa:fb3e:288]) by IA1PR12MB6604.namprd12.prod.outlook.com
+ ([fe80::265:64aa:fb3e:288%4]) with mapi id 15.20.6254.033; Tue, 4 Apr 2023
+ 17:21:04 +0000
+Message-ID: <7e617d8f-6c78-3d2f-5f8a-79acae09a8a9@nvidia.com>
+Date: Tue, 4 Apr 2023 10:20:59 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.1
 Subject: Re: [PATCH V4 04/10] dt-bindings: timestamp: Add
  nvidia,gpio-controller
-Message-ID: <ZCv8TviVD8n4MrnW@orome>
+Content-Language: en-US
+To: Thierry Reding <thierry.reding@gmail.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ jonathanh@nvidia.com, linux-kernel@vger.kernel.org,
+ linux-tegra@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linus.walleij@linaro.org, devicetree@vger.kernel.org,
+ linux-doc@vger.kernel.org, robh+dt@kernel.org, timestamp@lists.linux.dev,
+ krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl, corbet@lwn.net,
+ gregkh@linuxfoundation.org
 References: <20230323012929.10815-1-dipenp@nvidia.com>
  <20230323012929.10815-5-dipenp@nvidia.com>
  <f523c155-7d05-2034-27ea-e2e56881c0bb@linaro.org>
- <a7539193-8374-cda6-f535-360a4a8eab22@nvidia.com>
+ <a7539193-8374-cda6-f535-360a4a8eab22@nvidia.com> <ZCv8TviVD8n4MrnW@orome>
+X-Nvconfidentiality: public
+From: Dipen Patel <dipenp@nvidia.com>
+In-Reply-To: <ZCv8TviVD8n4MrnW@orome>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BYAPR21CA0019.namprd21.prod.outlook.com
+ (2603:10b6:a03:114::29) To IA1PR12MB6604.namprd12.prod.outlook.com
+ (2603:10b6:208:3a0::7)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="kKVfNtJEQjXZPd0A"
-Content-Disposition: inline
-In-Reply-To: <a7539193-8374-cda6-f535-360a4a8eab22@nvidia.com>
-User-Agent: Mutt/2.2.10 (2023-03-25)
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB6604:EE_|PH7PR12MB6466:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7df1da37-9a3b-4fbb-cfd8-08db3530f81e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	Aow+7VBEXAGyOBnkIdt91vJp9WOUxBGC3gwRROFQOZIg2OSjNyChOWTRxqrtcVWoEEC+ZgEgLePmHpxz1FyMXQTHBjOC5w1VBtLQGTSqo07RkK0HtbeqpZ8jKSpPPuN8FE2C1St0tDT6eYMXmc28Sox0N4wXrRIwYR/7/rLqferQA//xPOrHGpqRxBgs8j+SMMh82FO0QYQQEXlJH3yK8svqXp37LjI04/tEFhp0pts2EYlbbGx35HKkuX74+qeFjXGVvTnPLA+9xDca/aYFGJtjglz8efy2Ig2+0ugmEai0tPPcJUDBPwmsPei/MDJzSye/AiMNrQMdHdF7El7fe3UpdnAbmWtd/jk0aQzEXn/zgzAsMqarWkCjg7sf+azYZ8GTDLAaB+IpW+nVZ1RTRmtWH6rvzAMyF1D0rOZhPCcGFG/XTccG8PB45t9W5EOpQw2FksY0KgicdSvXE8KYVRRmPuclwOEBqHOnegh/htrxaV9zPFv3KttkaAOritSUZoC92zvTdZXqnrQ+nxQRoRLWXYarV1pltC7EkVy+hhCFc+LKfNeEh8e5iRCI7VLLohLuJyBTkW3u8ilmuZ0rUD9hVD4i5afkx/wa0imKoCCyaEra33svBUaz+Jv33BKrDSyTn3kocNouac5ExT3LXA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB6604.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(366004)(346002)(396003)(376002)(39860400002)(451199021)(83380400001)(66946007)(8936002)(8676002)(31686004)(2616005)(6666004)(66556008)(186003)(36756003)(5660300002)(53546011)(6512007)(478600001)(2906002)(41300700001)(6486002)(316002)(6916009)(26005)(4326008)(38100700002)(7416002)(6506007)(66476007)(86362001)(31696002)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?d29hKzdWTjluNWV3TUJQclN3b1g4djhqUVZrcFMvb1dtalRXMlA5b2E1TFdM?=
+ =?utf-8?B?YVJOTk1vSmpWbkFUeWp2REtXWkF1VTRwc215bHVTYlpIaHJMMFpTMkF6L1Ay?=
+ =?utf-8?B?QkJoakR5U3hsRXgzU05jeWNMWnZRZ3loQ3FCenlHS2J4MGxxSm43ZXJ4Qzlk?=
+ =?utf-8?B?ZGNVYUlocm04czlBc1k4aStsU3FIcElxR2RsMWE0akRCVmlXSjA2cWl3VGcy?=
+ =?utf-8?B?YThQNExkRTcxZlFueWJIUDBGMkdQcFZycm5QK2FUT2xOeitsdXNyZktJY2pX?=
+ =?utf-8?B?eXFJYTVPUTVkM2JiOWZoYkFLWlpucDh2QVI1K2dUSTRCeUFFOENkZDZjbVVP?=
+ =?utf-8?B?dzUzTDRlemUxZlk1dTMxMlREbHNRQ3YxMmJNUmxRai9vaDFkY3Zsam9rMkdB?=
+ =?utf-8?B?dHprZEQ1WjMwVDNXWEVqajZ0bWR2cFFxWXdyejR0RTJPa1lPR1lzTnUvRXJM?=
+ =?utf-8?B?MUVPdFhVZ3ZWMWNhMlNKK0NhcUFZZTNEVC9MRmwxSmFsRlZ0T0JXWEJrY3dW?=
+ =?utf-8?B?UWxodCthZ0ZwMkI1UjdkUmcrOWJtTXU0OFRYYmtlSi9TeTd5dEhvOGhFQThy?=
+ =?utf-8?B?YklSM3R3NGVZZ0pUTE5uaXAxeHZVbGRvZGxiejJkMit3UlN6UnlGb2QyWnR4?=
+ =?utf-8?B?VUM1UzJhdDY4dGYxbzErRlVIUng5Y0JJaDFJMFhmdUJsTUxrbjNUVW1FdGJL?=
+ =?utf-8?B?NVp4YnBFbGkveXJsT0x3ZDZxa0JjS1dYdExrazRnN1lnSm13SlFTN3p0SUJ1?=
+ =?utf-8?B?Q0kxd3dSb3BGYWY3NkZXaTdwMkkwcFNTZ013eVkvc0VqTVVycGt0RnpOZDQ4?=
+ =?utf-8?B?Q0k2S00yQTRnWE5ZQzl4Wm8ySS9VVmpqY0xEUGR0Y3Z1NGZHallkbHNSVm5O?=
+ =?utf-8?B?VUF2ZGY4ejM3RnFyNHF2dDQxd3RNZ3FrTm5BL0VReHVRNCtYd000bURNQ1RM?=
+ =?utf-8?B?R2dKLzVHLzlGamYrUnc3akdEVHFvREdNelFCWGYySXdKUERFRkRvbjZHakZ4?=
+ =?utf-8?B?ZEdsdWNleE1lYzNhSVZ4USsrL051YllFN2NZbjR4L0Znb3J5NkM2c2tXUHRI?=
+ =?utf-8?B?ajY3M3Qxbnk4Z25LcEZwbHU0Yi9MTVc0REZSNlhRM0g2SFBYV2RIcGxYUGpC?=
+ =?utf-8?B?eDBxM09valZzMnUxcFRKeWwrc0xRTE1lZFIrR200Sk5GNzR6VUQ5a0FwT2FT?=
+ =?utf-8?B?ckNLOGNQRFhSWUlwYmdBMlh2TkpibW94Smw0b2JJcFpNOVFINzkvY3dHb09r?=
+ =?utf-8?B?NmNmTlMrTHV4T3Q2RVpCWTF4LzBXVW02eTVBQTQyWTk1M0pVc0hoL3ZjUHZk?=
+ =?utf-8?B?cnkxczVsZGtPaG5YajV3QUp3bFZ0VWpFb2ZkczB0bnI1Mno4UWM5UkMwL2hP?=
+ =?utf-8?B?TmxvVGtMODV3S0xnWlB6VHFobW1laVd4UjJVVElFbG50NDRRaENUMGwrSjVJ?=
+ =?utf-8?B?bkRoNzNyc2tsaC9jR045YnhaeUhSbGpJNnJreC9oN0xPL25IOHQyMk92U2ZU?=
+ =?utf-8?B?UHRCSXJLYmJnTTB3MUs3NEgyUVAxWjJjSDdtRUdtWWhpSFVnNHJHM1pyNTdt?=
+ =?utf-8?B?OStHWm5zajZwVmU2UkhsclNFVHoxbXgwcnEzWlowa2dLOHV2bnlHY1BpWXJG?=
+ =?utf-8?B?ZVBJa3lJVWRDN2dETksxLzVPL1YweXJ0bzlxOXJRbGJQTFNvRmdjREM5ZHFU?=
+ =?utf-8?B?ejY2NVIvWXRiSnUyK2dCZ0QyckYyZHFHLytyalhPblhkV2diTFdldmZHd2Ix?=
+ =?utf-8?B?dEVVMmlsMVpPU2hEdjV5ZENrcGowUWF3OHR5djFiWUJqeWM5UWJQUWRMK0U4?=
+ =?utf-8?B?djhEZ3ozbWZibFBjVk1VVC9OUmI3ckIxc0s2dDZCSlJMMElCa3N5OVU5VVl0?=
+ =?utf-8?B?K1dMOUlSN3FMc2FVUytTY3BpaFFUN2JhK0VGVFFOcjJrcC95eUVmVmZvdnBp?=
+ =?utf-8?B?dFRSVzNUVThPRlIrTUpZTmQvaGozQW5lM05PWjJFTHZpelUwWTU2S2prdzJw?=
+ =?utf-8?B?U3BVNWdVVnNrYStsYVhqTTN1eVlOQUhYcVpiQU9Bdnp6a0ErZHJlcG5nRE52?=
+ =?utf-8?B?V3JEMzUvQW44enoxOUZKWUk1dmd4STd0dTdSQ2svbWRxRUExR2dUN2Y3Z3Z3?=
+ =?utf-8?Q?PFVDxptxCrfR5M7TDegYdx9mC?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7df1da37-9a3b-4fbb-cfd8-08db3530f81e
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6604.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Apr 2023 17:21:04.2913
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Y3RRoJZkqnty6MduhNduz2HRyFO1o4nykUYj5iI3jO4qfU9l84BADSmmozVVrX8WBj4TO3fEtu6yjSBZKaIZ3A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6466
 
+On 4/4/23 3:30 AM, Thierry Reding wrote:
+> On Mon, Mar 27, 2023 at 09:58:19AM -0700, Dipen Patel wrote:
+>> On 3/25/23 4:07 AM, Krzysztof Kozlowski wrote:
+>>> On 23/03/2023 02:29, Dipen Patel wrote:
+>>>> Introducing nvidia,gpio-controller property from Tegra234 SoCs onwards.
+>>>> This is done to help below case.
+>>>>
+>>>> Without this property code would look like:
+>>>> if (of_device_is_compatible(dev->of_node, "nvidia,tegra194-gte-aon"))
+>>>> 	hte_dev->c = gpiochip_find("tegra194-gpio-aon",
+>>>> 				   tegra_get_gpiochip_from_name);
+>>>> else if (of_device_is_compatible(dev->of_node, "nvidia,tegra234-gte-aon"))
+>>>> 	hte_dev->c = gpiochip_find("tegra234-gpio-aon",
+>>>> 				   tegra_get_gpiochip_from_name);
+>>>> else
+>>>> 	return -ENODEV;
+>>>>
+>>>> This means for every future addition of the compatible string, if else
+>>>> condition statements have to be expanded.
+>>>>
+>>>> With the property:
+>>>> gpio_ctrl = of_parse_phandle(dev->of_node, "nvidia,gpio-controller", 0);
+>>>> ....
+>>>> hte_dev->c = gpiochip_find(gpio_ctrl, tegra_get_gpiochip_from_of_node);
+>>>>
+>>>> This simplifies the code significantly. The introdunction of this
+>>>> property/binding does not break existing Tegra194 provider driver.
+>>>>
+>>>> Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+>>>> ---
+>>>>  .../timestamp/nvidia,tegra194-hte.yaml        | 31 +++++++++++++++++--
+>>>>  1 file changed, 29 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml b/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
+>>>> index eafc33e9ae2e..841273a3d8ae 100644
+>>>> --- a/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
+>>>> +++ b/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.yaml
+>>>> @@ -51,6 +51,12 @@ properties:
+>>>>        LIC instance has 11 slices and Tegra234 LIC has 17 slices.
+>>>>      enum: [3, 11, 17]
+>>>>  
+>>>> +  nvidia,gpio-controller:
+>>>> +    $ref: /schemas/types.yaml#/definitions/phandle
+>>>> +    description:
+>>>> +      The phandle to AON gpio controller instance. This is required to handle
+>>>> +      namespace conversion between GPIO and GTE.
+>>>> +
+>>>>    '#timestamp-cells':
+>>>>      description:
+>>>>        This represents number of line id arguments as specified by the
+>>>> @@ -65,22 +71,43 @@ required:
+>>>>    - interrupts
+>>>>    - "#timestamp-cells"
+>>>>  
+>>>> +allOf:
+>>>> +  - if:
+>>>> +      properties:
+>>>> +        compatible:
+>>>> +          contains:
+>>>> +            enum:
+>>>> +              - nvidia,tegra234-gte-aon
+>>>> +    then:
+>>>> +      required:
+>>>> +        - nvidia,gpio-controller
+>>>> +
+>>>>  additionalProperties: false
+>>>>  
+>>>>  examples:
+>>>>    - |
+>>>>      tegra_hte_aon: timestamp@c1e0000 {
+>>>>                compatible = "nvidia,tegra194-gte-aon";
+>>>> -              reg = <0xc1e0000 0x10000>;
+>>>> +              reg = <0x0 0xc1e0000 0x0 0x10000>;
+>>>
+>>> This is not really explained in commit msg... are you sure you tested it?
+>> I have to revert this part back in next patch as when I upgraded dtsschema it gave me errors.
+> 
+> We need the 0x0 in the DTS files because we have #address-cells = <2>
+> and #size-tells = <2>. For the examples, those default to just 1 cell,
+> so this can't be an exact copy of what we have in the DTS files.
+> 
+> Please make sure to always validate the bindings and examples.
 
---kKVfNtJEQjXZPd0A
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ack...
+> 
+> Thierry
 
-On Mon, Mar 27, 2023 at 09:58:19AM -0700, Dipen Patel wrote:
-> On 3/25/23 4:07 AM, Krzysztof Kozlowski wrote:
-> > On 23/03/2023 02:29, Dipen Patel wrote:
-> >> Introducing nvidia,gpio-controller property from Tegra234 SoCs onwards.
-> >> This is done to help below case.
-> >>
-> >> Without this property code would look like:
-> >> if (of_device_is_compatible(dev->of_node, "nvidia,tegra194-gte-aon"))
-> >> 	hte_dev->c =3D gpiochip_find("tegra194-gpio-aon",
-> >> 				   tegra_get_gpiochip_from_name);
-> >> else if (of_device_is_compatible(dev->of_node, "nvidia,tegra234-gte-ao=
-n"))
-> >> 	hte_dev->c =3D gpiochip_find("tegra234-gpio-aon",
-> >> 				   tegra_get_gpiochip_from_name);
-> >> else
-> >> 	return -ENODEV;
-> >>
-> >> This means for every future addition of the compatible string, if else
-> >> condition statements have to be expanded.
-> >>
-> >> With the property:
-> >> gpio_ctrl =3D of_parse_phandle(dev->of_node, "nvidia,gpio-controller",=
- 0);
-> >> ....
-> >> hte_dev->c =3D gpiochip_find(gpio_ctrl, tegra_get_gpiochip_from_of_nod=
-e);
-> >>
-> >> This simplifies the code significantly. The introdunction of this
-> >> property/binding does not break existing Tegra194 provider driver.
-> >>
-> >> Signed-off-by: Dipen Patel <dipenp@nvidia.com>
-> >> ---
-> >>  .../timestamp/nvidia,tegra194-hte.yaml        | 31 +++++++++++++++++--
-> >>  1 file changed, 29 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/timestamp/nvidia,tegra1=
-94-hte.yaml b/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-h=
-te.yaml
-> >> index eafc33e9ae2e..841273a3d8ae 100644
-> >> --- a/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.=
-yaml
-> >> +++ b/Documentation/devicetree/bindings/timestamp/nvidia,tegra194-hte.=
-yaml
-> >> @@ -51,6 +51,12 @@ properties:
-> >>        LIC instance has 11 slices and Tegra234 LIC has 17 slices.
-> >>      enum: [3, 11, 17]
-> >> =20
-> >> +  nvidia,gpio-controller:
-> >> +    $ref: /schemas/types.yaml#/definitions/phandle
-> >> +    description:
-> >> +      The phandle to AON gpio controller instance. This is required t=
-o handle
-> >> +      namespace conversion between GPIO and GTE.
-> >> +
-> >>    '#timestamp-cells':
-> >>      description:
-> >>        This represents number of line id arguments as specified by the
-> >> @@ -65,22 +71,43 @@ required:
-> >>    - interrupts
-> >>    - "#timestamp-cells"
-> >> =20
-> >> +allOf:
-> >> +  - if:
-> >> +      properties:
-> >> +        compatible:
-> >> +          contains:
-> >> +            enum:
-> >> +              - nvidia,tegra234-gte-aon
-> >> +    then:
-> >> +      required:
-> >> +        - nvidia,gpio-controller
-> >> +
-> >>  additionalProperties: false
-> >> =20
-> >>  examples:
-> >>    - |
-> >>      tegra_hte_aon: timestamp@c1e0000 {
-> >>                compatible =3D "nvidia,tegra194-gte-aon";
-> >> -              reg =3D <0xc1e0000 0x10000>;
-> >> +              reg =3D <0x0 0xc1e0000 0x0 0x10000>;
-> >=20
-> > This is not really explained in commit msg... are you sure you tested i=
-t?
-> I have to revert this part back in next patch as when I upgraded dtsschem=
-a it gave me errors.
-
-We need the 0x0 in the DTS files because we have #address-cells =3D <2>
-and #size-tells =3D <2>. For the examples, those default to just 1 cell,
-so this can't be an exact copy of what we have in the DTS files.
-
-Please make sure to always validate the bindings and examples.
-
-Thierry
-
---kKVfNtJEQjXZPd0A
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmQr/E4ACgkQ3SOs138+
-s6F7gQ/8CahJlsl2ie2xWVwhWMmBeCbLyErqS+oUnJBDhaLFTHrhUBNeDB0htb3x
-ZAUc3dZf+3ohXsFztk9DfVoH/3PTAxFftgN05tZHBCLXaBBoE/0uVQBVw2Q6VS7C
-q6XkykkbDFUBOzL6sJLZE3ucFdPTjG5HFmMF+UJF8NfmBLUWJrZ60kK8h3MQrjYR
-suT5Gr0EyOHy9nbtjDS3U05WW6Oyp4ppBTFWYuYbRIHgiZybCabVROR8NuCqqO5/
-17kaQheYOsyCfHwmQhNx/yH6qn/byXK0eKI8N05S9f7iBqyvgDO69LF5SVR7wZtD
-6i8DaiGS80EZtslyzEIcggM2WBklv0TO6tyRJWdsBjCoN+sFnRbTMOu/XFYvpqh5
-Fjk+Qedb/KaGYdzD+HjREyKCz8rjRJxBj+NyjiUCo/hIlXm3kBH+XihmLsY/3ZNs
-AjXxR25TIAq+yw42/gDfdx6/PzXwZtNmYq1ogpftsffj0rUTsv1v0Z5ScCWnKU15
-sIqSTXUmGBRmHErHyxV/AcgwAqljPuBVKdidyM+8IceZGD6bd56iv/Ywc28cfhNO
-cruSLxYVhvMJbMk2xX9ma8PWGAaOIkT+CTfQWC7YLMVMA8oMjPa74JQHKUlsrDb+
-GlAEoulplmcv1mbesr5bkm4rMpB6tjsoTElagX7RVgOOS2CALEI=
-=TMqU
------END PGP SIGNATURE-----
-
---kKVfNtJEQjXZPd0A--
