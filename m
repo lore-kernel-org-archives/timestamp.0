@@ -1,112 +1,147 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC47C648
-	for <timestamp@lists.linux.dev>; Tue,  4 Apr 2023 05:33:52 +0000 (UTC)
-Received: by mail-ed1-f42.google.com with SMTP id y4so125912712edo.2
-        for <timestamp@lists.linux.dev>; Mon, 03 Apr 2023 22:33:52 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733556139
+	for <timestamp@lists.linux.dev>; Tue,  4 Apr 2023 10:28:53 +0000 (UTC)
+Received: by mail-ed1-f52.google.com with SMTP id t10so128394114edd.12
+        for <timestamp@lists.linux.dev>; Tue, 04 Apr 2023 03:28:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680586431;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LSfvMCOrdSCg0KsTlmNTzh+wJyyn32F7jBR5XEIQXfs=;
-        b=SZwSkMwcEttyesUKzaZlZS4UGLFXMY126tr9woNXYKUhFfJvL2DW/VmdxbXEZVKhq4
-         Q8Pq5qlwwDErfIgKXJUIy0niHLAaBewg0qiRIG2Ea3WpDIcEC3HIHc1IACXyEIQcUvyO
-         c2Zr8YwvcOOX6aVTroi7AImN1zOILzZ4YqJrVM/HXHIeJqxbaLqixzQTiaPy3uI4KW8z
-         fWMLNaSOfu++mTiApTEXBctIvp/0ILa/2KaPKUr3ZGCLFKd7tQabv28XBN7YezNEXm6w
-         dx/m0ehD2NIiIW7DwzPLa2F+gqKklDNfN+rcYmZAnyu7BNPoZGwWJLn+fvo1lxCE/umF
-         vHMQ==
+        d=gmail.com; s=20210112; t=1680604131;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lFnhjOVDQ3ItCxmop4qZbHatGDWaTPywjSlabLzg9LE=;
+        b=cMcc5XGY1xYe2xnDmZxzicNPkAs+dVgKdBYDr5K9dUg0d0aXC3jj5+8Z8xpZ8SF+N7
+         bkFYUuUy6ug0qNFeVg84AQ7fYIphC/bZlNkFGbAHvRlyCwhKNP3x9mLUpxQd+tJad9VV
+         PqbIZbmpmlYWRj0SydPCJgOLXceOw36xGF23j2TVWYnGBegVL/c55WwWYaHkemZ6M2PD
+         R/RgsALUZsOLobzxV20mYQSM2wIENBm1WImLKXLoS3rwSBrmnNk2Zh49P+zRc4aTX8Xh
+         xmqgYmD1kF1x5x/zu4fXYqnDpKTUDS7t4w8sXpn4Y+ZjRsVzYd3WjQCV4Qt8Nvtz7eUP
+         zQOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680586431;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LSfvMCOrdSCg0KsTlmNTzh+wJyyn32F7jBR5XEIQXfs=;
-        b=yz5EERh54WWAAqjUP6id6pkVzE9ayNfunoyu6uLDsu1iunhzG1jqzxUOUnfw5sDMLU
-         hOgWBt5DwR9icFHoCXbW5b8F9AaG9kmruPo2hL0kbha6fkR+23QfuQc7p7X7AFPHUKsr
-         63CZbUALdYAhQTBR894IrnmroydYTCqqbtv1tttxdvbKjcLhDi3iOdwn+gbj2f0y9X5o
-         OWczYm2cXVWhRURAP9O4o0JQJiE1RI7vJaJT7zg8bSIN81IgK2baVET3DsemW1GA4cyU
-         7R4NYd14mHYqeWrfhpbgWctBW7QKcj2249xfDZz9KDvHk927iCyuzZ//P3MH75//60AB
-         G0Vg==
-X-Gm-Message-State: AAQBX9e4uOvqiPvCMA0mnOP6ZlNqgunviYdXwj6cEHKi7VRXPgKaFE3I
-	PdxXf61e01SEbsp02/lUzHvUBA==
-X-Google-Smtp-Source: AKy350a40YXsaP1RgtMOL5a6WR77TS6ARlPJXWLmm7+/lgqUoQ15z5r6n8YquYLchK+7NxQM/Zfl/Q==
-X-Received: by 2002:aa7:cad9:0:b0:502:4875:721 with SMTP id l25-20020aa7cad9000000b0050248750721mr1233965edt.15.1680586430958;
-        Mon, 03 Apr 2023 22:33:50 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:233a:5c18:b527:381e? ([2a02:810d:15c0:828:233a:5c18:b527:381e])
-        by smtp.gmail.com with ESMTPSA id 28-20020a508e5c000000b004c13fe8fabfsm5387403edx.84.2023.04.03.22.33.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Apr 2023 22:33:50 -0700 (PDT)
-Message-ID: <9c49e4a9-0792-bcae-506f-77b5874d4d19@linaro.org>
-Date: Tue, 4 Apr 2023 07:33:49 +0200
-Precedence: bulk
-X-Mailing-List: timestamp@lists.linux.dev
-List-Id: <timestamp.lists.linux.dev>
-List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
+        d=1e100.net; s=20210112; t=1680604131;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lFnhjOVDQ3ItCxmop4qZbHatGDWaTPywjSlabLzg9LE=;
+        b=PPFrbqLIv68zvngittxJRIEv77SSg7mYY2W0zzDx35OtcDISfbbjYcYSHawLgQ3Qvt
+         mduRhMKyNVzB3n5NqD4wgvJwq/CHSbJFgAM5Qsa7FOEk0ZjeQPx+Vj1ywMTIb8Exe6sW
+         cO9xD/ZUK7XQAno5vGAiUVWEGvEA1B1vga05ZgWUC/W0xL5l4jftdCXuexdxD6t56bam
+         6WPcZ7UHIv2DuuxfXOPb/JLhqlD5uG+3gIR6WmovdeUxXbNuQ4kUQfXFU+oHZtGbuqBk
+         LzHHwonwg+hyLvjYKjiAgEsoCJDhztf1o1R9ZbAp+bFn2ldZR08KfqcfvfLgy12J0mVx
+         kDVw==
+X-Gm-Message-State: AAQBX9fWX6MVKNSZc6CKT4Depk2WFo85OztwhB8six6l/qzHCNBmCn0N
+	X3Vf0ywjtYWQDrItvN7D6ic=
+X-Google-Smtp-Source: AKy350YTuwR0WdZcRmjxnBolJRplJ7pURoZBpPDv4DaQCLQi6MZav3gLAUxpI2FqWwmGPOf6tN1xIQ==
+X-Received: by 2002:a17:906:841a:b0:947:c09f:3a5d with SMTP id n26-20020a170906841a00b00947c09f3a5dmr1582176ejx.75.1680604131452;
+        Tue, 04 Apr 2023 03:28:51 -0700 (PDT)
+Received: from orome (p200300e41f1c0800f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f1c:800:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id x5-20020a170906b08500b0093dfd62f9dasm5745572ejy.35.2023.04.04.03.28.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Apr 2023 03:28:51 -0700 (PDT)
+Date: Tue, 4 Apr 2023 12:28:49 +0200
+From: Thierry Reding <thierry.reding@gmail.com>
+To: Dipen Patel <dipenp@nvidia.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Rob Herring <robh@kernel.org>, jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
+	linux-gpio@vger.kernel.org, linus.walleij@linaro.org,
+	devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
+	timestamp@lists.linux.dev, krzysztof.kozlowski+dt@linaro.org,
+	brgl@bgdev.pl, corbet@lwn.net, gregkh@linuxfoundation.org
 Subject: Re: [PATCH V4 04/10] dt-bindings: timestamp: Add
  nvidia,gpio-controller
-Content-Language: en-US
-To: Dipen Patel <dipenp@nvidia.com>, Rob Herring <robh@kernel.org>
-Cc: thierry.reding@gmail.com, jonathanh@nvidia.com,
- linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
- linux-gpio@vger.kernel.org, linus.walleij@linaro.org,
- devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
- timestamp@lists.linux.dev, krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl,
- corbet@lwn.net, gregkh@linuxfoundation.org
+Message-ID: <ZCv74dMMucY24L9m@orome>
 References: <20230323012929.10815-1-dipenp@nvidia.com>
  <20230323012929.10815-5-dipenp@nvidia.com>
  <20230324171329.GA2062332-robh@kernel.org>
  <7f2dc5cf-78b5-81c6-0012-26b1adce1c86@nvidia.com>
  <19b71fef-614a-d678-2e73-95db8f226e61@linaro.org>
  <df00404e-96a8-bf33-cbc7-25dbb09c89c7@nvidia.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Precedence: bulk
+X-Mailing-List: timestamp@lists.linux.dev
+List-Id: <timestamp.lists.linux.dev>
+List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="j4v+jpU4YnL3mitN"
+Content-Disposition: inline
 In-Reply-To: <df00404e-96a8-bf33-cbc7-25dbb09c89c7@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+User-Agent: Mutt/2.2.10 (2023-03-25)
 
-On 04/04/2023 06:24, Dipen Patel wrote:
+
+--j4v+jpU4YnL3mitN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Apr 03, 2023 at 09:24:17PM -0700, Dipen Patel wrote:
 > On 3/25/23 4:09 AM, Krzysztof Kozlowski wrote:
->> On 24/03/2023 19:51, Dipen Patel wrote:
->>> On 3/24/23 10:13 AM, Rob Herring wrote:
->>>> On Wed, Mar 22, 2023 at 06:29:23PM -0700, Dipen Patel wrote:
->>>>> Introducing nvidia,gpio-controller property from Tegra234 SoCs onwards.
->>>>> This is done to help below case.
->>>>>
->>>>> Without this property code would look like:
->>>>> if (of_device_is_compatible(dev->of_node, "nvidia,tegra194-gte-aon"))
->>>>> 	hte_dev->c = gpiochip_find("tegra194-gpio-aon",
->>>>> 				   tegra_get_gpiochip_from_name);
->>>>> else if (of_device_is_compatible(dev->of_node, "nvidia,tegra234-gte-aon"))
->>>>> 	hte_dev->c = gpiochip_find("tegra234-gpio-aon",
->>>>> 				   tegra_get_gpiochip_from_name);
->>>>> else
->>>>> 	return -ENODEV;
->>>>
->>>> Or you just put the name in match data.
->>>
->>> Not sure I have understood this comment, but "name" the first argument is
->>> already there to supply to callback to match data. Also, this if else is
->>> needed to know which "name" to provide.
->>
->> The point is that of_device_is_compatible() do not really scale and make
->> code more difficult to read. Your variant-customization should in
->> general entirely come from match/driver data.
-> 
+> > On 24/03/2023 19:51, Dipen Patel wrote:
+> >> On 3/24/23 10:13 AM, Rob Herring wrote:
+> >>> On Wed, Mar 22, 2023 at 06:29:23PM -0700, Dipen Patel wrote:
+> >>>> Introducing nvidia,gpio-controller property from Tegra234 SoCs onwar=
+ds.
+> >>>> This is done to help below case.
+> >>>>
+> >>>> Without this property code would look like:
+> >>>> if (of_device_is_compatible(dev->of_node, "nvidia,tegra194-gte-aon"))
+> >>>> 	hte_dev->c =3D gpiochip_find("tegra194-gpio-aon",
+> >>>> 				   tegra_get_gpiochip_from_name);
+> >>>> else if (of_device_is_compatible(dev->of_node, "nvidia,tegra234-gte-=
+aon"))
+> >>>> 	hte_dev->c =3D gpiochip_find("tegra234-gpio-aon",
+> >>>> 				   tegra_get_gpiochip_from_name);
+> >>>> else
+> >>>> 	return -ENODEV;
+> >>>
+> >>> Or you just put the name in match data.
+> >>
+> >> Not sure I have understood this comment, but "name" the first argument=
+ is
+> >> already there to supply to callback to match data. Also, this if else =
+is
+> >> needed to know which "name" to provide.
+> >=20
+> > The point is that of_device_is_compatible() do not really scale and make
+> > code more difficult to read. Your variant-customization should in
+> > general entirely come from match/driver data.
+>=20
 > Perhaps I should not have mentioned driver related details here about how
 > this property will help, that detail will go in driver patch. In the next
-> patch series I will remove this commit and just focus on what this property
+> patch series I will remove this commit and just focus on what this proper=
+ty
 > is.
 
-Regardless of this commit, driver match data is the way to go, not
-of_device_is_compatible().
+I think the point that Rob and Krzysztof are trying to make that rather
+than adding a new property for this, we can add a const char *gpio field
+to struct tegra_hte_data and then set that to the compatible string of
+the GPIO controller that we need this for.
 
+To be honest, I slightly prefer the explicit phandle reference, but it
+also complicates things a bit and looking up by compatible string isn't
+all that bad.
 
+Thierry
 
-Best regards,
-Krzysztof
+--j4v+jpU4YnL3mitN
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmQr+94ACgkQ3SOs138+
+s6FuTg//RaYWUCY1EIVK5FtyolJck7DDm1TQXL5ILgE2I9QFBGSGMptLVzAvGKDa
+OlqURt08FlaVKMGrdfW6KB4d9eIUt2GI7mFBftFfFa7jB0YDRvrF1HLtUJ80xQmZ
+vcLHKiWXfOPBxK8Z1m47MUoWOnhlbbPX2asdk+kF6Zy4c1XvADfKEIckN3LDTv7z
+guxioGkdf4/yfbQrIbqxrQ0sxiOU9wQJg9ZqxMObBLtMnMPvylNN9/oP7XsuAMfD
+0+hhaM9MSQKa+/XucaqqmiHqCfoP1GoRBl6DvJezrZx4TIoI7FlGJ1QIxuecOI2G
+JDelTvifSpzlfC5giaR6GS3cQXvyvKuAG5kQfodHhyV1JdV1wVP4YguEdXFPDRoG
+mWrRImkogPPvWvy20wCaqZRor8riz8r8jYTXZBUbL8CnpGeB/7EMG7KU4X7IICTa
+yhlqAMN734OzI4EMzp/s+tZCa/QaPaE1nlPHSOBvyp+Pv2xjjzDdbDyN3vzSX1A/
+WZTWOooXjbPkvhXcxC2+toMdSGJuvqsEn5emfcnpAw3mNUYuJRF500phzK8sQoVv
+G6NetMfFRKcTTzDQznnK3gomRb6EVrKw1cRy3ZOP52s+cSILZXZKLX0aV6l8hppx
+rnEDotFl9tti4UbRn+sX2eA7IqB+ftwAQyu1f2dNCPSw0V3m3cY=
+=Zelo
+-----END PGP SIGNATURE-----
+
+--j4v+jpU4YnL3mitN--
