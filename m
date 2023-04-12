@@ -1,124 +1,63 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2075.outbound.protection.outlook.com [40.107.243.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A5AAD2E
-	for <timestamp@lists.linux.dev>; Thu,  6 Apr 2023 17:19:14 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dwfSOvWBCj2w4FMFdSOEo70iPXKxZC3exAfnH8eBFKVV+5qd/84EOaydA+gzlKI7pLQY7AioCPa2z9wf6sR+rUH1ZJaYSAADSpuGajZTtfQSEK2YQ798fwYV1973zu1+ZuX1qLY0xk1aWfnuojhZXoTgUU48awZtBA97fAKrAEkj3ik/2sHzy0YGS9o1SuHkWRICfzga2B2RVRQ/q6wD3WJMV8iKFxvi4YaQGDl/OL93F+kjqPK35Wq9c6tcwstQKygmGZ5DGG9bwCPzdcQSCqJuAZGGrubJtARgoRxkBXKwbQydno4WkkgqQt+/l56tpvjdu5UbrqYKr60M5mXybg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=x0B4e4waDo/8ygYRfAUPi4j/yHBgi9ZU9AnjB6UuD5k=;
- b=PLhyFs/WSC5EBMCCB0NgLRqwBOh2kicTtHF8JNPvATir5ZoERfwUCqc+K9vuVHxqqkbQr9xPLlx81Qe3ywz7lFKZR+VZiZ/jEM0881QzfJWp0/+1C4NVIvqVFA6nO01/CZ/x/UU9xVz8YQcQeebOcVNb3gC7oC8zqtnUN+T5ATJtjkzb82ryZ+HLSTDzS6HCBAcPvelE26FVn/PB0Qa4d+l5nGWvJLURmMB+/M43SpXHliKpjfzqs28Mw4y3sy6LzmyGU1TzAggeCYXYcz9odFuD6xXt5h6kN8uF4kWY3TlUMkNaYd+Mz8PkcEp8Ub6+0R4jWyFggCsh+hFCYQ+dRw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=x0B4e4waDo/8ygYRfAUPi4j/yHBgi9ZU9AnjB6UuD5k=;
- b=LzzzeNkhlQFVL3io7dM8hdrhrWVErpxYuoMddhTS+ajzHETfZhMzBXxfqAMIQzcGrT7qC2DgVpJe2vpmOuzXmYhVVc6pLbo6btrTUMiZlsbr0x8AJGtQd3wr6k55x9WUgblCu0Zl4HH0TWp229NnDUaY5m9TBWH9ABZ42dIsXlygpQpsRGcVfmQLTDdJj3XNwJrti5F2qZ1BL2VocnKgv8m5Mb8wqO1VUXOL88nY+R8tFsAJGLG5KqBr4jFuJRrxzhObyZTj1v/utWgl4IJS5R4EgxyNdHp6bX8IQ/6pe/T0mxtJfMuxAjMt/QXSefkArh5y1oLoToTzNmeuLFJEIw==
-Received: from BL1PR13CA0347.namprd13.prod.outlook.com (2603:10b6:208:2c6::22)
- by MN2PR12MB4341.namprd12.prod.outlook.com (2603:10b6:208:262::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6277.31; Thu, 6 Apr
- 2023 17:19:12 +0000
-Received: from BL02EPF000145B8.namprd05.prod.outlook.com
- (2603:10b6:208:2c6:cafe::a3) by BL1PR13CA0347.outlook.office365.com
- (2603:10b6:208:2c6::22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6298.16 via Frontend
- Transport; Thu, 6 Apr 2023 17:19:12 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BL02EPF000145B8.mail.protection.outlook.com (10.167.241.208) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6222.35 via Frontend Transport; Thu, 6 Apr 2023 17:19:12 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Thu, 6 Apr 2023
- 10:18:43 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Thu, 6 Apr 2023
- 10:18:43 -0700
-Received: from dipenp.nvidia.com (10.127.8.10) by mail.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server id 15.2.986.37 via Frontend
- Transport; Thu, 6 Apr 2023 10:18:43 -0700
-From: Dipen Patel <dipenp@nvidia.com>
-To: <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
-	<linux-kernel@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
-	<linux-gpio@vger.kernel.org>, <linus.walleij@linaro.org>,
-	<devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-	<robh+dt@kernel.org>, <timestamp@lists.linux.dev>,
-	<krzysztof.kozlowski+dt@linaro.org>, <brgl@bgdev.pl>, <corbet@lwn.net>,
-	<gregkh@linuxfoundation.org>
-CC: Dipen Patel <dipenp@nvidia.com>
-Subject: [V5 10/10] gpio: tegra186: Add Tegra234 hte support
-Date: Thu, 6 Apr 2023 10:18:37 -0700
-Message-ID: <20230406171837.11206-11-dipenp@nvidia.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230406171837.11206-1-dipenp@nvidia.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2775611A
+	for <timestamp@lists.linux.dev>; Wed, 12 Apr 2023 14:24:59 +0000 (UTC)
+Received: by mail-oi1-f180.google.com with SMTP id bl22so25768159oib.11
+        for <timestamp@lists.linux.dev>; Wed, 12 Apr 2023 07:24:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681309499; x=1683901499;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zL+50zPLrjuLA8fqBLOEQM7c2a2HckTPPr7Ny3uRBP0=;
+        b=Qhqm9AWTmijqaqkGNXj6fYoN7c8BxT7K1+M7xPWTxRygFO5YsxNcMXfdd954VXyHlw
+         Ff9JvsIz/hn93QzoX0GLlg+rOmuFR+5+dPV7dfUS0faooyeFiFOjBCRawfYteaOnLS9F
+         KvjNDG/yUb2a+DKYjbVQBp2OjweIk2Vayg8PTOS6O7xFq7FkvPsj+UH2rVLn0Xr0l7Gc
+         taEmeeiT/FmhrwCP5jN1qR6EPC52c6tu4vfhf9qeOiD0gp5PC0JktLeOxsPiA4IJFkMC
+         T9jjaHQyxQ4wjl/WEWN4Gcvyqu5CXcGIo0ltwdz4OylknUB35Qc5Iogz3qAR/vekAQO0
+         IgsA==
+X-Gm-Message-State: AAQBX9c7tDcaY+7jOPFQom0UUVjbsFxFsS6Khw+7g0Z7XBX/fMUTgzAI
+	qo9R9r0+pI3uN4mHhVVcfA==
+X-Google-Smtp-Source: AKy350ZRWCnOuzOVFhOnHWoQ1lacuWyjXo0ay+clioHA9u4vMZliLv5kBRkMbBNTgscun57W5oShRQ==
+X-Received: by 2002:a05:6808:88:b0:386:ea33:755b with SMTP id s8-20020a056808008800b00386ea33755bmr1083158oic.19.1681309498919;
+        Wed, 12 Apr 2023 07:24:58 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id b124-20020aca3482000000b0038bc0cb5d52sm3498572oia.9.2023.04.12.07.24.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Apr 2023 07:24:58 -0700 (PDT)
+Received: (nullmailer pid 2312911 invoked by uid 1000);
+	Wed, 12 Apr 2023 14:24:57 -0000
+Date: Wed, 12 Apr 2023 09:24:57 -0500
+From: Rob Herring <robh@kernel.org>
+To: Dipen Patel <dipenp@nvidia.com>
+Cc: linus.walleij@linaro.org, jonathanh@nvidia.com, devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl, robh+dt@kernel.org, gregkh@linuxfoundation.org, linux-gpio@vger.kernel.org, timestamp@lists.linux.dev, linux-kernel@vger.kernel.org, corbet@lwn.net, linux-tegra@vger.kernel.org, thierry.reding@gmail.com, linux-doc@vger.kernel.org
+Subject: Re: [V5 03/10] dt-bindings: timestamp: Deprecate nvidia,slices
+ property
+Message-ID: <168130949723.2312853.9364535944152473595.robh@kernel.org>
 References: <20230406171837.11206-1-dipenp@nvidia.com>
-X-NVConfidentiality: public
+ <20230406171837.11206-4-dipenp@nvidia.com>
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF000145B8:EE_|MN2PR12MB4341:EE_
-X-MS-Office365-Filtering-Correlation-Id: a1c7c271-a2b8-45d4-8a23-08db36c30a7d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	3hEEo/R3j5PMuAn36gcbyeVrDUJ3ZJnuOvn9sdRsF9UNlHvESYyJg6qrwVTvpXxjSM6uEeC4Y3UQtpkFPHZhzRcxP+Nxxb73F+U3bnGhPjnr+gMxyx78UEqXOBA8Dq/4FEsJ4P0vSD/dn+bu7jsCzYvWRAG7qeMGaXELt1isCA8PJRHIenaP/yDkrdw0yK4CdsGAvC1XxOon9niCcJCLe2aNzzMpn+j2ef9fx57WsyNACh0T+4V71539fEgrX2Hr81TKDlY2ltN7gdswnxNEXtAkvt+8OXFlwl6p668gtDTAkkS1ZTL6UF9reSTTXFDdbbYVCZvCYFPQbIPmYQxCFk1TVUzbLqhbT9uxroVK09Pmz35wwOsrbt66gAGuYAU67KRXV3KQeISglv89tswyD2UDbcdjYDby2NMMaEppD6wSWME1weKQ7JiG4nKDHyD0z8KqjkUI32/pX89hv2rTkFkIHHMHsRjyUwz73EZ4lR9keqmeHMdRJv1Qvq04bEmhIAnkITuW1wn5tS5phjyi3v9aGKOuLvYo8sV+KaOe2nyVAM2dfOGhKs3OsydAN0Byvi7+OH/6KxU95AroYvqtfT+jBLXIDlLoohaZzT09Y3nxHA3ffGL0DNxMkMswCHRJsjHogd/jdHjBxg3R7Ol417HP5XLfvk/CBnD8AiX375EdAb0fpaigWT2D2BpgNFX0We2NpYd+6IKpIf10DDsZA1QfLMyOil2FtGOA2LyoulaH+WdigGtXXrAa8+U6sG66aFhadgaKv9aha57oI0zHHmUDS6svQMyqJMqDtSpR3fqNPGWWGcadPuESW/Sf+T3K
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(376002)(136003)(346002)(39860400002)(396003)(451199021)(46966006)(40470700004)(36840700001)(316002)(7416002)(5660300002)(478600001)(83380400001)(7696005)(8936002)(41300700001)(110136005)(4744005)(70206006)(4326008)(8676002)(70586007)(6666004)(107886003)(26005)(1076003)(2906002)(186003)(40460700003)(336012)(426003)(7636003)(921005)(356005)(82740400003)(47076005)(2616005)(40480700001)(82310400005)(86362001)(36756003)(36860700001)(83996005)(2101003);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Apr 2023 17:19:12.3391
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a1c7c271-a2b8-45d4-8a23-08db36c30a7d
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL02EPF000145B8.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4341
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230406171837.11206-4-dipenp@nvidia.com>
 
-To enable timestamp support for the Tegra234, has_gte variable needs
-to be set true.
 
-Signed-off-by: Dipen Patel <dipenp@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
----
- drivers/gpio/gpio-tegra186.c | 1 +
- 1 file changed, 1 insertion(+)
+On Thu, 06 Apr 2023 10:18:30 -0700, Dipen Patel wrote:
+> The property is not necessary as it is a constant value and can be
+> hardcoded in the driver code.
+> 
+> Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+> ---
+>  .../bindings/timestamp/nvidia,tegra194-hte.yaml           | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
 
-diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index 14c872b6ad05..b904de0b1784 100644
---- a/drivers/gpio/gpio-tegra186.c
-+++ b/drivers/gpio/gpio-tegra186.c
-@@ -1134,6 +1134,7 @@ static const struct tegra_gpio_soc tegra234_aon_soc = {
- 	.name = "tegra234-gpio-aon",
- 	.instance = 1,
- 	.num_irqs_per_bank = 8,
-+	.has_gte = true,
- };
- 
- #define TEGRA241_MAIN_GPIO_PORT(_name, _bank, _port, _pins)	\
--- 
-2.17.1
+Acked-by: Rob Herring <robh@kernel.org>
 
