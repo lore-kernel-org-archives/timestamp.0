@@ -1,106 +1,102 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795F220F6
-	for <timestamp@lists.linux.dev>; Fri, 14 Apr 2023 20:47:44 +0000 (UTC)
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-94eff00bcdaso38491166b.1
-        for <timestamp@lists.linux.dev>; Fri, 14 Apr 2023 13:47:44 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05CF8C15
+	for <timestamp@lists.linux.dev>; Thu, 20 Apr 2023 16:05:58 +0000 (UTC)
+Received: by mail-ej1-f50.google.com with SMTP id kt6so7748939ejb.0
+        for <timestamp@lists.linux.dev>; Thu, 20 Apr 2023 09:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681505262; x=1684097262;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=s5f3N0RAtgUVBIB/xIm7w7WNTQBqMz0AMr1YWNHsHjg=;
-        b=X7duMdF7yBT9zLGwesGIN4G3wnxp3Cjfh3udvsg4agx3zVaZ/60sVw/xE7aSLDTGhJ
-         zIjF3dd5jmSjhNdUX/OuNDeR2QQNKuNa7hYPHXF+TO4ZuLaKUXtGxHGa03DKlHrMgFeu
-         xfjSbV19IpjVaxXaFVOgcoi9ORTuRfC4KpnrmEDPFuoispB5my4N9JAPmdvul7vQ7HXf
-         Yum4/lMy5nouQOYVVzN07viXOybs3vZoC4POy8XN2UmICUQ3Y6zvtFLW30B1TIzjFLZl
-         RiDCukTz9T+ZsbMuVrfFxih+a2WKElYsyb0CNfJebpbF0EgGQQ1aL3Bh25KUHqarouEr
-         k3xg==
+        d=gmail.com; s=20221208; t=1682006757; x=1684598757;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EIrWFxNQFlhme+9qVbuyjFRPmgNp9vvWt4N75xCa6m4=;
+        b=a9rxcvGAOssBpy4B7PyIEPBItlmSNahxnycgB4kVPzpIz6OZ9CMc7H97kEQ8rirzr1
+         g4e//k/2hJlZY2UcTf/ZV7W78D0oif+QDSD8y/Rjn3IS8zvtuB+EizeU3l7A1BdTG049
+         /TJWVOz7m+8Q0LcUIHXBV6oCE8u8hCi8ncoqi1GYe/MbKP6mPGOlXoG+YVsOwtANwTGX
+         hE03Mn2G4krPSPrc1K/FPi1bTYIyLwIqQRteyPxens4/5ubijN1xjmZtZ6xEWcBqVc0o
+         933H5jxC2QivNsdcAo30+PfZbexvs7vECbotqh6MI5YhKteAcECf5k46gh7EosS7RUg7
+         bZUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681505262; x=1684097262;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s5f3N0RAtgUVBIB/xIm7w7WNTQBqMz0AMr1YWNHsHjg=;
-        b=kIFXC8O0LBqj0uY/LRw6ILE4APbFTw2i2cx+xDopcvZCt2rNW/e5F1I/o0CoxkzzsH
-         mqZvyMb8BMUOEr38kUCtSlpu2CurmLOg5mvlQ9bHiQPEB/3w+WVL4/4nX/llVFbxczTr
-         7TtK2I7EqvyRE9VCYWxzr+WccoBKLKLqhCQxGpRGiHZh7TIFV3yzgFltoZBlaQKbnwfo
-         OQYOKfQQpCmlc3Uy+kCGclkBxNfSKl6ZfMTY3ICe+BtXBgRlKD4zXjqmqkk/2G4ttoVN
-         +ic/JcRt9PXQ06RUB3fPvh3q3Si4OTuatQk0ROb4OK+zccd4VcbkYPa5dTZ21ZPmMuqR
-         Ddcg==
-X-Gm-Message-State: AAQBX9dkp3+OvgtY/cjq4Vzv06PvwRga6qfx+ZdEwAOsz1gQC+Mq7PbC
-	i2Qa6BidQ3zn76P1NHOfm/lhsw==
-X-Google-Smtp-Source: AKy350YgvMVGXc4UafDc/Bu9EhgyHaWr2UVtxorQb1uoFdRovgAwRThK3H4UFtY7yfcABeD8dWrWig==
-X-Received: by 2002:a05:6402:b2e:b0:4fb:f2db:a654 with SMTP id bo14-20020a0564020b2e00b004fbf2dba654mr7044407edb.12.1681505262487;
-        Fri, 14 Apr 2023 13:47:42 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:ffae:8aab:ae5a:4688? ([2a02:810d:15c0:828:ffae:8aab:ae5a:4688])
-        by smtp.gmail.com with ESMTPSA id bf13-20020a0564021a4d00b005024459f431sm2491923edb.70.2023.04.14.13.47.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Apr 2023 13:47:41 -0700 (PDT)
-Message-ID: <193eb300-3075-c07c-6946-9c56aca7a340@linaro.org>
-Date: Fri, 14 Apr 2023 22:47:40 +0200
+        d=1e100.net; s=20221208; t=1682006757; x=1684598757;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EIrWFxNQFlhme+9qVbuyjFRPmgNp9vvWt4N75xCa6m4=;
+        b=I3doj3xRl4t85PocQzGp4/VY2Dm6r+ltejlqzPpa7PTv4D6z2REFuIliVWl8RU5ETe
+         APXpKAMwXa545304qWFi840NcMxRCcvdsPcYeRmv6UH6Jjv8lz7YphOHHmfUSW8t+I4W
+         lA2y37bVrOCHw4UX5TLm2gCVw0sgeGvh2jm3bwRIm5+ExncOawe+N5kWtTbGeRDLsKME
+         gVQsPg/CFIDtopRU4o4XYpSOTHesNdw/TGn6YpBHsTq9MOavCpZPjue6mG+35qoIKcGr
+         igf9SbQWlLJO84hefcMKZxTXnvx19cePwio0spvi2TT1k53U0bzvFnvIe/ZCLihbo72s
+         m2qw==
+X-Gm-Message-State: AAQBX9f+9kYlFB84rW8CvvcPCYRXUZhFVICmNIlcIqD1x0YaKscd5Vy3
+	AG1sNiQfPat7BokzAkw8QOamhn+qukU=
+X-Google-Smtp-Source: AKy350YlLeT7OF1W7F6jluIK5b7JRjgtxjCjjoHaFXqLQ9oKKT4V6FsG5KV+u9+otG5Z3zZDBE9Jrg==
+X-Received: by 2002:a17:906:1c06:b0:94b:d57e:9d4b with SMTP id k6-20020a1709061c0600b0094bd57e9d4bmr2070785ejg.2.1682006756729;
+        Thu, 20 Apr 2023 09:05:56 -0700 (PDT)
+Received: from orome (p200300e41f053a00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f05:3a00:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id l22-20020a170906795600b0094f25ae0821sm887732ejo.31.2023.04.20.09.05.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Apr 2023 09:05:56 -0700 (PDT)
+Date: Thu, 20 Apr 2023 18:05:54 +0200
+From: Thierry Reding <thierry.reding@gmail.com>
+To: Dipen Patel <dipenp@nvidia.com>
+Cc: jonathanh@nvidia.com, linux-kernel@vger.kernel.org,
+	linux-tegra@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linus.walleij@linaro.org, devicetree@vger.kernel.org,
+	linux-doc@vger.kernel.org, robh+dt@kernel.org,
+	timestamp@lists.linux.dev, krzysztof.kozlowski+dt@linaro.org,
+	brgl@bgdev.pl, corbet@lwn.net, gregkh@linuxfoundation.org
+Subject: Re: [V6 4/9] arm64: tegra: Add Tegra234 GTE nodes
+Message-ID: <ZEFi4vKVtstiAno3@orome>
+References: <20230414004455.19275-1-dipenp@nvidia.com>
+ <20230414004455.19275-5-dipenp@nvidia.com>
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [V6 0/9] Add Tegra234 HTE support
-Content-Language: en-US
-To: Dipen Patel <dipenp@nvidia.com>, thierry.reding@gmail.com,
- jonathanh@nvidia.com, linux-kernel@vger.kernel.org,
- linux-tegra@vger.kernel.org, linux-gpio@vger.kernel.org,
- linus.walleij@linaro.org, devicetree@vger.kernel.org,
- linux-doc@vger.kernel.org, robh+dt@kernel.org, timestamp@lists.linux.dev,
- krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl, corbet@lwn.net,
- gregkh@linuxfoundation.org
-References: <20230414004455.19275-1-dipenp@nvidia.com>
- <373eacb8-be3f-6b95-3e08-f0ff36f79891@linaro.org>
- <a280fe0f-b8b1-4cb5-b4b6-aa9e9367241e@nvidia.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <a280fe0f-b8b1-4cb5-b4b6-aa9e9367241e@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="NPoYIIrP4+2LC65A"
+Content-Disposition: inline
+In-Reply-To: <20230414004455.19275-5-dipenp@nvidia.com>
+User-Agent: Mutt/2.2.10 (2023-03-25)
 
-On 14/04/2023 19:14, Dipen Patel wrote:
-> On 4/14/23 12:36 AM, Krzysztof Kozlowski wrote:
->> On 14/04/2023 02:44, Dipen Patel wrote:
->>> This patch series mainly adds support for the Tegra234 HTE provider. In
->>> addition, it addresses dt binding comments which prompted code
->>> changes in the existing HTE provider driver without breaking the
->>> Tegra194 provider. The comments raised concern how existing code
->>> retrieves gpio controller node
->>> (the node is used to help namespace conversion between HTE and GPIOLIB).
->>> To help simplify that process, new DT property is suggested which adds
->>> gpio controller node in the HTE provider binding as phandle property. To
->>> conlude this patch series:
->>> - adds Tegra234 HTE provider
->>> - modifies existing provider code to address new dt binding for Tegra234
->>> without breaking it for the Tegra194 chip.
->>>
->>> The V1 patch series:
->>> - Adds tegra Tegra234 HTE(timestamp) provider supports.
->>> - Updates MAINTAINERS file for git tree, mail list fields.
->>> - Updates devicetree and API documentations.
->>> - Enables HTE subsystem, Tegra194 and Tegra234 HTE providers
->>> by default in arm64 defconfig and dts files.
->>
->> All your emails miss PATCH prefix. Use `git format-patch` to generate
->> proper versioned patch. Stripping important part messes up with our
->> filters. We have quite a lot of emails, so proper filtering is important.
-> 
-> My bad...excitement of sending the patch series got hold of me :) Now I have realized
-> it is been happening since the beginning. Since all the previous patches have been
-> sent without PATCH prefix, is it ok for this version as it is or do you want me to resend
-> with proper prefix?
-> 
 
-It's okay for me, no need to resend. I just wanted to bring this to your
-attention, so future patchsets can be improved.
+--NPoYIIrP4+2LC65A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Best regards,
-Krzysztof
+On Thu, Apr 13, 2023 at 05:44:50PM -0700, Dipen Patel wrote:
+> Add GTE LIC and AON GPIO nodes for the tegra234 SoC.
+>=20
+> Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+> ---
+>  arch/arm64/boot/dts/nvidia/tegra234.dtsi | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
 
+Acked-by: Thierry Reding <treding@nvidia.com>
+
+--NPoYIIrP4+2LC65A
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmRBYuIACgkQ3SOs138+
+s6EhoQ/+NM3QPHuY/4aEUx5uEy94QwELsFH6cn5FTtmq3kevgv+fjstZ1Ojxy3Nf
+tx34APCxIWm85Bs6qI+xs7o0ikd+WrttTV6CxQhpOiptO88eDr3vT2aN6bSqTBR7
+LR5HvaOnn06pRkYHbMGM6OTRLCAEU5J7Cz3C+n1oG6mE6405ImpAAImYZMyPH7Be
+ITbUFGF+ZH6cucAlxvoi5GnBn8zoN9hYgLphhQs7qOqSqV+bVxVBvFJq2ZXBhQPp
+CKHvoKdN6aWcynnLiPDZsZ1uvVfjV/iOUMwgb/lyl5SW/nrXQqipBPN6l5ONvG2F
+xUt/auV2Ipsn3x8vlEKts2qrzVwl9ojiy6Is/hUp95L/srpJUeix0zPGU38thBSp
+aVbsNXy6T2yQCpjFE9kVO3uuIvJGsOqSp6tt4CYrrEryt93ktU9dEjREbkaLRDRa
+5oSnzNVDKmzith3Zi7uPUL7eKvtQflnMbCOhn2HvAyVcjijyWxaQvqYuDC9tZhs/
+31R8aSgpVF8in6IkQnztLgEdXehAi4yuq9TWOeKRgVJUYAXBfmg+kfXchmRVlxVl
+d5UNYfEqmPjjxRbJPL7491G8JXtV6V53RrSuEuZizMdUgT3Qp2ut4J+DaTXMHiSc
+NBfvENpdOfv8MBtwt7Rs/kyZZJC5D9RT5jKMomseLewcNM+X6ho=
+=vZgG
+-----END PGP SIGNATURE-----
+
+--NPoYIIrP4+2LC65A--
