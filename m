@@ -1,53 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D17BE40
-	for <timestamp@lists.linux.dev>; Wed,  3 May 2023 18:32:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 27832C4339B;
-	Wed,  3 May 2023 18:32:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1683138742;
-	bh=KkRexol8rqSfFiweVA984O6MeZg980x3q8wOoY3/CMI=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=a6Pb9wRMrhsTG1yoMAXnc0iQxk3nPgD2eYQIdXHVkEEO17GZCpLq74+o1w38KO6Z3
-	 vR8R6SqBQOoqLs9SAYlysbIb4yO1UqTtzxazwAqg6XoOV41WszcObBBXZlOBwvgXH4
-	 T1oLKNt/PHFKuWo7QjQ1uvHSPAucMDqwIhIlHVqAgadSZ3eLOMGxgGBfDzqNJLMPBR
-	 GkR+wAzS/SPk1j8ZcX9+UbYNVfPDBMxr0XUBnVXe1oXokwiXYZxbT95I99mWGpjwDk
-	 ZGoKsZH4/E4fMrI3HlMsXGk55+Boq0b4ucYUzGqzS0woUGn/lg+H2omqPz7BEXDHx6
-	 ISO4ElFT9uVTw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 1714DE5FFC9;
-	Wed,  3 May 2023 18:32:22 +0000 (UTC)
-Subject: Re: [GIT PULL] hte: Changes for v6.4-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <20230503032947.23384-1-dipenp@nvidia.com>
-References: <20230503032947.23384-1-dipenp@nvidia.com>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <20230503032947.23384-1-dipenp@nvidia.com>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/pateldipen1984/linux.git tags/for-6.4-rc1
-X-PR-Tracked-Commit-Id: ca3d1a4b419acad3fca6828884acb03614f7558b
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 29ee463d6fe45adde02098b3aa1166cd65fd2739
-Message-Id: <168313874209.23026.3621881726709996863.pr-tracker-bot@kernel.org>
-Date: Wed, 03 May 2023 18:32:22 +0000
-To: Dipen Patel <dipenp@nvidia.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, Dipen Patel <dipenp@nvidia.com>, timestamp@lists.linux.dev, linux-kernel@vger.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7BA19516
+	for <timestamp@lists.linux.dev>; Tue, 30 May 2023 14:48:58 +0000 (UTC)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-51458187be1so8039202a12.2
+        for <timestamp@lists.linux.dev>; Tue, 30 May 2023 07:48:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685458136; x=1688050136;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iV7Orb1i2HT8c6ntLQeDsScnfo8QsjoWIKrRpD+mlDM=;
+        b=q6DaxHgqELE2tu8Q1AxgIsCDpH+TNAJJHJp6Q7g8/Fkd/88Tk4TUy/ri0mT4Ktg5Mo
+         8loUDrV8rgOV4A6XNocbQ8st6LPKLPsCoM9M7NfuJiiPgFmWodAuWDMcEhGTqfI+4Tzf
+         71FhpeXfe33npOU4xXk8C/+4upzoWtXD+5OuR9V4CwEY+McHM/HpsrVpr/f2HM5wwk11
+         q6ItDg0BTxwcfJWB6uZBQGx+4pwaP2uzwuVXxHf91dLVKqsCTNfh3dg7BgyEkITCyOjh
+         IHl3EJehb7WHjyFD+D9eQjjetOZhYahUl2+MIzDnN4ovGk7najQrxWq/MU940DgRFDiZ
+         Y5Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685458136; x=1688050136;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iV7Orb1i2HT8c6ntLQeDsScnfo8QsjoWIKrRpD+mlDM=;
+        b=FXYPmmk4UoV4AfzJaIDDPY6gPRWIJfYM7rzOOYD6WGuv8kQuaIMP5zjHzsGvPvnKkS
+         lO4pyqpAPuey1cTqEoOV03QuwAvjkaFy+Qrp48QhHNl0FKY52nKD3IrUoA0ltmXvEon0
+         +va+S4aPGpk9zTiT5wJKFNELLcRimt55q49Kt43XTd9u0xviCcqbYlwmUX4zq/s2c58S
+         YYFHlt27UnFmN7QkyPXjUky5lUj/oYm1KwMtFSqUPB3tn50p+46MVMojR8D5lHehPmWF
+         Dee2CWGVrMlbhHz6cSgfDom+hLnVPlLrFYGiPfw6afbfTsWwi10cWKaVOt9sP7y/crA+
+         Kp2w==
+X-Gm-Message-State: AC+VfDzrGOTJGI4+6psBCCGG9PdQnLfBwAPFfA+mhyqucbpHloSyXO3D
+	Om5igTv2jIrgZmcHAbT2ENbHHg==
+X-Google-Smtp-Source: ACHHUZ57600gdJ8fZghoBNthDb/ZJ2da044/ygwaZp54+5w2nAm+4l+5lOMfpN+gAlzBZIyE3wXFJQ==
+X-Received: by 2002:aa7:d9c4:0:b0:50d:fcfb:861b with SMTP id v4-20020aa7d9c4000000b0050dfcfb861bmr1926404eds.0.1685458136376;
+        Tue, 30 May 2023 07:48:56 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id q21-20020aa7cc15000000b00514b2717ec6sm631283edt.28.2023.05.30.07.48.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 May 2023 07:48:55 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Alessandro Zummo <a.zummo@towertech.it>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Dipen Patel <dipenp@nvidia.com>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Dilip Kota <eswara.kota@linux.intel.com>,
+	linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-pwm@vger.kernel.org,
+	linux-rtc@vger.kernel.org,
+	alsa-devel@alsa-project.org,
+	linux-spi@vger.kernel.org,
+	timestamp@lists.linux.dev,
+	linux-watchdog@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Tony Lindgren <tony@atomide.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>
+Subject: [PATCH 0/7] dt-bindings: restrict node name suffixes
+Date: Tue, 30 May 2023 16:48:44 +0200
+Message-Id: <20230530144851.92059-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-The pull request you sent on Tue, 2 May 2023 20:29:47 -0700:
+Hi,
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/pateldipen1984/linux.git tags/for-6.4-rc1
+Tree-wide cleanup of DTS node name suffixes "-N", e.g. "pwm-5", so we allow
+only decimal numbers.  In few cases narrow the pattern to also disallow
+multiple suffixes, e.g. "pwm-5-5".
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/29ee463d6fe45adde02098b3aa1166cd65fd2739
+No dependencies, can be applied by individual subsystems.
 
-Thank you!
+Cc: Tony Lindgren <tony@atomide.com>
+Cc: Oleksij Rempel <o.rempel@pengutronix.de>
+
+Link: https://lore.kernel.org/all/20221127182232.GA128974-robh@kernel.org/
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (7):
+  dt-bindings: phy: intel,combo-phy: restrict node name suffixes
+  dt-bindings: pwm: restrict node name suffixes
+  dt-bindings: rtc: restrict node name suffixes
+  dt-bindings: slimbus: restrict node name suffixes
+  spi: dt-bindings: restrict node name suffixes
+  dt-bindings: timestamp: restrict node name suffixes
+  dt-bindings: watchdog: restrict node name suffixes
+
+ Documentation/devicetree/bindings/phy/intel,combo-phy.yaml    | 2 +-
+ Documentation/devicetree/bindings/pwm/pwm.yaml                | 2 +-
+ Documentation/devicetree/bindings/rtc/rtc.yaml                | 2 +-
+ Documentation/devicetree/bindings/slimbus/slimbus.yaml        | 2 +-
+ Documentation/devicetree/bindings/spi/spi-controller.yaml     | 2 +-
+ .../bindings/timestamp/hardware-timestamps-common.yaml        | 2 +-
+ Documentation/devicetree/bindings/watchdog/watchdog.yaml      | 4 ++--
+ 7 files changed, 8 insertions(+), 8 deletions(-)
 
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+2.34.1
+
