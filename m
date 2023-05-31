@@ -1,10 +1,10 @@
 Received: from muru.com (muru.com [72.249.23.125])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB7981878
-	for <timestamp@lists.linux.dev>; Wed, 31 May 2023 04:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F23EA40
+	for <timestamp@lists.linux.dev>; Wed, 31 May 2023 04:35:35 +0000 (UTC)
 Received: from localhost (localhost [127.0.0.1])
-	by muru.com (Postfix) with ESMTPS id E585681A7;
-	Wed, 31 May 2023 04:27:02 +0000 (UTC)
-Date: Wed, 31 May 2023 07:27:01 +0300
+	by muru.com (Postfix) with ESMTPS id F19638164;
+	Wed, 31 May 2023 04:25:33 +0000 (UTC)
+Date: Wed, 31 May 2023 07:25:32 +0300
 From: Tony Lindgren <tony@atomide.com>
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc: Vinod Koul <vkoul@kernel.org>,
@@ -27,11 +27,10 @@ Cc: Vinod Koul <vkoul@kernel.org>,
 	linux-spi@vger.kernel.org, timestamp@lists.linux.dev,
 	linux-watchdog@vger.kernel.org, Rob Herring <robh@kernel.org>,
 	Oleksij Rempel <o.rempel@pengutronix.de>
-Subject: Re: [PATCH 1/7] dt-bindings: phy: intel,combo-phy: restrict node
- name suffixes
-Message-ID: <20230531042701.GO14287@atomide.com>
+Subject: Re: [PATCH 2/7] dt-bindings: pwm: restrict node name suffixes
+Message-ID: <20230531042532.GI14287@atomide.com>
 References: <20230530144851.92059-1-krzysztof.kozlowski@linaro.org>
- <20230530144851.92059-2-krzysztof.kozlowski@linaro.org>
+ <20230530144851.92059-3-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
@@ -40,12 +39,15 @@ List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230530144851.92059-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230530144851.92059-3-krzysztof.kozlowski@linaro.org>
 
 * Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> [230530 14:49]:
 > Make the pattern matching node names a bit stricter to improve DTS
 > consistency.  The pattern is restricted to:
 > 1. Only one unit address or one -N suffix,
 > 2. -N suffixes to decimal numbers.
+> 
+> Suggested-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Reviewed-by: Tony Lindgren <tony@atomide.com>
