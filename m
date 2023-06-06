@@ -1,93 +1,106 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [217.70.178.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E8279D3
-	for <timestamp@lists.linux.dev>; Wed, 31 May 2023 06:57:14 +0000 (UTC)
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5149390b20aso6793748a12.3
-        for <timestamp@lists.linux.dev>; Tue, 30 May 2023 23:57:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685516232; x=1688108232;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zT4hWvO+05+c9BNBT9jLKJhOVWpxKJ0fJ2bZlxyHp3w=;
-        b=fMFgfFRH2oKpRqT2ngwoG7OVNjzftGze+7bCsyKX8BPD9bFqofDMAUVPCoEnQHK7YZ
-         P9GIyQhfD38i4+ZCGDARXcEYm6X5cRIC4tL5T+qbNbkgeShDMzkTLWzr9oYDt0+f+JWl
-         lHzDF1iYCMCPrdpof6K5qUxlFGUwcFYF/GLZO65/NMu6OKwhNzWz1cd/d8wdE+j3pUOz
-         lMePApuIuf6d/zdItcp1XEsmzrxB6T6pgzjGopOR1xlFS+ZkuKGA7bsqaJpY4Q6LL23f
-         uvstk79rsZFVpgFpPX5fCbzRB2qe6jaDE4E+ZywGX9/CsaInpvUDHcLgwfmb322vcwZg
-         ruCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685516232; x=1688108232;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zT4hWvO+05+c9BNBT9jLKJhOVWpxKJ0fJ2bZlxyHp3w=;
-        b=UEglcIV0iuGxN/OtzUYN0wxGnd/ZYua1LK4TrxE+adTapPoiTfEuII7IIIwlAPX5dM
-         HwobjC636QEocLqh1nKQ+FWY/5YUV37WjVWPYFqNzdJkbtTiWzycjStLUCCA+b5XU2g7
-         Ok4tRWrqgQFapYYdUPxz1aUQ2g0m64jyMWL87o1kHIvhrqbKoof+1eUjGHeJUujCAqOp
-         sC5r5Z611SWtB8njZMKu7N6gJnNYogM3LyG8VSUoDOVsmNvCFzOKf/Bcx8qLE7s2vDMX
-         4u++vl1LiJ/6CCYsPV4pLqMTyuuDez/t9Ar82k+qZbC4jXQ3LKruwzOu2hU85D1ZdlEI
-         k2Vg==
-X-Gm-Message-State: AC+VfDwbmMUjh3+hOoQUuCuMLiXxvDBIJjEDuwOBAZxad55vaap4mBN9
-	w1f24tJx5JdB9AytsrV7W082PA==
-X-Google-Smtp-Source: ACHHUZ5x5SACtt0xW0b6cmpAiNLg6lb938Dymx8uZU0YcrSBw25hfhVk5P/RfqzyOE7B6a2bNngPfw==
-X-Received: by 2002:aa7:d591:0:b0:514:c43e:3881 with SMTP id r17-20020aa7d591000000b00514c43e3881mr277960edq.35.1685516232672;
-        Tue, 30 May 2023 23:57:12 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id h23-20020aa7c617000000b005147503a238sm5308899edq.17.2023.05.30.23.57.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 23:57:12 -0700 (PDT)
-Message-ID: <367c3d26-b406-9ddc-e0ca-717994ed1c4a@linaro.org>
-Date: Wed, 31 May 2023 08:57:08 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE6D294D7
+	for <timestamp@lists.linux.dev>; Tue,  6 Jun 2023 21:57:38 +0000 (UTC)
+Received: from relay3-d.mail.gandi.net (unknown [IPv6:2001:4b98:dc4:8::223])
+	by mslow1.mail.gandi.net (Postfix) with ESMTP id A080AC1A00
+	for <timestamp@lists.linux.dev>; Tue,  6 Jun 2023 21:38:58 +0000 (UTC)
+X-GND-Sasl: alexandre.belloni@bootlin.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1686087530;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3IwmjLGuCx7jekbUY8ILKERGOQVFTWDIVAWaU21blAo=;
+	b=Dy4SLnZUwcBMfnuMUzXEiXCCf+OmuELyM00v0pww4+vjIpTkOl+fIRH8pEhvM3x/nzJMul
+	gLpZwLuDEdQHu871QMg10ARRE7Y74jYVWG5XY9fSdiAc7SjvAqooEU0I2D3djYQbWfZg9i
+	gpkLD8Maj0s77aaFOD0cyPpPtPxATVkRZIBM48CVdrshJP0QpbqLmAFalwMuGNC/GjSkEY
+	WJ96JK9/rX/yow7IfCyUGwDOyV8U4+9xZv1jjNjaWJClu3FVDFznyaBtSSfZP2dHjPbqSF
+	vZPjmj0aoqg4aH0mO2CuZETzpDn1hyqT2h3IlvksnZgg8qeXiFSKakpfe4lPSw==
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+X-GND-Sasl: alexandre.belloni@bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 2D59E60004;
+	Tue,  6 Jun 2023 21:38:48 +0000 (UTC)
+Date: Tue, 6 Jun 2023 23:38:47 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
+	Alessandro Zummo <a.zummo@towertech.it>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Mark Brown <broonie@kernel.org>, Dipen Patel <dipenp@nvidia.com>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Dilip Kota <eswara.kota@linux.intel.com>,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pwm@vger.kernel.org,
+	linux-rtc@vger.kernel.org, alsa-devel@alsa-project.org,
+	linux-spi@vger.kernel.org, timestamp@lists.linux.dev,
+	linux-watchdog@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Herring <robh@kernel.org>, Tony Lindgren <tony@atomide.com>,
+	Oleksij Rempel <linux@rempel-privat.de>
+Subject: Re: (subset) [PATCH 3/7] dt-bindings: rtc: restrict node name
+ suffixes
+Message-ID: <168608750603.35578.4427104675666542685.b4-ty@bootlin.com>
+References: <20230530144851.92059-1-krzysztof.kozlowski@linaro.org>
+ <20230530144851.92059-4-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 0/7] dt-bindings: restrict node name suffixes
-Content-Language: en-US
-To: Conor Dooley <conor@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Thierry Reding
- <thierry.reding@gmail.com>, =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?=
- <u.kleine-koenig@pengutronix.de>, Alessandro Zummo <a.zummo@towertech.it>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Mark Brown <broonie@kernel.org>, Dipen Patel <dipenp@nvidia.com>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
- <linux@roeck-us.net>, Dilip Kota <eswara.kota@linux.intel.com>,
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pwm@vger.kernel.org,
- linux-rtc@vger.kernel.org, alsa-devel@alsa-project.org,
- linux-spi@vger.kernel.org, timestamp@lists.linux.dev,
- linux-watchdog@vger.kernel.org, Tony Lindgren <tony@atomide.com>,
- Oleksij Rempel <o.rempel@pengutronix.de>
-References: <20230530144851.92059-1-krzysztof.kozlowski@linaro.org>
- <20230530-banister-luxurious-d33a5d289749@spud>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230530-banister-luxurious-d33a5d289749@spud>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230530144851.92059-4-krzysztof.kozlowski@linaro.org>
 
-On 30/05/2023 19:11, Conor Dooley wrote:
-> On Tue, May 30, 2023 at 04:48:44PM +0200, Krzysztof Kozlowski wrote:
->> Hi,
->>
->> Tree-wide cleanup of DTS node name suffixes "-N", e.g. "pwm-5", so we allow
->> only decimal numbers.  In few cases narrow the pattern to also disallow
->> multiple suffixes, e.g. "pwm-5-5".
+
+On Tue, 30 May 2023 16:48:47 +0200, Krzysztof Kozlowski wrote:
+> Make the pattern matching node names a bit stricter to improve DTS
+> consistency.  The pattern is restricted to:
+> 1. Only one unit address or one -N suffix,
+> 2. -N suffixes to decimal numbers.
 > 
-> I figure there'll be quite a bit of stuff to fix up afterwards?
-> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+> 
 
-Quick grep shown zero fixes needed.
+Applied, thanks!
+
+[3/7] dt-bindings: rtc: restrict node name suffixes
+      commit: 93eff1e0e67a0b54fc16f07f0ca88f8b5afd9f89
 
 Best regards,
-Krzysztof
 
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
