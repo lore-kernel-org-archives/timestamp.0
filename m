@@ -1,65 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E61C182C8
-	for <timestamp@lists.linux.dev>; Wed, 21 Jun 2023 17:32:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F215EC433C8;
-	Wed, 21 Jun 2023 17:32:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1687368750;
-	bh=VfqGpYEIglQTk51i33OR5r1TFrQwDJbPB0c/7MTgQXU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lL5Wji/oNVr5PUKpng4sRLy9k9e/N1ftHA1H/u/QEfYMDF0txKa82VpDKcAWyENjq
-	 9nFIxmUQ7OBdkawD4EgQTkdU0NN4WpeZkzIjDP76oY4AVYMD2Ve/9hScaIytGN5BD2
-	 63jFjGe9ZIQBlCs2KzuYLE97Hv90ScP6yvHeyjp3lBHawrxbcIXXqzcaolcAHyUu20
-	 RvVg5VUVR7oWBlnMjagDmW4se5Ij8db88LJB5ugxm2M7iT2tlHntQB51Dw55hhjoIb
-	 69Yw7/LdTsDiPfDCzfXM2Ro0OAaZhHUdyOuQGIWEDkCugjRNycgeL8MQKN9AV3PIG2
-	 8yytwf9fE/QwA==
-Date: Wed, 21 Jun 2023 23:02:26 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Kishon Vijay Abraham I <kishon@kernel.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7B08C02
+	for <timestamp@lists.linux.dev>; Fri, 23 Jun 2023 14:51:54 +0000 (UTC)
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-31272fcedf6so723237f8f.2
+        for <timestamp@lists.linux.dev>; Fri, 23 Jun 2023 07:51:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687531913; x=1690123913;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rJWtnTqZGQqiTeKl4r3aFL4RAd0yKamdEh9nm3JU/uE=;
+        b=nZcAJ+sOqOwPNZAQ60lFA97QCbjofCc+XbSeSieNhhuKrWMtiE/O020aJCaGZig5Lf
+         M+2Ra8MPpBVqUhcStWmEYd2ObUzA+kQ3K8H2ePAsYG1JWTf3WWXWaROYVC6t7QX+mx6J
+         ESspbYNZ8OxGO/MfZaT0ORXOyftuTisX0q5bz1doEqX176Xd3AyztjKHNHN63UimszRn
+         Dqv+xetGcZd2+R0LFeA2aONQHwXzUPMXk9dRWS8mqvQ8vpJvPrOKCvsRr9lGz/T5jW+G
+         bbfDKveX+aL7d/d/Okx6QglyYu1YT1lUbE8K9aKT4exUm3nUwLqWGufz9RjrDc1FYimv
+         EUrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687531913; x=1690123913;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rJWtnTqZGQqiTeKl4r3aFL4RAd0yKamdEh9nm3JU/uE=;
+        b=DvawHl4y+DYinoz407X09IWD/AQyz86LQEd7NXHABzFCo4AtLXqyyqIu8edLe9ukz4
+         ZV/jqp1bcXhX6RHCN997rtCmOlyFF8PD9/m2/3hUFYTb9SCZ/kH04ZxIIU4u1H3wmDCr
+         bchjTp0argbbFBjKdEhvln0xz187AlFlAPMMjA6ch+G6rx+FUmYmWtf8UtATeUP0R6Wv
+         d//kYO9USEtIDbsVYV1Fsz03+X/nDD2qpkWMWL9ny+kF/hyfKv75tovQtfEVj4FjG0PZ
+         pYs2fsBlWqoPJwmf9vuTV6wRNOE6cpcOesxPLmhq2cwtVdb4qe5kPVC6e5bxar0nmvfC
+         3bMQ==
+X-Gm-Message-State: AC+VfDzIX0KIGwGjx28cCHKfRVFzXHbH+2h2+Dmcy9W2OSj2rf8WydIX
+	Us57Uv3MSrBSdPoYq0hMgYU=
+X-Google-Smtp-Source: ACHHUZ4EBaf4UIgKOYCqelucvQ5eoSxiLNvK3UwYGIN9g04VxMMagZ6W8cf/YKjEZ8A8mLc9ODWWzg==
+X-Received: by 2002:a5d:5642:0:b0:311:13e6:6504 with SMTP id j2-20020a5d5642000000b0031113e66504mr14242204wrw.47.1687531913116;
+        Fri, 23 Jun 2023 07:51:53 -0700 (PDT)
+Received: from localhost (p200300e41f305300f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f30:5300:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id n11-20020a5d4c4b000000b003113ccbf388sm9844475wrt.13.2023.06.23.07.51.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jun 2023 07:51:52 -0700 (PDT)
+From: Thierry Reding <thierry.reding@gmail.com>
+To: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Alessandro Zummo <a.zummo@towertech.it>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Mark Brown <broonie@kernel.org>, Dipen Patel <dipenp@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
+	Dipen Patel <dipenp@nvidia.com>,
 	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Dilip Kota <eswara.kota@linux.intel.com>,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pwm@vger.kernel.org,
-	linux-rtc@vger.kernel.org, alsa-devel@alsa-project.org,
-	linux-spi@vger.kernel.org, timestamp@lists.linux.dev,
-	linux-watchdog@vger.kernel.org, Rob Herring <robh@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>
-Subject: Re: [PATCH 1/7] dt-bindings: phy: intel,combo-phy: restrict node
- name suffixes
-Message-ID: <ZJM0Kh8+ZzfiFQlg@matsya>
+	linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-pwm@vger.kernel.org,
+	linux-rtc@vger.kernel.org,
+	alsa-devel@alsa-project.org,
+	linux-spi@vger.kernel.org,
+	timestamp@lists.linux.dev,
+	linux-watchdog@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Tony Lindgren <tony@atomide.com>,
+	Oleksij Rempel <linux@rempel-privat.de>
+Subject: Re: (subset) [PATCH 0/7] dt-bindings: restrict node name suffixes
+Date: Fri, 23 Jun 2023 16:51:36 +0200
+Message-ID: <168753171977.1191890.3520383079920452323.b4-ty@gmail.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230530144851.92059-1-krzysztof.kozlowski@linaro.org>
 References: <20230530144851.92059-1-krzysztof.kozlowski@linaro.org>
- <20230530144851.92059-2-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230530144851.92059-2-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 30-05-23, 16:48, Krzysztof Kozlowski wrote:
-> Make the pattern matching node names a bit stricter to improve DTS
-> consistency.  The pattern is restricted to:
-> 1. Only one unit address or one -N suffix,
-> 2. -N suffixes to decimal numbers.
 
-Applied, thanks
+On Tue, 30 May 2023 16:48:44 +0200, Krzysztof Kozlowski wrote:
+> Tree-wide cleanup of DTS node name suffixes "-N", e.g. "pwm-5", so we allow
+> only decimal numbers.  In few cases narrow the pattern to also disallow
+> multiple suffixes, e.g. "pwm-5-5".
+> 
+> No dependencies, can be applied by individual subsystems.
+> 
+> Cc: Tony Lindgren <tony@atomide.com>
+> Cc: Oleksij Rempel <o.rempel@pengutronix.de>
+> 
+> [...]
 
+Applied, thanks!
+
+[2/7] dt-bindings: pwm: restrict node name suffixes
+      commit: 05b743db9d8cc4e51b3eb77889d24ab9aa2bf169
+
+Best regards,
 -- 
-~Vinod
+Thierry Reding <thierry.reding@gmail.com>
