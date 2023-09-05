@@ -1,43 +1,43 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B987DDD1
-	for <timestamp@lists.linux.dev>; Tue,  5 Sep 2023 18:53:42 +0000 (UTC)
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4018af103bcso1013485e9.1
-        for <timestamp@lists.linux.dev>; Tue, 05 Sep 2023 11:53:42 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03BFDDAF
+	for <timestamp@lists.linux.dev>; Tue,  5 Sep 2023 18:53:43 +0000 (UTC)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-401f503b529so28406235e9.0
+        for <timestamp@lists.linux.dev>; Tue, 05 Sep 2023 11:53:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1693940020; x=1694544820; darn=lists.linux.dev;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1693940022; x=1694544822; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=c6tn4Tgcsi1O0hqP3FN/fJ4KrpHQM0EtczTKadJgTtw=;
-        b=bi/PuediI+N9Dc48ia1eajiBHjeW+OTQAwBXo5YtEE302akYJmCELYda5o/9b4+cgP
-         lPFO51at/czm+Zv3Wl9LXQhz33OUwYQ5CpKgI+xq+vMih3vORpbcXgHzj7P7B320d9mY
-         38dFb2frHripChzQnb987YhNWjETEmKFe7O9ON9vnS3uMehAN1WDKdoP+aio3b3GRmbP
-         HlLqIvgYPxcuvG5DeSu2VHF+4Q9Mcznmtt9CseoaEw5+ek3p0vlEgVzcA7J+2xjrV91o
-         59HY+n3NplZbYPxzFjugtlk/xgjCglxHq/8H4/TwhxUBfVLOR+SP5y3jtSgd4BPc2MgV
-         wL4Q==
+        bh=vPYbcmhlviFwWzuYOu9Z0ne7hiPspJP6iTCWdpKZ06M=;
+        b=aazftGQ9q+CHhaU/qkpAStgqcXn8D2jH9wI5mph/ks8KvwdjeOM1ylST4jFMy08Q9M
+         2o/e2775Ivn+7QhXxUn3AgtERjOX0t+tZm6o0oWY0BiVcZoKPhcfIEeakimiGjhDWE5Y
+         wcbVbT37skdqeupTuUL7UoyDb2qFeqzIctCZ2ga77C15fROMScggCzKTQ7H1na6mz3aC
+         rJ/JJwc+olAl7e1ArdLkt4LB+ftPpZWu0yDiMwy8wV71/ORtwuT8mUPsL6R5naXPIXAg
+         unKbsFekBFYYQSJ7G+aTP2p4ggyU96mWZgjWsqeyhwfm5xHjjdDMehgmzGaZd/zuVpfL
+         1C+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693940020; x=1694544820;
+        d=1e100.net; s=20221208; t=1693940022; x=1694544822;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=c6tn4Tgcsi1O0hqP3FN/fJ4KrpHQM0EtczTKadJgTtw=;
-        b=GZq1uPYPyKAK53QDyePMJ0WP8MSrPS4xb75UsjnG4IYwS0mg4lVJ8f+yojS2n5axYU
-         ODAYXOgkrp2HmrJLk9ozHi8cpXH3VHOOd4aHbJCgMkRKI+PGs2nPBbSCpw2oZUjSaxGW
-         fmxovFgFQ+XoJk4kG3bqEDQEA68uHLVQDs/DhZDL+A7ylxOYgPTujsGzBCBAzTuMGaQD
-         HwwqBEPqV+VZBbzQelruNtEgcLKUGQ1colTAe612yJF62oMKMyCpxijQ35Yq4vNPZ65k
-         MD+zVdYPN9gbnDPKwt3Swoa9nJphLz/1WDr5R3e+P6KnCLo372fFnxBUi+C2gYd9ZOKk
-         r+1g==
-X-Gm-Message-State: AOJu0YwZ6y05CbJNnXgcWzdYxX/beHqvSwETzKlq276znwLr+EsjO69m
-	xPikJJ6JPzfPrwUePXr8pFJr2g==
-X-Google-Smtp-Source: AGHT+IHaOumSDU3nr/8PNaqRqHS3aAWO3c0eVyPkb5h63GCpGBG6kfLxrczPHvapwSdIRLtHe1YhsQ==
-X-Received: by 2002:a7b:ce90:0:b0:3fe:1b5e:82 with SMTP id q16-20020a7bce90000000b003fe1b5e0082mr547652wmj.20.1693940020693;
-        Tue, 05 Sep 2023 11:53:40 -0700 (PDT)
+        bh=vPYbcmhlviFwWzuYOu9Z0ne7hiPspJP6iTCWdpKZ06M=;
+        b=RQw/cojYbLCayD1LzucyG/nIyfDmhvJelyKT3cLgrkhoRMmW+t+za7EMHAjgRyF1zo
+         C0ZAoc/c19M2qjknBQz5oBYE0fi6wNqaEae/5CcvNIinopQxna7DtQKJ0d0n/8EzRigw
+         nWQ/6wAzH7fsbTpjtf/cSw3crrJnTVVFZs2KbKfppfSv0Z8Za0WFh6AaBTVC5Gnk8cQM
+         BpbSMuqYDeGK7v26y6hTPfcaxCU33JSNeH+9pQ4yV7MdbaQ4oIerys/GGCzs7y5w/yym
+         SGzUnSTvin+ePm3uSUwY1EJ4EDRpwmMArdZeWegtbPfpkMR6/Yba+FA4740Tt+EsJrd+
+         rvTw==
+X-Gm-Message-State: AOJu0YzYfZGToyISfwZAdgjJ6f62NJPFXn9vuQnuZZleiCOIhoicVqTj
+	QNFyWAvaKyBY3u/b9JyMPdIZ7Q==
+X-Google-Smtp-Source: AGHT+IH7bFhmwhJkbEP09mNLLK4toqHl75c1c56y8lKZfC2ULSFpMzvdc2De5dyozg7UIqDbZnvopw==
+X-Received: by 2002:a7b:cb96:0:b0:3fe:d6bf:f314 with SMTP id m22-20020a7bcb96000000b003fed6bff314mr414148wmi.39.1693940021910;
+        Tue, 05 Sep 2023 11:53:41 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:7a54:5dbc:6d09:48b7])
-        by smtp.gmail.com with ESMTPSA id 17-20020a05600c249100b003fbc30825fbsm17550010wms.39.2023.09.05.11.53.39
+        by smtp.gmail.com with ESMTPSA id 17-20020a05600c249100b003fbc30825fbsm17550010wms.39.2023.09.05.11.53.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Sep 2023 11:53:40 -0700 (PDT)
+        Tue, 05 Sep 2023 11:53:41 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Aaro Koskinen <aaro.koskinen@iki.fi>,
 	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
@@ -61,9 +61,9 @@ Cc: linux-arm-kernel@lists.infradead.org,
 	linux-tegra@vger.kernel.org,
 	platform-driver-x86@vger.kernel.org,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 12/21] hte: allow building modules with COMPILE_TEST enabled
-Date: Tue,  5 Sep 2023 20:53:00 +0200
-Message-Id: <20230905185309.131295-13-brgl@bgdev.pl>
+Subject: [PATCH 13/21] hte: tegra194: improve the GPIO-related comment
+Date: Tue,  5 Sep 2023 20:53:01 +0200
+Message-Id: <20230905185309.131295-14-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230905185309.131295-1-brgl@bgdev.pl>
 References: <20230905185309.131295-1-brgl@bgdev.pl>
@@ -77,35 +77,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Allow building all HTE modules with COMPILE_TEST Kconfig option enabled.
+Using any of the GPIO interfaces using the global numberspace is
+deprecated. Make it clear in the comment.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/hte/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hte/hte-tegra194.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hte/Kconfig b/drivers/hte/Kconfig
-index cf29e0218bae..083e67492bf2 100644
---- a/drivers/hte/Kconfig
-+++ b/drivers/hte/Kconfig
-@@ -16,7 +16,7 @@ if HTE
+diff --git a/drivers/hte/hte-tegra194.c b/drivers/hte/hte-tegra194.c
+index 6fe6897047ac..9fd3c00ff695 100644
+--- a/drivers/hte/hte-tegra194.c
++++ b/drivers/hte/hte-tegra194.c
+@@ -407,12 +407,15 @@ static int tegra_hte_line_xlate(struct hte_chip *gc,
+ 		return -EINVAL;
  
- config HTE_TEGRA194
- 	tristate "NVIDIA Tegra194 HTE Support"
--	depends on ARCH_TEGRA_194_SOC
-+	depends on (ARCH_TEGRA_194_SOC || COMPILE_TEST)
- 	help
- 	  Enable this option for integrated hardware timestamping engine also
- 	  known as generic timestamping engine (GTE) support on NVIDIA Tegra194
-@@ -25,7 +25,7 @@ config HTE_TEGRA194
- 
- config HTE_TEGRA194_TEST
-         tristate "NVIDIA Tegra194 HTE Test"
--        depends on HTE_TEGRA194
-+        depends on (HTE_TEGRA194 || COMPILE_TEST)
-         help
- 	  The NVIDIA Tegra194 GTE test driver demonstrates how to use HTE
- 	  framework to timestamp GPIO and LIC IRQ lines.
+ 	/*
++	 * GPIO consumers can access GPIOs in two ways:
+ 	 *
+-	 * There are two paths GPIO consumers can take as follows:
+-	 * 1) The consumer (gpiolib-cdev for example) which uses GPIO global
+-	 * number which gets assigned run time.
+-	 * 2) The consumer passing GPIO from the DT which is assigned
+-	 * statically for example by using TEGRA194_AON_GPIO gpio DT binding.
++	 * 1) Using the global GPIO numberspace.
++	 *
++	 * This is the old, now DEPRECATED method and should not be used in
++	 * new code. TODO: Check if tegra is even concerned by this.
++	 *
++	 * 2) Using GPIO descriptors that can be assigned to consumer devices
++	 * using device-tree, ACPI or lookup tables.
+ 	 *
+ 	 * The code below addresses both the consumer use cases and maps into
+ 	 * HTE/GTE namespace.
 -- 
 2.39.2
 
