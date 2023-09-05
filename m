@@ -1,43 +1,43 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F112DDDAF
-	for <timestamp@lists.linux.dev>; Tue,  5 Sep 2023 18:53:38 +0000 (UTC)
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4018af103bcso1013175e9.1
-        for <timestamp@lists.linux.dev>; Tue, 05 Sep 2023 11:53:38 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653AEDDD1
+	for <timestamp@lists.linux.dev>; Tue,  5 Sep 2023 18:53:40 +0000 (UTC)
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-317c3ac7339so2486617f8f.0
+        for <timestamp@lists.linux.dev>; Tue, 05 Sep 2023 11:53:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1693940017; x=1694544817; darn=lists.linux.dev;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1693940018; x=1694544818; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LktKQq4MWoQ/qKoiT9d7DgSnCPQ1kCPUYmKK3IZgeGM=;
-        b=1JRALQ7xKeopXqVfclTrmaRVanui1a2+ZlwvD1Qyd03UgZzZLLlUO7CSaLt3J1dV6a
-         7Il4BiTFOSzFlEVE22hDxpnyD7AEVjNBnvnG0tOnnROuPcCkNeKRyf24EXMFvNkvA008
-         N9CX4xVb0p3CYHv12RH5qHcri/nEMjFMzoJRItSizwRDRAqFkLVeQU9fvMB71gA9uJQW
-         +pgDNBJUYcuu/aD/VX8bNLDEbp2x7B+/VNlgXS+4A6N5ZjCg1+3lXywvGiSahax0mKbR
-         1QLheEuvpHBfHlM+umGd+aw3x8Ezmcd/tUlwp1yKFZLggGzwI5M1Buk5mZ2d2+/TcLGn
-         QGSQ==
+        bh=0Lyvqa4ehdDUPxRvhVu2QVwAbbRfiYfIlEbafqal+r0=;
+        b=3VzpEdCZHMCwlhhW1Smgr4A3UFFFQPRf0uWoK9mCoxQf2PKFq5pEIjcu/Rq44KMujP
+         +qtnBlBXNewdHVpIV9fCKo/JDVOLtRhFxyc/+FQYVsYiJhYtgfYjzi+1EMaARTdPL2dL
+         903eszcrS3yFzyBF1dyLMxQXCi0P5+BOo/gxuSeANNARtG05+h1mLB7/OW6Gtgk9So14
+         wbaVLUDthu5t+0mxZzXLr+xGOQC7r5Z3UMTPrSu5NBMAjWslKm+4SJHK6LZkP6uI7s/H
+         RZMlmI6Kzmqcfn324enMsx4GVeCchmtQ2FhdjCMp+GEzlXrzr2bWwYGrkoMI8q44Kwqd
+         Si6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693940017; x=1694544817;
+        d=1e100.net; s=20221208; t=1693940018; x=1694544818;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LktKQq4MWoQ/qKoiT9d7DgSnCPQ1kCPUYmKK3IZgeGM=;
-        b=BgfRDxofQd5VStvwMOlDGONJ35o1x9H05YVRNDlEf+SOIuWjvQ8o1mBXQvS+j0uIve
-         DRNuPDmEhlhBOemSNlOYBqMp0T/BI9T/dZILzHiq6TncwktQp0bGZH65fyRqEcNYmN2i
-         EAByApT3Lh3rWeYYePMo7yVXQFHrEGl9/lrXq3sQcqymeWqQLKFZQjFGMCltbKDi2xtG
-         iNVQTGggT2Yk+6m/4ZejH2yj96R8ouHdbp+dUqSbJIT+uzyG5EV/4Sls/2BW1qfX/va7
-         pOONUxZ/JUJNfIThB4Uv41V1578kOJ0yf5DZ7xW3BbQrhXDceYV9oIwLv2KC2ZOpTVt+
-         bFXA==
-X-Gm-Message-State: AOJu0Yz04B3VS7rx94yHDEpIofnZ0vEMVN8wkFhXWstmNUVGrHF71R4c
-	opAeEQxTxjmWx+nEIQgD3ORsjA==
-X-Google-Smtp-Source: AGHT+IEKE+XCvxCtmXJO+rvvHv5Ifn1+auM+4ZurnpxJ8t+aLjhMPMETigx/CB4V/gfiHQTOepYw2A==
-X-Received: by 2002:a05:600c:4b1f:b0:401:bcec:be3e with SMTP id i31-20020a05600c4b1f00b00401bcecbe3emr598796wmp.17.1693940017155;
-        Tue, 05 Sep 2023 11:53:37 -0700 (PDT)
+        bh=0Lyvqa4ehdDUPxRvhVu2QVwAbbRfiYfIlEbafqal+r0=;
+        b=gCrgT7H3pPUdgSyWz9s1dxpQwN6e7rJWiu/wBIRPegM+tvbwB28WIGWy7EcnE/3MRD
+         lOBS7id1b/Tmd+9y4ure9Ak/mKM7k+vSwejbohZriegmAGYk80q5MriDcw+zt1PiIp1a
+         zAamFW/fGNXbNKVT2vwx3G/UmugnvXPLnKpxeQ80F69F/xHLpFSJcAAkh4Y59VU863sV
+         FGNo5yEueEvFdDKsRMmbp+CrwWGUxom8DMaG/yKza8OHcVjzchC81AzmnAaJil9AxWV9
+         HevrRDGHxPxOIDUqjmmC1SgWEYHSaJ4tOaungJbyKfQR5j0FxjXNmLImdWYHTT7i7eCs
+         Qorg==
+X-Gm-Message-State: AOJu0YxCy6bQtLjRT8A1QBmgbp9fqRcw8tS5nv0HIo7HhHesvAa9VbyN
+	lN8dx1kx2cCa1glhQ5G9bp8mOQ==
+X-Google-Smtp-Source: AGHT+IG/jv5LelRKHFkS+zSS/4W2MFsO0ZmIobecKNQDMGWNcj2BwZSzitK+fLdVa7TdoNhlKNwX4g==
+X-Received: by 2002:a05:6000:1190:b0:313:f399:6cea with SMTP id g16-20020a056000119000b00313f3996ceamr489890wrx.4.1693940018296;
+        Tue, 05 Sep 2023 11:53:38 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:7a54:5dbc:6d09:48b7])
-        by smtp.gmail.com with ESMTPSA id 17-20020a05600c249100b003fbc30825fbsm17550010wms.39.2023.09.05.11.53.36
+        by smtp.gmail.com with ESMTPSA id 17-20020a05600c249100b003fbc30825fbsm17550010wms.39.2023.09.05.11.53.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Sep 2023 11:53:36 -0700 (PDT)
+        Tue, 05 Sep 2023 11:53:37 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Aaro Koskinen <aaro.koskinen@iki.fi>,
 	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
@@ -61,9 +61,9 @@ Cc: linux-arm-kernel@lists.infradead.org,
 	linux-tegra@vger.kernel.org,
 	platform-driver-x86@vger.kernel.org,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 09/21] gpiolib: reluctantly provide gpio_device_get_chip()
-Date: Tue,  5 Sep 2023 20:52:57 +0200
-Message-Id: <20230905185309.131295-10-brgl@bgdev.pl>
+Subject: [PATCH 10/21] gpiolib: replace find_chip_by_name() with gpio_device_find_by_label()
+Date: Tue,  5 Sep 2023 20:52:58 +0200
+Message-Id: <20230905185309.131295-11-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230905185309.131295-1-brgl@bgdev.pl>
 References: <20230905185309.131295-1-brgl@bgdev.pl>
@@ -77,58 +77,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-The process of converting all unauthorized users of struct gpio_chip to
-using dedicated struct gpio_device function will be long so in the
-meantime we must provide a way of retrieving the pointer to struct
-gpio_chip from a GPIO device.
+Remove all remaining uses of find_chip_by_name() (and subsequently:
+gpiochip_find()) from gpiolib.c and use the new
+gpio_device_find_by_label() instead.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/gpio/gpiolib.c      | 18 ++++++++++++++++++
- include/linux/gpio/driver.h |  1 +
- 2 files changed, 19 insertions(+)
+ drivers/gpio/gpiolib.c | 36 ++++++++++++------------------------
+ 1 file changed, 12 insertions(+), 24 deletions(-)
 
 diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 9715bbc698e9..408f8a7753f9 100644
+index 408f8a7753f9..90e8c3d8b6f6 100644
 --- a/drivers/gpio/gpiolib.c
 +++ b/drivers/gpio/gpiolib.c
-@@ -246,6 +246,24 @@ int gpio_device_get_base(struct gpio_device *gdev)
+@@ -1161,18 +1161,6 @@ struct gpio_device *gpio_device_find_by_label(const char *label)
  }
- EXPORT_SYMBOL_GPL(gpio_device_get_base);
+ EXPORT_SYMBOL_GPL(gpio_device_find_by_label);
  
-+/**
-+ * gpio_device_get_chip() - Get the gpio_chip implementation of this GPIO device
-+ * @gdev: GPIO device
-+ *
-+ * Until we can get rid of all non-driver users struct gpio_chip, we must
-+ * provide a way of retrieving the pointer to it from struct gpio_device. This
-+ * is *NOT* safe as the GPIO API is considered to be hot-unpluggable and the
-+ * chip can dissapear at any moment (unlike reference-counted struct
-+ * gpio_device).
-+ *
-+ * Use at your own risk.
-+ */
-+struct gpio_chip *gpio_device_get_chip(struct gpio_device *gdev)
-+{
-+	return gdev->chip;
-+}
-+EXPORT_SYMBOL_GPL(gpio_device_get_chip);
-+
- /* dynamic allocation of GPIOs, e.g. on a hotplugged device */
- static int gpiochip_find_base(int ngpio)
+-static int gpiochip_match_name(struct gpio_chip *gc, void *data)
+-{
+-	const char *name = data;
+-
+-	return !strcmp(gc->label, name);
+-}
+-
+-static struct gpio_chip *find_chip_by_name(const char *name)
+-{
+-	return gpiochip_find((void *)name, gpiochip_match_name);
+-}
+-
+ /**
+  * gpio_device_get() - Increase the reference count of this GPIO device
+  * @gdev: GPIO device to increase the refcount for
+@@ -3924,21 +3912,22 @@ EXPORT_SYMBOL_GPL(gpiod_remove_lookup_table);
+  */
+ void gpiod_add_hogs(struct gpiod_hog *hogs)
  {
-diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
-index 47906bc56b3d..bb9ec741bfda 100644
---- a/include/linux/gpio/driver.h
-+++ b/include/linux/gpio/driver.h
-@@ -782,6 +782,7 @@ struct gpio_device *gpiod_to_device(struct gpio_desc *desc);
+-	struct gpio_chip *gc;
+ 	struct gpiod_hog *hog;
  
- /* struct gpio_device getters */
- int gpio_device_get_base(struct gpio_device *gdev);
-+struct gpio_chip *gpio_device_get_chip(struct gpio_device *gdev);
+ 	mutex_lock(&gpio_machine_hogs_mutex);
  
- #else /* CONFIG_GPIOLIB */
+ 	for (hog = &hogs[0]; hog->chip_label; hog++) {
++		struct gpio_device *gdev __free(gpio_device_put) = NULL;
++
+ 		list_add_tail(&hog->list, &gpio_machine_hogs);
  
+ 		/*
+ 		 * The chip may have been registered earlier, so check if it
+ 		 * exists and, if so, try to hog the line now.
+ 		 */
+-		gc = find_chip_by_name(hog->chip_label);
+-		if (gc)
+-			gpiochip_machine_hog(gc, hog);
++		gdev = gpio_device_find_by_label(hog->chip_label);
++		if (gdev)
++			gpiochip_machine_hog(gdev->chip, hog);
+ 	}
+ 
+ 	mutex_unlock(&gpio_machine_hogs_mutex);
+@@ -3999,7 +3988,7 @@ static struct gpio_desc *gpiod_find(struct device *dev, const char *con_id,
+ 		return desc;
+ 
+ 	for (p = &table->table[0]; p->key; p++) {
+-		struct gpio_chip *gc;
++		struct gpio_device *gdev __free(gpio_device_put) = NULL;
+ 
+ 		/* idx must always match exactly */
+ 		if (p->idx != idx)
+@@ -4021,9 +4010,8 @@ static struct gpio_desc *gpiod_find(struct device *dev, const char *con_id,
+ 			return ERR_PTR(-EPROBE_DEFER);
+ 		}
+ 
+-		gc = find_chip_by_name(p->key);
+-
+-		if (!gc) {
++		gdev = gpio_device_find_by_label(p->key);
++		if (!gdev) {
+ 			/*
+ 			 * As the lookup table indicates a chip with
+ 			 * p->key should exist, assume it may
+@@ -4036,15 +4024,15 @@ static struct gpio_desc *gpiod_find(struct device *dev, const char *con_id,
+ 			return ERR_PTR(-EPROBE_DEFER);
+ 		}
+ 
+-		if (gc->ngpio <= p->chip_hwnum) {
++		if (gdev->chip->ngpio <= p->chip_hwnum) {
+ 			dev_err(dev,
+ 				"requested GPIO %u (%u) is out of range [0..%u] for chip %s\n",
+-				idx, p->chip_hwnum, gc->ngpio - 1,
+-				gc->label);
++				idx, p->chip_hwnum, gdev->chip->ngpio - 1,
++				gdev->chip->label);
+ 			return ERR_PTR(-EINVAL);
+ 		}
+ 
+-		desc = gpiochip_get_desc(gc, p->chip_hwnum);
++		desc = gpiochip_get_desc(gdev->chip, p->chip_hwnum);
+ 		*flags = p->flags;
+ 
+ 		return desc;
 -- 
 2.39.2
 
