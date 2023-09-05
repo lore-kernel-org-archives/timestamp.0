@@ -1,43 +1,43 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59917D53B
-	for <timestamp@lists.linux.dev>; Tue,  5 Sep 2023 18:53:35 +0000 (UTC)
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-401bbfc05fcso30009055e9.3
-        for <timestamp@lists.linux.dev>; Tue, 05 Sep 2023 11:53:35 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874FADDAF
+	for <timestamp@lists.linux.dev>; Tue,  5 Sep 2023 18:53:36 +0000 (UTC)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-402c46c49f4so28186375e9.1
+        for <timestamp@lists.linux.dev>; Tue, 05 Sep 2023 11:53:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1693940013; x=1694544813; darn=lists.linux.dev;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1693940014; x=1694544814; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rGZDmwAMqeUVhOTfv7ZtpSGAuFAAm5HZQ+raVbVaSso=;
-        b=ahPed7en1h61Zq6GHOCnHc0Dn/7mhkObkeKv6N8dMVMmaJ0MwgnfhT1MJSb8RtkuH2
-         r1b0wcVmMytUQTmEPdBJPW523iffUU+1xyQdqFmmKI5rp3Nwr97IQGSJdbw6l47WHNk1
-         CSpAAi6H+RLYETjiE4rwZ0+NWkG8OWviaBZ6qHI2GteRnPAtVBsrhSkcLcfpKqdrqzLc
-         XxIDlynNJs+ypNBh7ziTQfEBPO/jzr7KsaEBXsooLIul9pSL3MN6Cu1FWylpFTDX5Umf
-         ixnJkoD6TVJ063ADRMwywWDke8ienojUQc4+VAfQGNgoIaK61SPbt5SwJ1CKQjt+4NS4
-         Pf2w==
+        bh=2+MC7OlTYjYmYcid9pUzzxXRyDGKxkUAmb4nz8uCexs=;
+        b=lEqCbL7iD7Zcv7QPVts7SZcW4AU29OXHZstacH1BwzSGFhNYrHYPeYjGvkar82jrxF
+         mJMVgooulvNos8cGXpngmxZEZJfASQoGZcW/j9mSVAZ0dlDf0gfARbEgSP1ipT36Eo9d
+         bM0cO7oPLx07yBsAl0ZQmELkZllnvQJJPHqqtNMB0IJ/DdQsFL2CO0mUOOZXO0R+Uk84
+         hR2f+6X91bOtMYXH9qbsL5CbfIk4e9JGf7BgSc5JVeO5Pc0xm4IBz3LlBr4+kjJL+4vq
+         VUB51EHW5Rig+uJhsYkXlGn8uEY2603UfO7IcFTflZDcVZINi6v/WtwWl+JHhNlrYwAF
+         pc1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693940013; x=1694544813;
+        d=1e100.net; s=20221208; t=1693940014; x=1694544814;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rGZDmwAMqeUVhOTfv7ZtpSGAuFAAm5HZQ+raVbVaSso=;
-        b=Sd65v88Moq26v/IwRdQnxljxg/LgxccFfgl0DrJYlOgRo7xcqEwBNlzztb/pBe+Dnq
-         pP+eSCG8Wtx3BGC2rwvFmZ/oSCJBMNP/VnD4cyrvByyB4kA60kNomGyEBWHLxS7vpmDo
-         0ty+/FQFntHAyFdMrMSgZSc446Rj0L+AcHYmgqux1pjyIGqy+D+ogvmkwtFIwzHimf1r
-         ehC4TmHpDVbp9WXhcVGxTvdyQQxOaGDfeZPii3rU2ev9bcKPVH8afPMUnQKhiNFsgATL
-         0Bb3/yBMr+w1rGtzYlel6hV3CixqE+uiH+tb59atUZuOVYt/TPqhNHBP8i3vSl1xyD0e
-         XxEg==
-X-Gm-Message-State: AOJu0YzR7Mb20Q0Ccqm5OJnlZD/QobUPepgTGjbpnYAmIBbJsKBCT4p0
-	Vofm9kW5yl9QkKnCUimsXlWI0Q==
-X-Google-Smtp-Source: AGHT+IE6a92Y8/0xOq//9BYLFPzr9xAdeK40uWCbwfh4Inevy5jL9Qx5QtQIzqIf7nl+RNMdD6lXWg==
-X-Received: by 2002:a05:600c:2149:b0:402:8c7b:ceea with SMTP id v9-20020a05600c214900b004028c7bceeamr402336wml.30.1693940013467;
-        Tue, 05 Sep 2023 11:53:33 -0700 (PDT)
+        bh=2+MC7OlTYjYmYcid9pUzzxXRyDGKxkUAmb4nz8uCexs=;
+        b=WpiFzlArnalOedYc7dVYa8Ti9BkWmwwl5sPUiVeGkpgWYHGovl4ESObL1lo3mTbP8C
+         dvtDQfgvwiFOw4Epv3ZjVqz2yL+2mqTlWJyeYJDB5zSsPqjYQ1Tc1r8VvlK5GcPInw++
+         0Dses1wbCCxDuK0h40ZZr7gAtk5enkDsxbL0phROku/VERWHx90zSXx4I1CqtnxQFuHy
+         G3bHhlmsoUHmugXaEraTBcL6zrxTjLGYDjn2H4Y0VRe0DCG5YpKmTLXGjI3wATE9NZXl
+         JyPArbCKTpF2y7uz6+yxnVqmgFLBoJemXgHFyJ/hEE7Y6s5z33ziFHgEvZXdly4rHF/7
+         Wa9A==
+X-Gm-Message-State: AOJu0Yx5Zif//FxQ79tIT7teUwFPmPVttqMApUgJHAEBt5pWXg9ZEPDZ
+	LqZ53qnVNhk9yn5SbFrFMBQCZg==
+X-Google-Smtp-Source: AGHT+IGj2EuAvHtXRXD8rdSvHdyQNmCzp7/4dD7j6aPqgw+n/kXSu9aLQQjPpRIFRE646UdFzsOLag==
+X-Received: by 2002:adf:e0c5:0:b0:319:6b6c:dd01 with SMTP id m5-20020adfe0c5000000b003196b6cdd01mr477303wri.17.1693940014702;
+        Tue, 05 Sep 2023 11:53:34 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:7a54:5dbc:6d09:48b7])
-        by smtp.gmail.com with ESMTPSA id 17-20020a05600c249100b003fbc30825fbsm17550010wms.39.2023.09.05.11.53.32
+        by smtp.gmail.com with ESMTPSA id 17-20020a05600c249100b003fbc30825fbsm17550010wms.39.2023.09.05.11.53.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Sep 2023 11:53:33 -0700 (PDT)
+        Tue, 05 Sep 2023 11:53:34 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Aaro Koskinen <aaro.koskinen@iki.fi>,
 	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
@@ -61,9 +61,9 @@ Cc: linux-arm-kernel@lists.infradead.org,
 	linux-tegra@vger.kernel.org,
 	platform-driver-x86@vger.kernel.org,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 06/21] gpiolib: provide gpiod_to_device()
-Date: Tue,  5 Sep 2023 20:52:54 +0200
-Message-Id: <20230905185309.131295-7-brgl@bgdev.pl>
+Subject: [PATCH 07/21] gpiolib: provide gpio_device_get_base()
+Date: Tue,  5 Sep 2023 20:52:55 +0200
+Message-Id: <20230905185309.131295-8-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230905185309.131295-1-brgl@bgdev.pl>
 References: <20230905185309.131295-1-brgl@bgdev.pl>
@@ -77,52 +77,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-struct gpio_desc is opaque so provide a way for users to retrieve the
-underlying GPIO device.
+Let's start adding getters for the opaque struct gpio_device. Start with
+a function allowing to retrieve the base GPIO number.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/gpio/gpiolib.c      | 14 ++++++++++++++
- include/linux/gpio/driver.h |  1 +
- 2 files changed, 15 insertions(+)
+ drivers/gpio/gpiolib.c      | 13 +++++++++++++
+ include/linux/gpio/driver.h |  3 +++
+ 2 files changed, 16 insertions(+)
 
 diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 4a9af6bfc6d4..9637a79a9a60 100644
+index 9637a79a9a60..9715bbc698e9 100644
 --- a/drivers/gpio/gpiolib.c
 +++ b/drivers/gpio/gpiolib.c
-@@ -219,6 +219,20 @@ struct gpio_chip *gpiod_to_chip(const struct gpio_desc *desc)
+@@ -233,6 +233,19 @@ struct gpio_device *gpiod_to_device(struct gpio_desc *desc)
  }
- EXPORT_SYMBOL_GPL(gpiod_to_chip);
+ EXPORT_SYMBOL_GPL(gpiod_to_device);
  
 +/**
-+ * gpiod_to_device() - Return the GPIO device owning this descriptor
-+ * @desc: GPIO descriptor
++ * gpio_device_get_base() - Get the base GPIO number allocated by this device
++ * @gdev: GPIO device
 + *
 + * Returns:
-+ * Pointer to the opaque struct gpio_device object. This function does not
-+ * increase the reference count of gpio_device.
++ * First GPIO number in the global GPIO numberspace for this device.
 + */
-+struct gpio_device *gpiod_to_device(struct gpio_desc *desc)
++int gpio_device_get_base(struct gpio_device *gdev)
 +{
-+	return gpio_device_get(desc->gdev);
++	return gdev->base;
 +}
-+EXPORT_SYMBOL_GPL(gpiod_to_device);
++EXPORT_SYMBOL_GPL(gpio_device_get_base);
 +
  /* dynamic allocation of GPIOs, e.g. on a hotplugged device */
  static int gpiochip_find_base(int ngpio)
  {
 diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
-index b2572b26c8e3..e3747e730ed1 100644
+index e3747e730ed1..b68b3493b29d 100644
 --- a/include/linux/gpio/driver.h
 +++ b/include/linux/gpio/driver.h
-@@ -778,6 +778,7 @@ int gpiochip_lock_as_irq(struct gpio_chip *gc, unsigned int offset);
- void gpiochip_unlock_as_irq(struct gpio_chip *gc, unsigned int offset);
- 
+@@ -780,6 +780,9 @@ void gpiochip_unlock_as_irq(struct gpio_chip *gc, unsigned int offset);
  struct gpio_chip *gpiod_to_chip(const struct gpio_desc *desc);
-+struct gpio_device *gpiod_to_device(struct gpio_desc *desc);
+ struct gpio_device *gpiod_to_device(struct gpio_desc *desc);
  
++/* struct gpio_device getters */
++int gpio_device_get_base(struct gpio_device *gdev);
++
  #else /* CONFIG_GPIOLIB */
  
+ #include <linux/err.h>
 -- 
 2.39.2
 
