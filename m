@@ -1,138 +1,175 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F801DDAF
-	for <timestamp@lists.linux.dev>; Tue,  5 Sep 2023 18:53:53 +0000 (UTC)
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-3ff1c397405so28802915e9.3
-        for <timestamp@lists.linux.dev>; Tue, 05 Sep 2023 11:53:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1693940032; x=1694544832; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UrAFFOP3UXm+2vTLeazN1us+BKa1tnA/xN1dYjhLvHM=;
-        b=qaL0N5ssAKdWrtaTacx0hOWg+2atu4o6fLRD89KoodtUwAx3SWtiNo3eHtcIUy5UJS
-         Lv+/vfkN4fSDypY2rKBFtM1J/XAX0ZUG8uG2cZJhnSeoWVrGEmxQFdZgzyIEGxrnC6/b
-         bQhZgVO5Ffupdvu9Vgv7tp1VBlAfxmADe3q7456rIG1/T+62ekqWcbsAIfKKWLW8Rk/n
-         9GhqV8lAMTJjsUTOei8sa/mVYd9hpUvWfzIi+TzPZ8Xj5i9l7M+AP9bqsVTrpK+Q6mqO
-         2bWMxhFArgq493m+gJOTwZs77PZe1KeKU3BHrviKrE/JmprtyplXcyO7EAmhwbtGA0uI
-         0DQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693940032; x=1694544832;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UrAFFOP3UXm+2vTLeazN1us+BKa1tnA/xN1dYjhLvHM=;
-        b=cVs4woqLGcoxx1xwZSMBVJISUJWySSLJMBMaYnXuj5qQ6JjJan6tWJ7G9roJDfsE8r
-         HRaasPYY2LsSfoev69nOfOtqouYDKEb7Qo4oHKJEUTg6kpB1akH+1gpH554ALJiTjMfK
-         QVVs0JAfrWo+luYfiyDEitBYMniXhWD23r6pOG2umIM95mxPuLfULFkYnMhhYittbFeE
-         0KuY5XA9FxR6rv5ke7md4Jc8NZEJGGIujiQBui0HN4lIST3EYX23pd6RHKaYJZopeN8z
-         ma13K3TwEAU8Nb/8w/9TSg/0c/W6yuBrKZTJ5mnJ0EwWjU/LPaDTtiMOZlNvbmyOPDMT
-         tmOQ==
-X-Gm-Message-State: AOJu0YzAoYoUViS+J/7S7bwa6gSyhPqHQJ19qyqDKOvkZNaXjjMnG+va
-	kI8+tBGw/BEUll6pTqceDj9QVA==
-X-Google-Smtp-Source: AGHT+IG5rvnvzkhR7zSqbm37o4SyQS5DF2Q3QExpMFHirbdRnNeCry1xvOOt3d5Fk7gOho9h35WBqA==
-X-Received: by 2002:a05:600c:11ce:b0:3fe:2011:a7ce with SMTP id b14-20020a05600c11ce00b003fe2011a7cemr453840wmi.6.1693940031710;
-        Tue, 05 Sep 2023 11:53:51 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:7a54:5dbc:6d09:48b7])
-        by smtp.gmail.com with ESMTPSA id 17-20020a05600c249100b003fbc30825fbsm17550010wms.39.2023.09.05.11.53.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Sep 2023 11:53:51 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Aaro Koskinen <aaro.koskinen@iki.fi>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29969362
+	for <timestamp@lists.linux.dev>; Wed,  6 Sep 2023 07:10:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693984241; x=1725520241;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=CzVsvBBCQyE6nmVgfBDTPc4IJEBFPNuhlR6CIA56RSY=;
+  b=A0zcfqaFsFrOd2QACHuvF3GaYEwwi3laqu/RXyHAS8+Gk+kKp2/sx4ot
+   ZPMxxWn0fFp7UW0eBndnNpBoiIL6KV2TYOCOHfUcflzuq1Sun84FkdGw0
+   +1FSjRL0SH98xHHVqYX8NL7rk/aovJMu/3W5YIfZjCxAre2DmyZK7mBth
+   kiN2+bKbacDoc3WCGE3WxHngCcPgvMVvMoBh3LAAXw2FTCyEnP+GbDsBx
+   bBfC7KLD1+b8Rz5LhnVc2e2HoBPcyy12utFS8KHgVi82Nnn/Zq8ao53lO
+   nuVnKyP1/mFeJIT4HRtzq4Mf1h9V1Q2A/352LQSB64ZmhQmzdA7Pup6df
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10824"; a="407993436"
+X-IronPort-AV: E=Sophos;i="6.02,231,1688454000"; 
+   d="scan'208";a="407993436"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2023 00:10:39 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10824"; a="734933655"
+X-IronPort-AV: E=Sophos;i="6.02,231,1688454000"; 
+   d="scan'208";a="734933655"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by orsmga007.jf.intel.com with ESMTP; 06 Sep 2023 00:10:33 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1001)
+	id 1DF7F30D; Wed,  6 Sep 2023 10:10:32 +0300 (EEST)
+Date: Wed, 6 Sep 2023 10:10:32 +0300
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Aaro Koskinen <aaro.koskinen@iki.fi>,
 	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
 	Tony Lindgren <tony@atomide.com>,
 	Russell King <linux@armlinux.org.uk>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
 	Dipen Patel <dipenp@nvidia.com>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Jonathan Hunter <jonathanh@nvidia.com>,
 	Hans de Goede <hdegoede@redhat.com>,
-	Mark Gross <markgross@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org,
-	linux-omap@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-acpi@vger.kernel.org,
-	timestamp@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	Mark Gross <markgross@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-acpi@vger.kernel.org, timestamp@lists.linux.dev,
+	linux-tegra@vger.kernel.org, platform-driver-x86@vger.kernel.org,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 21/21] gpiolib: remove gpiochip_find()
-Date: Tue,  5 Sep 2023 20:53:09 +0200
-Message-Id: <20230905185309.131295-22-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230905185309.131295-1-brgl@bgdev.pl>
+Subject: Re: [PATCH 08/21] gpio: acpi: provide
+ acpi_gpio_device_free_interrupts()
+Message-ID: <20230906071032.GA1599918@black.fi.intel.com>
 References: <20230905185309.131295-1-brgl@bgdev.pl>
+ <20230905185309.131295-9-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230905185309.131295-9-brgl@bgdev.pl>
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Hi,
 
-With all users of gpiochip_find() converted to using gpio_device_find(),
-we can now remove this function from the kernel.
+On Tue, Sep 05, 2023 at 08:52:56PM +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> We're moving away from public functions that take struct gpio_chip as
+> argument as the chip - unlike struct gpio_device - is owned by its
+> provider and tied to its lifetime.
+> 
+> Provide an alternative to acpi_gpiochip_free_interrupts().
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/gpio/gpiolib.c      | 22 ----------------------
- include/linux/gpio/driver.h |  3 ---
- 2 files changed, 25 deletions(-)
+Looks good to me, few minor comments below.
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 90e8c3d8b6f6..bd700fb4871e 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -1081,28 +1081,6 @@ void gpiochip_remove(struct gpio_chip *gc)
- }
- EXPORT_SYMBOL_GPL(gpiochip_remove);
- 
--/*
-- * FIXME: This will be removed soon.
-- *
-- * This function is depracated, don't use.
-- */
--struct gpio_chip *gpiochip_find(void *data,
--				int (*match)(struct gpio_chip *gc,
--					     void *data))
--{
--	struct gpio_device *gdev;
--	struct gpio_chip *gc = NULL;
--
--	gdev = gpio_device_find(data, match);
--	if (gdev) {
--		gc = gdev->chip;
--		gpio_device_put(gdev);
--	}
--
--	return gc;
--}
--EXPORT_SYMBOL_GPL(gpiochip_find);
--
- /**
-  * gpio_device_find() - find a specific GPIO device
-  * @data: data to pass to match function
-diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
-index bb9ec741bfda..7d2bf464478a 100644
---- a/include/linux/gpio/driver.h
-+++ b/include/linux/gpio/driver.h
-@@ -603,9 +603,6 @@ int devm_gpiochip_add_data_with_key(struct device *dev, struct gpio_chip *gc,
- 				    void *data, struct lock_class_key *lock_key,
- 				    struct lock_class_key *request_key);
- 
--struct gpio_chip *gpiochip_find(void *data,
--				int (*match)(struct gpio_chip *gc, void *data));
--
- struct gpio_device *gpio_device_find(void *data,
- 				     int (*match)(struct gpio_chip *gc,
- 						  void *data));
--- 
-2.39.2
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+
+> ---
+>  drivers/gpio/gpiolib-acpi.c | 29 +++++++++++++++++++++++------
+>  include/linux/gpio/driver.h | 12 ++++++++++++
+>  2 files changed, 35 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
+> index fbda452fb4d6..5633e39396bc 100644
+> --- a/drivers/gpio/gpiolib-acpi.c
+> +++ b/drivers/gpio/gpiolib-acpi.c
+> @@ -558,12 +558,9 @@ void acpi_gpiochip_request_interrupts(struct gpio_chip *chip)
+>  }
+>  EXPORT_SYMBOL_GPL(acpi_gpiochip_request_interrupts);
+>  
+> -/**
+> - * acpi_gpiochip_free_interrupts() - Free GPIO ACPI event interrupts.
+> - * @chip:      GPIO chip
+> - *
+> - * Free interrupts associated with GPIO ACPI event method for the given
+> - * GPIO chip.
+> +/*
+> + * This function is deprecated, use acpi_gpio_device_free_interrupts()
+> + * instead.
+>   */
+>  void acpi_gpiochip_free_interrupts(struct gpio_chip *chip)
+>  {
+> @@ -604,6 +601,26 @@ void acpi_gpiochip_free_interrupts(struct gpio_chip *chip)
+>  }
+>  EXPORT_SYMBOL_GPL(acpi_gpiochip_free_interrupts);
+>  
+> +/**
+> + * acpi_gpio_device_free_interrupts() - Free GPIO ACPI event interrupts.
+> + * @chip	GPIO device
+
+Should be:
+
+@chip: GPIO device
+
+> + *
+> + * Free interrupts associated with GPIO ACPI event method for the given
+> + * GPIO device.
+> + */
+> +void acpi_gpio_device_free_interrupts(struct gpio_device *gdev)
+> +{
+> +	struct gpio_chip *gc;
+> +
+> +	/* TODO: protect gdev->chip once SRCU is in place in GPIOLIB. */
+> +	gc = gdev->chip;
+> +	if (!gc)
+> +		return;
+> +
+> +	acpi_gpiochip_free_interrupts(gc);
+> +}
+> +EXPORT_SYMBOL_GPL(acpi_gpio_device_free_interrupts);
+> +
+>  int acpi_dev_add_driver_gpios(struct acpi_device *adev,
+>  			      const struct acpi_gpio_mapping *gpios)
+>  {
+> diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
+> index b68b3493b29d..47906bc56b3d 100644
+> --- a/include/linux/gpio/driver.h
+> +++ b/include/linux/gpio/driver.h
+> @@ -835,4 +835,16 @@ static inline struct fwnode_handle *gpiochip_node_get_first(struct device *dev)
+>  	return NULL;
+>  }
+>  
+> +/*
+> + * FIXME: Remove this once the only driver that uses it - android tablets -
+> + * becomes a good citizen and stops abusing GPIOLIB.
+
+There are a acouple of more when grepping for acpi_gpiochip_free_interrupts().
+
+I'm not entirely sure why these functions are exposed to the drivers in
+the first place. IMHO GPIOLIB should deal with these but perhaps there
+is some good reason these drivers do it...
+
+> + */
+> +#ifdef CONFIG_ACPI
+> +void acpi_gpio_device_free_interrupts(struct gpio_device *gdev);
+> +#else
+> +static inline void acpi_gpio_device_free_interrupts(struct gpio_device *gdev)
+> +{
+> +}
+
+I would put these {} to the same line:
+
+static inline void acpi_gpio_device_free_interrupts(struct gpio_device *gdev) { }
+
+> +#endif
+> +
+>  #endif /* __LINUX_GPIO_DRIVER_H */
+> -- 
+> 2.39.2
