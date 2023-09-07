@@ -1,52 +1,51 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FD9136B
-	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:22:55 +0000 (UTC)
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-d7eccc1b8c6so626535276.0
-        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:22:55 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7381116
+	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:25:04 +0000 (UTC)
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-d7b91422da8so589301276.2
+        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:25:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694071374; x=1694676174; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1694071504; x=1694676304; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KDyS14lOc9gIdV8qqpJN7dVOi7FiXE2O1crBwgTrNhg=;
-        b=hWJC0diW82VCKEXjRzALnvAbWETOnOmwwIQCbF4bFPpkswpWOFzJzzRa+drXYx3vJE
-         drfwpK5BCAi0O1EV3ORXO1HM6IacSNYeth4hDn6ZQBR+ihX4u+x7g7dzqVY19OnlY0TP
-         WQRURMEwbf4Cm9y9/6X+BofxZBR/RFjI37PwHGf0cUDm9PuQTTE/tIbgdDYo261jhCI7
-         FPZK3eDBzUnT6b+W5ufUnvV21CsrypOBlT68R1XlSi7gVK4OnIA1Zkwa7n3Y9T5VYJj5
-         6DEpda2co1DxTrtdeMnxiXyknHqsLeWYYhr4GjJbuGFobKTpYUT00o8BoRmZL0iu6HhF
-         7JMw==
+        bh=XvLrxMQ1IidFWYQv1qbOrK7Zz+kctFqLG1SqA3KCV8I=;
+        b=KeHG1J+PYcrfedrnUIVtdIILW6YgprmYQTIFj+gwwdEucq49AG6bIe8VWI/lYZ1AVm
+         MOK6Wi1bHuiLw5khzfaTEML6BMsZ5tmN2WHDSJSSJbjmF3Z5VQQvzUBPCuyS8OTYeApl
+         hOAEmi5rVIKDlZTtI9RZDH5I1zq0Q9oorenXhi2BfFxix/CEd7oLDUfjaTrUa77VGutT
+         +qvprwL1ZZKNdyWLQ5AyUvcFacm7DqkKPYybB+1nAnMSXzL70LzsuD7u3xnpzCFIEXBn
+         Ntj/GTWcCyJkH8eU9hM0i3srfFduoHOCYP3KAG4Vnp+yKNFM1sWpU+ns7KghBu7hRFKL
+         mGvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694071374; x=1694676174;
+        d=1e100.net; s=20221208; t=1694071504; x=1694676304;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KDyS14lOc9gIdV8qqpJN7dVOi7FiXE2O1crBwgTrNhg=;
-        b=X55CRXzz5Mxmuuev/S14kdqeZr4TbXjqdP3rl8UzXKssyh4U39QnpQy61MChkLbsXa
-         v0Jnt8Q/fLcBEt0EDkNdn3OOEB498Hlqf6eZ7ntcJeA7lqevhd8OQ0Vzzru6ld5s5dn+
-         b+z2mpT/j9K7nx/Tr6UC/qmnZRNhLU/JVjQdjFaVKnV+g33wcnRzaJlKEkFLLztR51S0
-         D62jRG0Yzpg6I5zXysvGssq+uDOMJl6am9Z+CmK9OGlcTpBOqOOrOLcxJTe8ISVByIeF
-         4tiqkQ7Y1Fynj6Ve8I1hipWDRf7dUOn96yYis0V7DKc+LsCbHatwOPTUJqFt6w3H4HsF
-         2EfQ==
-X-Gm-Message-State: AOJu0YxGBngytUiyQdVHY+Xl4sp8wpjrFocPb92dTrQnsdA/4GfksSu9
-	Qf/bC4EP5dOgB3TrK4e5e8pXD+2a2GV5jfzl3n54tQ==
-X-Google-Smtp-Source: AGHT+IGJ2fOJYbfgZwCYkGOqpBoV8zRdwms0YQyjwmM812KoO4CG3kmEhKK7s/PjKGQeVe41+y3pVjBhSp9/fdWja/U=
-X-Received: by 2002:a25:408a:0:b0:d06:49e9:a29c with SMTP id
- n132-20020a25408a000000b00d0649e9a29cmr19754022yba.34.1694071374753; Thu, 07
- Sep 2023 00:22:54 -0700 (PDT)
+        bh=XvLrxMQ1IidFWYQv1qbOrK7Zz+kctFqLG1SqA3KCV8I=;
+        b=Dasnl21ZICTqO4sX3P9j5b2CZAviVwnC9071aNegL6nQwq/QcSoAmTl+qzScG5OWJZ
+         oEsEwH9XrAW0FuNHvL7LMU08gtMUV/ufpCDwDx7ZoLAOIDGOpi8Ep9atjzqU0ASvE3qM
+         Isb+Td8vAvSK5ostau/ul73gRMkXUziPcpdbuQS1BWo3PCfFjr49duHQLrrxjOQQ7y9C
+         b5OiZps1FLjnfemToa+I+iYnWh5lMIV7fm/QwlgSGPP47GoUk/C2RgZ7XKSO4kk1ysnQ
+         +pQoKvGkl7IwQ1XIuHRTI6HgjaPU4dR8vhAg7Ylqeu+phAnQ4RSW1eFjp3KA41LeEJnM
+         OzuA==
+X-Gm-Message-State: AOJu0Yyxshf498Ik1+5vcAXDF4Mzk+a5AARct7ZL2VPcWitTHQX88o9w
+	Jr37MODdS+c2qk0EfvjZ0CBGPnaahjETAZzuuBSibQ==
+X-Google-Smtp-Source: AGHT+IF33BsQs6PXZBD6Yyx6MLxtC5D3dCLaevE9AUQBN2cYvO/VBix1ip+znuJz46jocHvadEET9qd1DQq8TKxIbhc=
+X-Received: by 2002:a25:fc16:0:b0:d78:be:6f02 with SMTP id v22-20020a25fc16000000b00d7800be6f02mr17528083ybd.11.1694071503985;
+ Thu, 07 Sep 2023 00:25:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-13-brgl@bgdev.pl>
-In-Reply-To: <20230905185309.131295-13-brgl@bgdev.pl>
+References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-14-brgl@bgdev.pl>
+In-Reply-To: <20230905185309.131295-14-brgl@bgdev.pl>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 7 Sep 2023 09:22:43 +0200
-Message-ID: <CACRpkdYJhP5otaFXbn49sK_33GJMy85MszyD9rqoQT1-fqd9dA@mail.gmail.com>
-Subject: Re: [PATCH 12/21] hte: allow building modules with COMPILE_TEST enabled
+Date: Thu, 7 Sep 2023 09:24:52 +0200
+Message-ID: <CACRpkdZE9hMWNeY=J0LrGTO1=83L46z69V6b7BX=Q-vaM3kBAA@mail.gmail.com>
+Subject: Re: [PATCH 13/21] hte: tegra194: improve the GPIO-related comment
 To: Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
 	Tony Lindgren <tony@atomide.com>, Russell King <linux@armlinux.org.uk>, 
@@ -67,12 +66,12 @@ wrote:
 
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >
-> Allow building all HTE modules with COMPILE_TEST Kconfig option enabled.
+> Using any of the GPIO interfaces using the global numberspace is
+> deprecated. Make it clear in the comment.
 >
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-This should be a separate patch should it not?
-Just send it separately to Dipen so he can merge it.
+Split this off and send separately to Dipen.
 Acked-by: Linus Walleij <linus.walleij@linaro.org>
 
 Yours,
