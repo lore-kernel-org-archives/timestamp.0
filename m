@@ -1,57 +1,58 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C611116
-	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:31:13 +0000 (UTC)
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-d7820f9449bso639209276.1
-        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:31:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413E81116
+	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:31:31 +0000 (UTC)
+Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-45070739316so243575137.1
+        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:31:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694071872; x=1694676672; darn=lists.linux.dev;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1694071891; x=1694676691; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uhjMO+NmlnkrwuQTWTc/YRBA9QtXdjC/hl8DIJEpExk=;
-        b=tuIejAcysUfVdN+eHKOo2Qhi7MaeqGVwzqaH7tSgbog3xEeJR0cuIw9B2ejKz9yuGB
-         Uyxrpb4du3YbAjL6Ee6MIgyfDU2m/TP8I1iI6Hlic0Ry1hLFCSHBl+B4sjOeHhjJ1R8Q
-         RSCv4X3tHQ/LMnPar0R8Y9cC/qI8gmDMIrR3rJ6263VnsguU38OleCLdBWSl/PHpb0kE
-         YCPvrIULXHnlxfyRAx6ED8XFS4ZIKoThSzKO/sK1b56fZnmmcINOPR+upxxMI2nAuqAC
-         GcV6svDCerOiDd/Gy8c6cknwFw8DJXj0tVyZOIkFq1qjok3j+02WovpUPkLGksp/5Pe2
-         TOCQ==
+        bh=RuYVBuRk1qSk/vysKkYAGZLoaF4hP5KwSrbdU9HLCHc=;
+        b=oY0kIivRHCYS1z7iElQ3az1ISlrO05lhJMbDjv0vMUBjbXn8PUJkza9uvPLLapAVqw
+         x93YFeE6fgV3v7AC0EehwBnT+H7qwE0KIuR8W6EVTnyksi+DIQL1hHXznSERsVFAUr/x
+         BN1ihIrLiW6DKe231E8nitWCAocFAMQvCNrahB5aglmGoZZEGkrzOrH6IBUvHr5HeMB3
+         hKA9hqIUQD5OAUchXE0CYggRx+mrrRDSbCfs6AZoS7W4gf/ctqgmQkol3Izklydc+qVq
+         YyvrWdTh/MR/UWzhB6oBYSx7HL/WmjcNPWoRvOhgCOj4Ki8XJxhsEUPsWbj+3yNGJub6
+         lsdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694071872; x=1694676672;
+        d=1e100.net; s=20221208; t=1694071891; x=1694676691;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uhjMO+NmlnkrwuQTWTc/YRBA9QtXdjC/hl8DIJEpExk=;
-        b=B83e/qM3Uqow84AOvtk9G3UfkiQFx5D/9WraSzxDWE294YBUbE4bARU4GFuguZolhx
-         x6CpCOvs9rggQFod0yKKRE7Df1juYDePqi4Ke5ezGuEZVK0Di2SV2siymlZ0Qf9hkTtr
-         tHRnd42NJHl1sgEhMvKmrhFHmuj/lBEsWb7UjjFZ/WzhtLPD6vXTfsmy3uNHpnTcRF6P
-         zrbxqGupx6Rdk5tm6GkemSeTtCnVm9Y9fmCJLF9so/VDMM0po9i4Svr2E8JrTLmBzz0F
-         CfsrWqesG5ktrTbEK7vAM4UMfDznKhCWHI1170qf1yUJumH+JE3SERMwQY69CeQIO4R6
-         s47Q==
-X-Gm-Message-State: AOJu0Yx5xaFvHIEdMqWCny5lKA/NtH4Y8OQFGissu4wjcC8lWJ/IGNI5
-	e8vy+GrVecCKUKm40j7+thZRvgDXAEJKeXQlbQmCew==
-X-Google-Smtp-Source: AGHT+IEos+IWcRlRURBpWq2f/yqX4JwD1uUNGc4FMcBDjtB4EYVZgMX+6wsZb6/oamwVKLnZoLMvxAzj5BAJ8/qIfJs=
-X-Received: by 2002:a25:aad4:0:b0:d7b:9ac8:f439 with SMTP id
- t78-20020a25aad4000000b00d7b9ac8f439mr18109140ybi.40.1694071872125; Thu, 07
- Sep 2023 00:31:12 -0700 (PDT)
+        bh=RuYVBuRk1qSk/vysKkYAGZLoaF4hP5KwSrbdU9HLCHc=;
+        b=iIuOUVdP4hMW7mr1qsK+MjWQyjY4qf5xOrO92y79/w89EypDAKUPsm3qMxhD0kABxg
+         x56yT9X1hYoFQQxwXWtpwffsOCOt+2ZEsonsAEYWYeIt8Ct55SFByFcjg1BXfYFCOnEW
+         yU/lTAatEWNUwWoWXnb/8VFDfusxnA+2PpOPiR3CjVqv3HKzS9X4QO8Z4gPx2oxzkf+Y
+         NE+st+HXpyoPgeveFbce3eyC+cyWnn9UAMmjwr0GtxsmfVXxcbz651Eyo4sWyn/xmy9B
+         2zJk/kbKTPTmAv+V7xJkZh3Acvn//fkYs0Kb0dHWT9I8x3PUSP0QhZeqFypt38xhIl+O
+         SMAg==
+X-Gm-Message-State: AOJu0Yw7Tn4t3kFSgTxetuwneXEE79NfLkVkkuV4PigfhqlFlMdDixGl
+	Fn0HJO15bYpAiMEIucuBOQ2NTuil3UEp3CCPCI48Ww==
+X-Google-Smtp-Source: AGHT+IFH+TTCwwws89F7SNPi0GGOZFWp/OkGv5hkCV0kl2J1CUqPAY/iOB9bwWhCU9n1g7MoTzaR/hVwP1cetSs2hGI=
+X-Received: by 2002:a67:ebd9:0:b0:44e:a3e9:68d1 with SMTP id
+ y25-20020a67ebd9000000b0044ea3e968d1mr5642709vso.1.1694071890893; Thu, 07 Sep
+ 2023 00:31:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-16-brgl@bgdev.pl>
-In-Reply-To: <20230905185309.131295-16-brgl@bgdev.pl>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 7 Sep 2023 09:31:01 +0200
-Message-ID: <CACRpkdaVUPNYVjAi2XsNKVhwmtk2qpVp62Lke4xeDOwhhBXLtg@mail.gmail.com>
-Subject: Re: [RFT PATCH 15/21] arm: omap1: ams-delta: stop using gpiochip_find()
-To: Bartosz Golaszewski <brgl@bgdev.pl>
+References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-13-brgl@bgdev.pl>
+ <CACRpkdYJhP5otaFXbn49sK_33GJMy85MszyD9rqoQT1-fqd9dA@mail.gmail.com>
+In-Reply-To: <CACRpkdYJhP5otaFXbn49sK_33GJMy85MszyD9rqoQT1-fqd9dA@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 7 Sep 2023 09:31:19 +0200
+Message-ID: <CAMRc=MdXU_EiG4iYhHJd7faRPEQ21hXHhRpPAqTa-TiMiraZpw@mail.gmail.com>
+Subject: Re: [PATCH 12/21] hte: allow building modules with COMPILE_TEST enabled
+To: Linus Walleij <linus.walleij@linaro.org>, Dipen Patel <dipenp@nvidia.com>
 Cc: Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
 	Tony Lindgren <tony@atomide.com>, Russell King <linux@armlinux.org.uk>, 
 	Mika Westerberg <mika.westerberg@linux.intel.com>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Dipen Patel <dipenp@nvidia.com>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
 	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
 	Hans de Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>, 
 	linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org, 
@@ -62,21 +63,30 @@ Cc: Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.co
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 5, 2023 at 8:53=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl> =
-wrote:
-
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Thu, Sep 7, 2023 at 9:22=E2=80=AFAM Linus Walleij <linus.walleij@linaro.=
+org> wrote:
 >
-> gpiochip_find() is going away as it's not hot-unplug safe. This platform
-> is not affected by any of the related problems as this GPIO controller
-> cannot really go away but in order to finally remove this function, we
-> need to convert it to using gpio_device_find() as well.
+> On Tue, Sep 5, 2023 at 8:53=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
 >
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Allow building all HTE modules with COMPILE_TEST Kconfig option enabled=
+.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> This should be a separate patch should it not?
+> Just send it separately to Dipen so he can merge it.
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
+>
+> Yours,
+> Linus Walleij
 
-I was cleaning this one just some merge cycle ago, now it
-looks even better!
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Dipen,
 
-Yours,
-Linus Walleij
+Can you just pick this up and the other patch addressing a comment in
+a HTE driver separately? Would spare a resend to the list and I'd drop
+it from the series.
+
+Bart
