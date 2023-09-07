@@ -1,52 +1,52 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8A41116
-	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:28:29 +0000 (UTC)
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-d7f1bc4ece3so612367276.1
-        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:28:29 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C611116
+	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:31:13 +0000 (UTC)
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-d7820f9449bso639209276.1
+        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:31:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694071709; x=1694676509; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1694071872; x=1694676672; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2QUcdjgXxrS+bTKkF3r2QRe+Cc9aRk/mkNDQCAPj22c=;
-        b=IVEd/98qyJSkG5hzNf4rxTG/bWBqL/NK/0J91D9BWbBw9k6fxD5mWRG7ND5IauLtie
-         d8JCMZlrwr5qFkmSaweolSnCSJFEBl5SPucrszkKR55j1YX9rTIw0XHeuRPXbaAfV++j
-         Nl5dCQqSZQmJPtNWwBwKp6s5YwJpOAzshylh0n3Fj80q/hyjsDEUrsk5gro70HoNKcHl
-         Z3DsnUmVm57VypqVp3va/kWlOL0kVhNh8ffWS55lUcg+b9bYkT21TfVTO3ICKOjYW7a3
-         tRF/t1I7xQ2gVuJv8TQPh70xYvPU5utpSJ2WeuD6Hi9pQ/hS8fU82/Hlxtk9nro3jZpQ
-         3XIg==
+        bh=uhjMO+NmlnkrwuQTWTc/YRBA9QtXdjC/hl8DIJEpExk=;
+        b=tuIejAcysUfVdN+eHKOo2Qhi7MaeqGVwzqaH7tSgbog3xEeJR0cuIw9B2ejKz9yuGB
+         Uyxrpb4du3YbAjL6Ee6MIgyfDU2m/TP8I1iI6Hlic0Ry1hLFCSHBl+B4sjOeHhjJ1R8Q
+         RSCv4X3tHQ/LMnPar0R8Y9cC/qI8gmDMIrR3rJ6263VnsguU38OleCLdBWSl/PHpb0kE
+         YCPvrIULXHnlxfyRAx6ED8XFS4ZIKoThSzKO/sK1b56fZnmmcINOPR+upxxMI2nAuqAC
+         GcV6svDCerOiDd/Gy8c6cknwFw8DJXj0tVyZOIkFq1qjok3j+02WovpUPkLGksp/5Pe2
+         TOCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694071709; x=1694676509;
+        d=1e100.net; s=20221208; t=1694071872; x=1694676672;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2QUcdjgXxrS+bTKkF3r2QRe+Cc9aRk/mkNDQCAPj22c=;
-        b=lpWcaNCQXxvLG9as7Xyuu1w+34zSgADqzXdbWczGFNXt2Ii1vcIWNRfVrfHeQKopId
-         h0XwZ6Jyg4qx+ltRuV6SwKRFzv6ffgOj5q7wJJZXnewdwPXffts97RaUhm3mv1bRDOOn
-         GTS9BUjlUbuwk77IfMon7hl7VMZnQrX7Wg8zndBIdFcdNO8e3wiEvkv7G3U0b/XTzdpC
-         J/+hd2cjbls2c9GM7sj2Y9lLqbLdE0TtsdjvcteqM/Ji0HBODUptpP2gtKj8OSIBXFcS
-         dUeRT2CGv4FrDjNUsHMhqTX5G1bLG6kgTpVRbZtUtLBAIOxEB4AJXHV6ODl8ZUR0pCbA
-         mQHA==
-X-Gm-Message-State: AOJu0Ywm9XHHvU8mf+950e8D4SWNgxGQ8rWzioc3q3wpSB6nWyWxMmFz
-	5R5WtCmL4SIdd4+eZyRWdzRHHvrecfh0aKhla1ZTdg==
-X-Google-Smtp-Source: AGHT+IG2TLQ2WqAfuGI+vTl02pQSFPJWDZVOY1MfvYV7hKobdzNo0vRGz8kywS9VyDIIMdmuzYR3qPmWC3h4lMZlj/s=
-X-Received: by 2002:a25:dc81:0:b0:d7b:9a5d:37c with SMTP id
- y123-20020a25dc81000000b00d7b9a5d037cmr18599620ybe.49.1694071708542; Thu, 07
- Sep 2023 00:28:28 -0700 (PDT)
+        bh=uhjMO+NmlnkrwuQTWTc/YRBA9QtXdjC/hl8DIJEpExk=;
+        b=B83e/qM3Uqow84AOvtk9G3UfkiQFx5D/9WraSzxDWE294YBUbE4bARU4GFuguZolhx
+         x6CpCOvs9rggQFod0yKKRE7Df1juYDePqi4Ke5ezGuEZVK0Di2SV2siymlZ0Qf9hkTtr
+         tHRnd42NJHl1sgEhMvKmrhFHmuj/lBEsWb7UjjFZ/WzhtLPD6vXTfsmy3uNHpnTcRF6P
+         zrbxqGupx6Rdk5tm6GkemSeTtCnVm9Y9fmCJLF9so/VDMM0po9i4Svr2E8JrTLmBzz0F
+         CfsrWqesG5ktrTbEK7vAM4UMfDznKhCWHI1170qf1yUJumH+JE3SERMwQY69CeQIO4R6
+         s47Q==
+X-Gm-Message-State: AOJu0Yx5xaFvHIEdMqWCny5lKA/NtH4Y8OQFGissu4wjcC8lWJ/IGNI5
+	e8vy+GrVecCKUKm40j7+thZRvgDXAEJKeXQlbQmCew==
+X-Google-Smtp-Source: AGHT+IEos+IWcRlRURBpWq2f/yqX4JwD1uUNGc4FMcBDjtB4EYVZgMX+6wsZb6/oamwVKLnZoLMvxAzj5BAJ8/qIfJs=
+X-Received: by 2002:a25:aad4:0:b0:d7b:9ac8:f439 with SMTP id
+ t78-20020a25aad4000000b00d7b9ac8f439mr18109140ybi.40.1694071872125; Thu, 07
+ Sep 2023 00:31:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-15-brgl@bgdev.pl>
-In-Reply-To: <20230905185309.131295-15-brgl@bgdev.pl>
+References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-16-brgl@bgdev.pl>
+In-Reply-To: <20230905185309.131295-16-brgl@bgdev.pl>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 7 Sep 2023 09:28:17 +0200
-Message-ID: <CACRpkda9=VULj4Cy_sit-UpUQnVEbS-RJKAeULVCw8ZCRTq1sw@mail.gmail.com>
-Subject: Re: [RFT PATCH 14/21] hte: tegra194: don't access struct gpio_chip
+Date: Thu, 7 Sep 2023 09:31:01 +0200
+Message-ID: <CACRpkdaVUPNYVjAi2XsNKVhwmtk2qpVp62Lke4xeDOwhhBXLtg@mail.gmail.com>
+Subject: Re: [RFT PATCH 15/21] arm: omap1: ams-delta: stop using gpiochip_find()
 To: Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
 	Tony Lindgren <tony@atomide.com>, Russell King <linux@armlinux.org.uk>, 
@@ -67,18 +67,16 @@ wrote:
 
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >
-> Using struct gpio_chip is not safe as it will disappear if the
-> underlying driver is unbound for any reason. Switch to using reference
-> counted struct gpio_device and its dedicated accessors.
+> gpiochip_find() is going away as it's not hot-unplug safe. This platform
+> is not affected by any of the related problems as this GPIO controller
+> cannot really go away but in order to finally remove this function, we
+> need to convert it to using gpio_device_find() as well.
 >
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-As Andy points out add <linux/cleanup.h>, with that fixed:
+I was cleaning this one just some merge cycle ago, now it
+looks even better!
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-
-I think this can be merged into the gpio tree after leaving some
-slack for the HTE maintainer to look at it, things look so much
-better after this.
 
 Yours,
 Linus Walleij
