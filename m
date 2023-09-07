@@ -1,52 +1,52 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF7EEDA
-	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:09:23 +0000 (UTC)
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-d7b9de8139fso528799276.1
-        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:09:23 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E604EDA
+	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:10:34 +0000 (UTC)
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-d7e87b4a0f2so615011276.0
+        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:10:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694070562; x=1694675362; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1694070633; x=1694675433; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9b7v8ynf43I8EPh86qv2+Qihb/MMTTB3QC+Af1PR4Qs=;
-        b=NEC4wcB7g2YXyLFUok2W9PN8jW1cbYe18XKzv1L+zxxw+lNxNtIorLyPsiMaOO4DZb
-         TgldoslxTXYXSkf/vZUWPQw2FOCgUvOfksAD8z7Z+bkPZSEPVLiPbbiUrxvvHCznVuPj
-         gA73teP8r8lpN0Lp7FEFNcLrygpt27rvikhhqEEsQ2/Ddq5NqukfgrCr8/IN7J4Rsbbw
-         v1plGOAMvZRa6mfhHdeV8EWb8X16Xvcj7flDIriQOV88ywgOxZWuEt7XqkzrhFZ43g1r
-         p4HbGvTDltuq5iHJX83MTAxHdshhuAgk5uGU3lH3k8Shti2M7Mq4vmHW1gbfb/E9TfcK
-         5D5Q==
+        bh=sZM5LCrIIZq6Cza2RJhNNmn9rDXfdqmiDRo4rHF5ssg=;
+        b=c0tgj4wGNuMTIu+oDGzuua2nR1eLElN+aBF/+Jd1RIUb2l5MMB/obK7tGG38as7mWz
+         IsFyPsoF6jWHs3fZr8F8of1ENkZkVgcbAfnwRq4klVel+ks2UQcwAD9QYgxX61saTv65
+         OJTpLjzJyteEa2s7ZgAIHgPBouH+tcuEB0iJIZvdTP7nhms2Ngjyl+rb6KaU3RgePw6s
+         VPFXIOnyb8WWmRti7CHDBM1KGR8j2YMG68FWkzKYnaw7ESY27x3K2R0X7QvY6xjKIaVr
+         nsz3YIyFNw1fLEPKvyab2XmgVy3+5rGdRBDlGIksYAiZRSbg2KizG/CQB4yt3LQDwE9r
+         auLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694070562; x=1694675362;
+        d=1e100.net; s=20221208; t=1694070633; x=1694675433;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9b7v8ynf43I8EPh86qv2+Qihb/MMTTB3QC+Af1PR4Qs=;
-        b=ES6Sd6jlW6T99/BuMqt83SvLxh9DzCDK2D+1SAwvSofEVrSlh+D09LmNnw4U6fe9ON
-         2md6jaM5/3U2m4CKAuaK92eKusDBEM9JxxfBq6xEsslEfO4b+jOt8laYR15t1UPPWKRj
-         /cTqlJd9zfGoY9CJsluQT4A40eh/qoZyMtT4v+TJQgWUPNeb334Ij0e+Y9cWBVz0olHT
-         x2a7opGlFS8up0Vtivm7BUpUV65UBN0Rn+XZ8fwsLiFV5RI++tGxC9iBWhhmUoiHSbp3
-         q4nS0N0afCoV67/8SnGubx4G5rJ5Qhi7l34/c47d638lLIxiNpVdWYtUbSfdnriPgvmz
-         gBgQ==
-X-Gm-Message-State: AOJu0YwVotDqW/OyWUljqaDwGDFp4mGgvz8dTg81BbRcVJoVFlr/rMaj
-	GTAO3PrbQIXSazkXYoc/CTMDwwye6VC6trrJHVh7YQ==
-X-Google-Smtp-Source: AGHT+IFBMY2aVjLfU4IGVauVzzx/POp8es0I/Cix3TKhZtX3AA6hztSUPcllgbHHruPMjhuUvCKYwAD/N3CsJPq8yKo=
-X-Received: by 2002:a25:bc53:0:b0:d62:6514:45b7 with SMTP id
- d19-20020a25bc53000000b00d62651445b7mr18630990ybk.37.1694070562057; Thu, 07
- Sep 2023 00:09:22 -0700 (PDT)
+        bh=sZM5LCrIIZq6Cza2RJhNNmn9rDXfdqmiDRo4rHF5ssg=;
+        b=Tqjhq+UxgQYqcDU65Qd9wtRo1X+w/AXoj7o3t9ojXURuei0isRnpNfjTr70Y/3Div+
+         piXCv18OW0dsnAPlyYxufx93RlsGnc8dJPW4K4p45uU7db5mCLEjCp6+ngYzINJl2s4e
+         2VMla3nwzxkJ9tL3mVKanRnkp2oeZXCFV9ejf/AI0Kw5yYdI+GujORIt9CPQ33xxpcxP
+         DHfZkO4gZJIcMSonK3qncML07bxDccqmEnerCQor+UYoiARjaiNXznFu6jXbmbk3Z2Ul
+         eevauNAw8uVvMA2p4okJrlRc9YQI8VKX1Azl5JQ8/wFk/LjusWzx0ESSsGhnwHR7WaUj
+         iPQg==
+X-Gm-Message-State: AOJu0YwaBcUxPATYmUyEPwXRCPDG2IfQ3BYaka6nES6HyXgsOTBQ3xek
+	GvI1b3DlJhPwexRJR+poU3x2MkVjRA4aD9SD6xYZSw==
+X-Google-Smtp-Source: AGHT+IHhj18itEgT7Zkm6inaHN3nE+QPEGLPicrIzqqx/vXBzW0adJyqRztqORI4Xy/4ylPWC4tCJ9Ht9cCQq18uOlw=
+X-Received: by 2002:a25:aae3:0:b0:d1a:955f:304d with SMTP id
+ t90-20020a25aae3000000b00d1a955f304dmr18305004ybi.64.1694070633444; Thu, 07
+ Sep 2023 00:10:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-6-brgl@bgdev.pl>
-In-Reply-To: <20230905185309.131295-6-brgl@bgdev.pl>
+References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-7-brgl@bgdev.pl>
+In-Reply-To: <20230905185309.131295-7-brgl@bgdev.pl>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 7 Sep 2023 09:09:10 +0200
-Message-ID: <CACRpkdbAeBQj2RUjj9ybaAiytvtgpF4PXFvX+S4C0ZVP0bb8Rg@mail.gmail.com>
-Subject: Re: [PATCH 05/21] gpiolib: add support for scope-based management to gpio_device
+Date: Thu, 7 Sep 2023 09:10:22 +0200
+Message-ID: <CACRpkdadcw=E38o=cNWT4fQ_PK0UPifJZdVjuXTw0cjxPAEaKw@mail.gmail.com>
+Subject: Re: [PATCH 06/21] gpiolib: provide gpiod_to_device()
 To: Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
 	Tony Lindgren <tony@atomide.com>, Russell King <linux@armlinux.org.uk>, 
@@ -67,13 +67,11 @@ wrote:
 
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >
-> As the few users that need to get the reference to the GPIO device often
-> release it right after inspecting its properties, let's add support for
-> the automatic reference release to struct gpio_device.
+> struct gpio_desc is opaque so provide a way for users to retrieve the
+> underlying GPIO device.
 >
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Needless to say, I'm a strong advocate for scoped resource management.
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
 Yours,
