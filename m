@@ -1,51 +1,52 @@
 Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7381116
-	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:25:04 +0000 (UTC)
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-d7b91422da8so589301276.2
-        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:25:04 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8A41116
+	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:28:29 +0000 (UTC)
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-d7f1bc4ece3so612367276.1
+        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694071504; x=1694676304; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1694071709; x=1694676509; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XvLrxMQ1IidFWYQv1qbOrK7Zz+kctFqLG1SqA3KCV8I=;
-        b=KeHG1J+PYcrfedrnUIVtdIILW6YgprmYQTIFj+gwwdEucq49AG6bIe8VWI/lYZ1AVm
-         MOK6Wi1bHuiLw5khzfaTEML6BMsZ5tmN2WHDSJSSJbjmF3Z5VQQvzUBPCuyS8OTYeApl
-         hOAEmi5rVIKDlZTtI9RZDH5I1zq0Q9oorenXhi2BfFxix/CEd7oLDUfjaTrUa77VGutT
-         +qvprwL1ZZKNdyWLQ5AyUvcFacm7DqkKPYybB+1nAnMSXzL70LzsuD7u3xnpzCFIEXBn
-         Ntj/GTWcCyJkH8eU9hM0i3srfFduoHOCYP3KAG4Vnp+yKNFM1sWpU+ns7KghBu7hRFKL
-         mGvA==
+        bh=2QUcdjgXxrS+bTKkF3r2QRe+Cc9aRk/mkNDQCAPj22c=;
+        b=IVEd/98qyJSkG5hzNf4rxTG/bWBqL/NK/0J91D9BWbBw9k6fxD5mWRG7ND5IauLtie
+         d8JCMZlrwr5qFkmSaweolSnCSJFEBl5SPucrszkKR55j1YX9rTIw0XHeuRPXbaAfV++j
+         Nl5dCQqSZQmJPtNWwBwKp6s5YwJpOAzshylh0n3Fj80q/hyjsDEUrsk5gro70HoNKcHl
+         Z3DsnUmVm57VypqVp3va/kWlOL0kVhNh8ffWS55lUcg+b9bYkT21TfVTO3ICKOjYW7a3
+         tRF/t1I7xQ2gVuJv8TQPh70xYvPU5utpSJ2WeuD6Hi9pQ/hS8fU82/Hlxtk9nro3jZpQ
+         3XIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694071504; x=1694676304;
+        d=1e100.net; s=20221208; t=1694071709; x=1694676509;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XvLrxMQ1IidFWYQv1qbOrK7Zz+kctFqLG1SqA3KCV8I=;
-        b=Dasnl21ZICTqO4sX3P9j5b2CZAviVwnC9071aNegL6nQwq/QcSoAmTl+qzScG5OWJZ
-         oEsEwH9XrAW0FuNHvL7LMU08gtMUV/ufpCDwDx7ZoLAOIDGOpi8Ep9atjzqU0ASvE3qM
-         Isb+Td8vAvSK5ostau/ul73gRMkXUziPcpdbuQS1BWo3PCfFjr49duHQLrrxjOQQ7y9C
-         b5OiZps1FLjnfemToa+I+iYnWh5lMIV7fm/QwlgSGPP47GoUk/C2RgZ7XKSO4kk1ysnQ
-         +pQoKvGkl7IwQ1XIuHRTI6HgjaPU4dR8vhAg7Ylqeu+phAnQ4RSW1eFjp3KA41LeEJnM
-         OzuA==
-X-Gm-Message-State: AOJu0Yyxshf498Ik1+5vcAXDF4Mzk+a5AARct7ZL2VPcWitTHQX88o9w
-	Jr37MODdS+c2qk0EfvjZ0CBGPnaahjETAZzuuBSibQ==
-X-Google-Smtp-Source: AGHT+IF33BsQs6PXZBD6Yyx6MLxtC5D3dCLaevE9AUQBN2cYvO/VBix1ip+znuJz46jocHvadEET9qd1DQq8TKxIbhc=
-X-Received: by 2002:a25:fc16:0:b0:d78:be:6f02 with SMTP id v22-20020a25fc16000000b00d7800be6f02mr17528083ybd.11.1694071503985;
- Thu, 07 Sep 2023 00:25:03 -0700 (PDT)
+        bh=2QUcdjgXxrS+bTKkF3r2QRe+Cc9aRk/mkNDQCAPj22c=;
+        b=lpWcaNCQXxvLG9as7Xyuu1w+34zSgADqzXdbWczGFNXt2Ii1vcIWNRfVrfHeQKopId
+         h0XwZ6Jyg4qx+ltRuV6SwKRFzv6ffgOj5q7wJJZXnewdwPXffts97RaUhm3mv1bRDOOn
+         GTS9BUjlUbuwk77IfMon7hl7VMZnQrX7Wg8zndBIdFcdNO8e3wiEvkv7G3U0b/XTzdpC
+         J/+hd2cjbls2c9GM7sj2Y9lLqbLdE0TtsdjvcteqM/Ji0HBODUptpP2gtKj8OSIBXFcS
+         dUeRT2CGv4FrDjNUsHMhqTX5G1bLG6kgTpVRbZtUtLBAIOxEB4AJXHV6ODl8ZUR0pCbA
+         mQHA==
+X-Gm-Message-State: AOJu0Ywm9XHHvU8mf+950e8D4SWNgxGQ8rWzioc3q3wpSB6nWyWxMmFz
+	5R5WtCmL4SIdd4+eZyRWdzRHHvrecfh0aKhla1ZTdg==
+X-Google-Smtp-Source: AGHT+IG2TLQ2WqAfuGI+vTl02pQSFPJWDZVOY1MfvYV7hKobdzNo0vRGz8kywS9VyDIIMdmuzYR3qPmWC3h4lMZlj/s=
+X-Received: by 2002:a25:dc81:0:b0:d7b:9a5d:37c with SMTP id
+ y123-20020a25dc81000000b00d7b9a5d037cmr18599620ybe.49.1694071708542; Thu, 07
+ Sep 2023 00:28:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-14-brgl@bgdev.pl>
-In-Reply-To: <20230905185309.131295-14-brgl@bgdev.pl>
+References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-15-brgl@bgdev.pl>
+In-Reply-To: <20230905185309.131295-15-brgl@bgdev.pl>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 7 Sep 2023 09:24:52 +0200
-Message-ID: <CACRpkdZE9hMWNeY=J0LrGTO1=83L46z69V6b7BX=Q-vaM3kBAA@mail.gmail.com>
-Subject: Re: [PATCH 13/21] hte: tegra194: improve the GPIO-related comment
+Date: Thu, 7 Sep 2023 09:28:17 +0200
+Message-ID: <CACRpkda9=VULj4Cy_sit-UpUQnVEbS-RJKAeULVCw8ZCRTq1sw@mail.gmail.com>
+Subject: Re: [RFT PATCH 14/21] hte: tegra194: don't access struct gpio_chip
 To: Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
 	Tony Lindgren <tony@atomide.com>, Russell King <linux@armlinux.org.uk>, 
@@ -66,13 +67,18 @@ wrote:
 
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >
-> Using any of the GPIO interfaces using the global numberspace is
-> deprecated. Make it clear in the comment.
+> Using struct gpio_chip is not safe as it will disappear if the
+> underlying driver is unbound for any reason. Switch to using reference
+> counted struct gpio_device and its dedicated accessors.
 >
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Split this off and send separately to Dipen.
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
+As Andy points out add <linux/cleanup.h>, with that fixed:
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+
+I think this can be merged into the gpio tree after leaving some
+slack for the HTE maintainer to look at it, things look so much
+better after this.
 
 Yours,
 Linus Walleij
