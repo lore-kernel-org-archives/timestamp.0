@@ -1,52 +1,52 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE1CEDA
-	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:08:06 +0000 (UTC)
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-d7f0a60a159so534672276.0
-        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:08:06 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF7EEDA
+	for <timestamp@lists.linux.dev>; Thu,  7 Sep 2023 07:09:23 +0000 (UTC)
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-d7b9de8139fso528799276.1
+        for <timestamp@lists.linux.dev>; Thu, 07 Sep 2023 00:09:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694070485; x=1694675285; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1694070562; x=1694675362; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=h2UPY8Ad0JyZ552HHQpe1k1G4pRk3wLhmWob6nvmGZM=;
-        b=hGyDsfLSfOCPT4BwtVSiaKjHbbLLZ+31LPke8blNJ+9LUwxBZCFRA4eT8aD1PY6R99
-         /3buZi0yJ7KGf9bjJclTnaLOtYdzJ7j5DefBfdA0zY8z5p/hPIMKlLJWQivs4/eIlDUA
-         N/m+UKy2rSfXWMzNNJpnr6aarqmF6XufPKUcUjn5LKVPWLlTD7abKmtqJ7AspBKzkuL6
-         boiNAEF0QTPTrwaQaJK5rZ2y6HyB6eCBGqL10gL1mvX9wJtWieEmE8xGwigFRaLoVmRv
-         uSFNGD1yeVGKtAaJz78z0fUFOI9mlDaEmw/KChrI8eNX6celY9nBOeoEgYMpZXgGa5UC
-         GY1Q==
+        bh=9b7v8ynf43I8EPh86qv2+Qihb/MMTTB3QC+Af1PR4Qs=;
+        b=NEC4wcB7g2YXyLFUok2W9PN8jW1cbYe18XKzv1L+zxxw+lNxNtIorLyPsiMaOO4DZb
+         TgldoslxTXYXSkf/vZUWPQw2FOCgUvOfksAD8z7Z+bkPZSEPVLiPbbiUrxvvHCznVuPj
+         gA73teP8r8lpN0Lp7FEFNcLrygpt27rvikhhqEEsQ2/Ddq5NqukfgrCr8/IN7J4Rsbbw
+         v1plGOAMvZRa6mfhHdeV8EWb8X16Xvcj7flDIriQOV88ywgOxZWuEt7XqkzrhFZ43g1r
+         p4HbGvTDltuq5iHJX83MTAxHdshhuAgk5uGU3lH3k8Shti2M7Mq4vmHW1gbfb/E9TfcK
+         5D5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694070485; x=1694675285;
+        d=1e100.net; s=20221208; t=1694070562; x=1694675362;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=h2UPY8Ad0JyZ552HHQpe1k1G4pRk3wLhmWob6nvmGZM=;
-        b=WkSaNC0MtpGRSswY9QbbpEpN17647EzMkZ/XtAJzBS8o50doWbYyoxDHBTc0GODIK6
-         gSou/7OPtrgnVOq5yjjdRGQwL7XWED2vUZjbMf6h2W/c6dz6wePGfhdSc1hhUgzbz3L7
-         zWCVrBkqt/DD1dR7dSRiis0bIBU/9temLCfMd+YMZK7nxirsrQQpTcbkdJtzGbHx0x1t
-         ZzONy7wR/DmRS3o80772HjwHrESxWz5KThj7gwtKfEpzpWuLFv3Fk01G7hhVRPBNiBNG
-         wxaV+hgVRf16brgq4378PfW0Xq2wmchuVOLGV8qEAHeXwjZXwqx2/p7UmGH61rqNvQPe
-         +xKQ==
-X-Gm-Message-State: AOJu0Yxl2in+xyV/ulBzuW85Y6w8C/T6JMmIKXAsStErcvSw07lXGD+R
-	yoU6PFPiz1g34wd0vnlFPh5Fita4IH0HYcNVj5xdiQ==
-X-Google-Smtp-Source: AGHT+IFxuGmnz6UhP+iDHBaAUw7EFN+gVZSw6nwdZwmmFMJ3XnkMU5k7fxCuPngY53Trr0s6Te5MkJ1CXk5K8y+Rwo4=
-X-Received: by 2002:a25:ce47:0:b0:d1d:514e:27c6 with SMTP id
- x68-20020a25ce47000000b00d1d514e27c6mr18577035ybe.6.1694070485563; Thu, 07
- Sep 2023 00:08:05 -0700 (PDT)
+        bh=9b7v8ynf43I8EPh86qv2+Qihb/MMTTB3QC+Af1PR4Qs=;
+        b=ES6Sd6jlW6T99/BuMqt83SvLxh9DzCDK2D+1SAwvSofEVrSlh+D09LmNnw4U6fe9ON
+         2md6jaM5/3U2m4CKAuaK92eKusDBEM9JxxfBq6xEsslEfO4b+jOt8laYR15t1UPPWKRj
+         /cTqlJd9zfGoY9CJsluQT4A40eh/qoZyMtT4v+TJQgWUPNeb334Ij0e+Y9cWBVz0olHT
+         x2a7opGlFS8up0Vtivm7BUpUV65UBN0Rn+XZ8fwsLiFV5RI++tGxC9iBWhhmUoiHSbp3
+         q4nS0N0afCoV67/8SnGubx4G5rJ5Qhi7l34/c47d638lLIxiNpVdWYtUbSfdnriPgvmz
+         gBgQ==
+X-Gm-Message-State: AOJu0YwVotDqW/OyWUljqaDwGDFp4mGgvz8dTg81BbRcVJoVFlr/rMaj
+	GTAO3PrbQIXSazkXYoc/CTMDwwye6VC6trrJHVh7YQ==
+X-Google-Smtp-Source: AGHT+IFBMY2aVjLfU4IGVauVzzx/POp8es0I/Cix3TKhZtX3AA6hztSUPcllgbHHruPMjhuUvCKYwAD/N3CsJPq8yKo=
+X-Received: by 2002:a25:bc53:0:b0:d62:6514:45b7 with SMTP id
+ d19-20020a25bc53000000b00d62651445b7mr18630990ybk.37.1694070562057; Thu, 07
+ Sep 2023 00:09:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-5-brgl@bgdev.pl>
-In-Reply-To: <20230905185309.131295-5-brgl@bgdev.pl>
+References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-6-brgl@bgdev.pl>
+In-Reply-To: <20230905185309.131295-6-brgl@bgdev.pl>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 7 Sep 2023 09:07:53 +0200
-Message-ID: <CACRpkdYCOVJZ6TUMQQHSaKZHMCx8tE8=3z=1BogYTkr52mFr8Q@mail.gmail.com>
-Subject: Re: [PATCH 04/21] gpiolib: provide gpio_device_get_desc()
+Date: Thu, 7 Sep 2023 09:09:10 +0200
+Message-ID: <CACRpkdbAeBQj2RUjj9ybaAiytvtgpF4PXFvX+S4C0ZVP0bb8Rg@mail.gmail.com>
+Subject: Re: [PATCH 05/21] gpiolib: add support for scope-based management to gpio_device
 To: Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
 	Tony Lindgren <tony@atomide.com>, Russell King <linux@armlinux.org.uk>, 
@@ -67,15 +67,13 @@ wrote:
 
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >
-> Getting the GPIO descriptor directly from the gpio_chip struct is
-> dangerous as we don't take the reference to the underlying GPIO device.
-> In order to start working towards removing gpiochip_get_desc(), let's
-> provide a safer variant that works with an existing reference to struct
-> gpio_device.
+> As the few users that need to get the reference to the GPIO device often
+> release it right after inspecting its properties, let's add support for
+> the automatic reference release to struct gpio_device.
 >
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Andy had some good doc comments, with these addressed:
+Needless to say, I'm a strong advocate for scoped resource management.
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
 Yours,
