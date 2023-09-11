@@ -1,102 +1,108 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE795C129
-	for <timestamp@lists.linux.dev>; Mon, 11 Sep 2023 10:05:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694426726; x=1725962726;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=00fLvhiMtv2ZiGvbKRwC5xfsj2n/I3VRQoCUrYTyoPk=;
-  b=jl2GuVQ0iTI0oRz0MkQVdaxATSUIUcHK+EK6YhVdHvcJgr9/D9jaWFjr
-   A0ptRbNEC0ApBO+JtBVMiFnMSCCOsTOZTdk5UD+iQDxVvje4Lqpz5pB08
-   rbtxdHxQWRuoF1DydnelJ+U8SGeQgSrVK5TlZKQNAvEsOZdiVitA0n+9N
-   BCZ7zruRf/ZgTd/SQDmUs9JWYzlhegseMge/UkDSffachRH+IbnEiEuQH
-   rA314T4LTrq4x7K8//h2yN56JKIA85KdDhjqiT+YNGNkrS8mFamlnHS9R
-   oItCnMlJ7jzIoTx5ZmUSpt/lEp46bwjfGZUqYm3xLfnbb5S7XemKSouiq
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10829"; a="363065952"
-X-IronPort-AV: E=Sophos;i="6.02,243,1688454000"; 
-   d="scan'208";a="363065952"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2023 03:05:24 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10829"; a="866884962"
-X-IronPort-AV: E=Sophos;i="6.02,243,1688454000"; 
-   d="scan'208";a="866884962"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2023 03:05:18 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1qfdn9-008HnB-00;
-	Mon, 11 Sep 2023 13:05:15 +0300
-Date: Mon, 11 Sep 2023 13:05:14 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Hans de Goede <hdegoede@redhat.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Dipen Patel <dipenp@nvidia.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Mark Gross <markgross@kernel.org>,
-	linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-acpi@vger.kernel.org, timestamp@lists.linux.dev,
-	linux-tegra@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [RFT PATCH 11/21] platform: x86: android-tablets: don't access
- GPIOLIB private members
-Message-ID: <ZP7mWk/jx3FZjMih@smile.fi.intel.com>
-References: <20230905185309.131295-1-brgl@bgdev.pl>
- <20230905185309.131295-12-brgl@bgdev.pl>
- <8f51b4a8-bb9c-4918-61a8-4ab402da1ed0@redhat.com>
- <CAMRc=Mfmp3Nd5jwNWr=kc8RFO-arFDwEvLxj5Qu9_1OOXR2gHQ@mail.gmail.com>
- <173bdafa-08da-7473-6711-61131986eb3c@redhat.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F9FBE67
+	for <timestamp@lists.linux.dev>; Mon, 11 Sep 2023 11:10:07 +0000 (UTC)
+Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-450b8d61550so298367137.0
+        for <timestamp@lists.linux.dev>; Mon, 11 Sep 2023 04:10:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1694430607; x=1695035407; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ygzI44NeTHTXZv1CATzGbcxyMKxYdJM78sd/Ui4mbh4=;
+        b=1+xhWIkhSj2/L/1zDYfGQd0GCgoKqZQiu4Dw/fN3U5QXjA4/4mLqbVHfqZ0Wv4bO2y
+         LNjfdquhxqhq5HeDfclJ1ZG2VnoIDeSMFQ1hvRLwrrZf9jKZDN1dKTG1C6e0yp5RBEGw
+         fjdm+MO09+qNb7YPnWUP1qQTF72DwBAo7uBpTkoL5E82ljoPGkIX+0wey2MTZlr5yWxp
+         ZQYVSMhdYlk5kzofCjFmSHYCmImAU57N+qdrqmU8ShVrY3f2p7D+QKjvEy3R5Kyxw+zO
+         zWeHFFDoV45dPXBWXiYrlUN4JSJlQmj+E/aPMlCdBUiOpzFbHDNFIDMt/Izid4bOsyte
+         CZuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694430607; x=1695035407;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ygzI44NeTHTXZv1CATzGbcxyMKxYdJM78sd/Ui4mbh4=;
+        b=mjXxqJP2XQLR0SDaUQU/z6+ZGJkmVKqgRxgSU+nzGdp2tAv0J8gdp9nBeC7JyaXmSN
+         DgDGJS5e21zCf0utDnZh5BgX1NPnpaaQYg1aJqMUP8DeqaOboSog+eSh5VkVeiwgZWuL
+         KXRFOf9c/LO9k07obagDIbND5OFZxmxakH76V4RPIViXaq6MjhFfKR5jvRcK+gv0yPeH
+         XMslMYtbJcd6kxOosuQMDOhlaUqyLEjCJUStjZVNrv+l4mzO38ubpai78u3XTItTmgjK
+         wYpMypCm105cfmKjqdIz4hp7MP/gGYHnLyxsXvXPGL8cTUYfuFNKKHFunWOUngGtz7bj
+         0H0Q==
+X-Gm-Message-State: AOJu0Yz9iH+PG0jIJEiz7TH9AvwDFlGLG2vjZUNpLW3VhIKVfCEAbAjh
+	wHGsBd7fHGl61wY1jBf59dEjI9q6jFMKYVqkdgVfmQ==
+X-Google-Smtp-Source: AGHT+IHKoGdBmULT8rxuDZNFn4KOQlQw0ew3QXPEPQ2cSj+YIXX/HcTVOBuC3A6SmscStWmmEPnPXA1WJ+6yAFCejlE=
+X-Received: by 2002:a67:f557:0:b0:44d:5b62:bcd5 with SMTP id
+ z23-20020a67f557000000b0044d5b62bcd5mr8865170vsn.23.1694430607044; Mon, 11
+ Sep 2023 04:10:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <173bdafa-08da-7473-6711-61131986eb3c@redhat.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-16-brgl@bgdev.pl>
+ <CACRpkdaVUPNYVjAi2XsNKVhwmtk2qpVp62Lke4xeDOwhhBXLtg@mail.gmail.com> <6555932.G0QQBjFxQf@dell>
+In-Reply-To: <6555932.G0QQBjFxQf@dell>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Mon, 11 Sep 2023 13:09:56 +0200
+Message-ID: <CAMRc=Mfrk9q6fJyEAuxDXYPpbjVHeLJaTjHEcKiYHzrE3r+_7A@mail.gmail.com>
+Subject: Re: [RFT PATCH 15/21] arm: omap1: ams-delta: stop using gpiochip_find()
+To: Janusz Krzysztofik <jmkrzyszt@gmail.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Aaro Koskinen <aaro.koskinen@iki.fi>, 
+	Tony Lindgren <tony@atomide.com>, Russell King <linux@armlinux.org.uk>, 
+	Mika Westerberg <mika.westerberg@linux.intel.com>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Dipen Patel <dipenp@nvidia.com>, 
+	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Hans de Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>, 
+	linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-acpi@vger.kernel.org, timestamp@lists.linux.dev, 
+	linux-tegra@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Sep 09, 2023 at 04:17:53PM +0200, Hans de Goede wrote:
-> On 9/6/23 16:27, Bartosz Golaszewski wrote:
-> > On Wed, Sep 6, 2023 at 3:01 PM Hans de Goede <hdegoede@redhat.com> wrote:
+On Fri, Sep 8, 2023 at 8:07=E2=80=AFPM Janusz Krzysztofik <jmkrzyszt@gmail.=
+com> wrote:
+>
+> Dnia czwartek, 7 wrze=C5=9Bnia 2023 09:31:01 CEST Linus Walleij pisze:
+> > On Tue, Sep 5, 2023 at 8:53=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.=
+pl> wrote:
+> >
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > gpiochip_find() is going away as it's not hot-unplug safe. This platf=
+orm
+> > > is not affected by any of the related problems as this GPIO controlle=
+r
+> > > cannot really go away but in order to finally remove this function, w=
+e
+> > > need to convert it to using gpio_device_find() as well.
+> > >
+> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > I was cleaning this one just some merge cycle ago, now it
+> > looks even better!
+> > Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+>
+> Acked-by: Janusz Krzysztofik <jmkrzyszt@gmail.com>
+>
 
-...
+Janusz,
 
-> > This makes sense! Maybe we'd need a good-old board file setting up all
-> > non-described devices using the driver model?
-> 
-> Right, this is pretty much exactly what the x86-android-tablets
-> code does. Except that it does it for a bunch of boards in a single
-> .ko / driver. There is a lot of commonality between these boards,
-> so this allows sharing most of the code.
-> 
-> The driver uses DMI matching, with the match's driver_data pointing
-> to a description of which devices to instantiate and then the shared
-> code takes care of instantiating those.
-> 
-> About 90% of the data / code is __init or __initdata so both
-> the code to instantiate the devices as well as the per board
-> data is free-ed after module_init() has run.
+Is it fine if I take it through the GPIO tree?
 
-...which is nicely looked and isolated hack (or quirk if you prefer)
-that I like! Thanks, Hans, for maintaining that!
+Bartosz
 
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+> Thanks,
+> Janusz
+>
+> >
+> > Yours,
+> > Linus Walleij
+> >
+>
+>
+>
+>
