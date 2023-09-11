@@ -1,216 +1,102 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD7F63B6
-	for <timestamp@lists.linux.dev>; Sat,  9 Sep 2023 14:17:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1694269077;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gxpqjGlWGczKrjdD/KSIdC9Ij7lXDy76wdf60gzXu/U=;
-	b=B9jfQhFzwDi3Q8Yfp0zGb5maNh67iYw+S2K6EiWfvf0oKXVU7+zpcAizvlVmuLz8eUZOaq
-	uWPYLvwQ5gtBREixOZRi6BxsjNzm77ioHJiPC9iTazlSj5WbL/POzftEZnAHTao1+F1999
-	zo1ldzLi3BNyqZhh+9j3hDN+h7rys+U=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-497-_YErG6sVPBiN72rYz8bmfQ-1; Sat, 09 Sep 2023 10:17:56 -0400
-X-MC-Unique: _YErG6sVPBiN72rYz8bmfQ-1
-Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-997c891a88dso201066166b.3
-        for <timestamp@lists.linux.dev>; Sat, 09 Sep 2023 07:17:56 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A9C3D8C
+	for <timestamp@lists.linux.dev>; Mon, 11 Sep 2023 09:44:52 +0000 (UTC)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-401bbfc05fcso46933445e9.3
+        for <timestamp@lists.linux.dev>; Mon, 11 Sep 2023 02:44:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1694425491; x=1695030291; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=R0/rqbO9zdTuj+XkCrDufr//URbhGp0n8nPQ9514Kz8=;
+        b=ylHX4yfeNJWQwUmeT6WQ13FhZIbIxWHmlXJfkcTT1tb9J7OOCnre8Oh7CE8spl+udG
+         WRenfgCG1kyITH22MqWtg6dWXN7f8xwUTfj0ZOnq4A800TA5XJl5l4XpfCrY+8m+uxg0
+         wr5X7Hi2qM0fwV3IzUz0z//O7Nk1EGX9hE2RqPq3XG8U1/EACnxpULajdrslwm2uVsBE
+         05FJtg9Cx7YVlEUkWFLIjoobEf8ewnPRUl7Kay7qUHn/xxNqx7lzDlO4nTIP8miAfojv
+         aNRwW1DLfjuB1URcwIJk9Q6sqWtyGJ8kx8dotjAVf7GaeJfrGIwF+/UFIuevkk1autpb
+         KJhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694269075; x=1694873875;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gxpqjGlWGczKrjdD/KSIdC9Ij7lXDy76wdf60gzXu/U=;
-        b=M/9GZRv7DGalYct6yZpTEPVWae9gutp+TG9LMbgAXkHcuBS2Q2g1GKdSm7yrH27Afq
-         1RIeoEdKHNIqqjn5NeAEmMIm3gWayDxO50nEjA+valXEP9bq5WbLiOfeeCz5UHRUKlgN
-         w8VtJrE65SKOfWhDFHscYzKzkD2TTxtUyXvNbPXxG5Q7w+DH6BAEfF+b8xbCyLuBbHLn
-         tUnvp5nyx7uWr55XIzVUgDPt3WJhzKWcfeQApr4y1yTytgwE/LroqSRq4TxlbJs2oXda
-         0ict+mWpij8jS+KNK0VVeiDrtiet+hc/9r73NLXJ1KzbeshMo5Bq5ervACnDtceDZs6j
-         q17w==
-X-Gm-Message-State: AOJu0YyXfHo7LSgkcHWFJQY9m5bp6hF6L72XnVWISFELwR63W88CP6fe
-	Sp0eumBO9TRKprjOln3qCTPzSKIrMiySIiCzrlKQbateDXl9Fe5yDfvtt33jYEa8axeQ6QQRzSp
-	mVmnCFVdCGe75nneDT4yB
-X-Received: by 2002:a17:906:1099:b0:9a1:bb8f:17d0 with SMTP id u25-20020a170906109900b009a1bb8f17d0mr4501446eju.30.1694269075507;
-        Sat, 09 Sep 2023 07:17:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMudyVp+zx8RzmnPFLHESTvoKIZa2tIOu9EV9hDpsbWpIlbA1KAhUYJhR+ZESN38YSVQ+qMw==
-X-Received: by 2002:a17:906:1099:b0:9a1:bb8f:17d0 with SMTP id u25-20020a170906109900b009a1bb8f17d0mr4501420eju.30.1694269075146;
-        Sat, 09 Sep 2023 07:17:55 -0700 (PDT)
-Received: from ?IPV6:2001:1c00:c32:7800:5bfa:a036:83f0:f9ec? (2001-1c00-0c32-7800-5bfa-a036-83f0-f9ec.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:5bfa:a036:83f0:f9ec])
-        by smtp.gmail.com with ESMTPSA id i10-20020a170906114a00b00992076f4a01sm2396508eja.190.2023.09.09.07.17.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Sep 2023 07:17:54 -0700 (PDT)
-Message-ID: <173bdafa-08da-7473-6711-61131986eb3c@redhat.com>
-Date: Sat, 9 Sep 2023 16:17:53 +0200
+        d=1e100.net; s=20230601; t=1694425491; x=1695030291;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=R0/rqbO9zdTuj+XkCrDufr//URbhGp0n8nPQ9514Kz8=;
+        b=nlQOa2Ct6162BNQflv/XTEZ5PuABuN4lfi44jmBDcUFGpNGxd2bRaIJ4zPRCSl2Cz9
+         ufPLq86X1wmbJShgTzv3VxeK6ehcvrKg3l9wUJyvQ4tT7dxrLs+Oasa0BcsKJtY4s6fu
+         +3wBSwfsLDHFoWi7zfmhXNgNcK8PQdev4ygr4fkR4NYQq+T2aSBmtIwIVBnNKigSIkDG
+         /I5/4A3idmmQ4VXPmL3cWzRauJtiaGNTLiNgZB4DbwOMjVIwNZs3XQMXTHiK5xe4dOHr
+         U0BCEh+rOvIG+0+D7tUHAnwvBo7WTfjFkLuErbnwjLDHMY+JgEpx+ji2JdvcivTRIp2a
+         QbQA==
+X-Gm-Message-State: AOJu0YyXTEaY7LA+i0I1FHnLvWIY7vddODfa3gVDMHjFIBS7i4x4kamX
+	wJiEjCvYULAs9NYU/fn/rQDC2A==
+X-Google-Smtp-Source: AGHT+IFoi4Dei8OscALHdqZx2NassPsp3aooQcZ1UAgjVrAk+Jw6ryGdd0bnraeWRUOWi1pzfF528Q==
+X-Received: by 2002:a1c:7508:0:b0:3fe:d1e9:e6b8 with SMTP id o8-20020a1c7508000000b003fed1e9e6b8mr8066631wmc.12.1694425490282;
+        Mon, 11 Sep 2023 02:44:50 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:c2b1:675e:119e:2497])
+        by smtp.gmail.com with ESMTPSA id c26-20020a7bc01a000000b003feeb082a9fsm9627985wmb.3.2023.09.11.02.44.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 02:44:49 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Dipen Patel <dipenp@nvidia.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>
+Cc: timestamp@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH] hte: tegra194: improve the GPIO-related comment
+Date: Mon, 11 Sep 2023 11:44:43 +0200
+Message-Id: <20230911094443.14040-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [RFT PATCH 11/21] platform: x86: android-tablets: don't access
- GPIOLIB private members
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Aaro Koskinen <aaro.koskinen@iki.fi>,
- Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
- Russell King <linux@armlinux.org.uk>,
- Mika Westerberg <mika.westerberg@linux.intel.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Linus Walleij <linus.walleij@linaro.org>, Dipen Patel <dipenp@nvidia.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>, Mark Gross <markgross@kernel.org>,
- linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-acpi@vger.kernel.org, timestamp@lists.linux.dev,
- linux-tegra@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230905185309.131295-1-brgl@bgdev.pl>
- <20230905185309.131295-12-brgl@bgdev.pl>
- <8f51b4a8-bb9c-4918-61a8-4ab402da1ed0@redhat.com>
- <CAMRc=Mfmp3Nd5jwNWr=kc8RFO-arFDwEvLxj5Qu9_1OOXR2gHQ@mail.gmail.com>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <CAMRc=Mfmp3Nd5jwNWr=kc8RFO-arFDwEvLxj5Qu9_1OOXR2gHQ@mail.gmail.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US, nl
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Bart,
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-On 9/6/23 16:27, Bartosz Golaszewski wrote:
-> On Wed, Sep 6, 2023 at 3:01 PM Hans de Goede <hdegoede@redhat.com> wrote:
->>
->> Hi Bartosz,
->>
->> On 9/5/23 20:52, Bartosz Golaszewski wrote:
->>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>
->>> We're slowly removing cases of abuse of the GPIOLIB public API. One of
->>> the biggest issues is looking up and accessing struct gpio_chip whose
->>> life-time is tied to the provider and which can disappear from under any
->>> user at any given moment. We have provided new interfaces that use the
->>> opaque struct gpio_device which is reference counted and will soon be
->>> thorougly protected with appropriate locking.
->>>
->>> Stop using old interfaces in this driver and switch to safer
->>> alternatives.
->>>
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>
->> First of all sorry for the issues this hack-ish kernel module
->> is causing for cleaning up gpiolib APIs.
->>
->> I don't know how close a look you took at the code, so first of
->> all let me try to briefly explain what this hackish kernel module
->> is for:
->>
->> There are some x86_64/ACPI tablets which shipped with Android as
->> factory OS. On these tablets the device-specific (BSP style)
->> kernel has things like the touchscreen driver simply having
->> a hardcoded I2C bus-number + I2C client address. Combined
->> with also hardcoded GPIO numbers (using the old number base APIs)
->> for any GPIOs it needs.
->>
->> So the original Android kernels do not need the devices
->> to be properly described in ACPI and the ACPI tables are
->> just one big copy and paste job from some BSP which do
->> not accurately describe the hardware at all.
->>
->> x86-android-tablets.ko identifies affected models by their
->> DMI strings and then manually instantiates things like
->> i2c-clients for the touchscreen, accelerometer and also
->> other stuff. Yes this is ugly but it allows mainline kernels
->> to run pretty well on these devices since other then
->> the messed up ACPI tables these are pretty standard x86/ACPI
->> tablets.
->>
->> I hope this explains the hacks, now on to the problems
->> these are causing:
-> 
-> This makes sense! Maybe we'd need a good-old board file setting up all
-> non-described devices using the driver model?
+Using any of the GPIO interfaces using the global numberspace is
+deprecated. Make it clear in the comment.
 
-Right, this is pretty much exactly what the x86-android-tablets
-code does. Except that it does it for a bunch of boards in a single
-.ko / driver. There is a lot of commonality between these boards,
-so this allows sharing most of the code.
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+---
+This was part of a wider series but since this is independent, I'm sending
+it separately.
 
-The driver uses DMI matching, with the match's driver_data pointing
-to a description of which devices to instantiate and then the shared
-code takes care of instantiating those.
+ drivers/hte/hte-tegra194.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-About 90% of the data / code is __init or __initdata so both
-the code to instantiate the devices as well as the per board
-data is free-ed after module_init() has run.
-
-<snip>
-
->> So rather then the above I think what needs to happen here
->> (and I can hopefully make some time for that this weekend) is:
->>
->> 1. Have the x86-android-tablets code instantiate a
->>    "x86-android-tablets" platform-dev
->> 2. Have the code generate a gpiod_lookup_table for all GPIOs
->>    for which it currently uses x86_android_tablet_get_gpiod()
->>    with the .dev_id set to "x86-android-tablets"
->> 3. Use regular gpiod_get() on the "x86-android-tablets" pdev
->>    to get the desc.
->>
->> I think this should solve all the issues with
->> x86_android_tablet_get_gpiod() poking inside
->> gpiolib external since now it is only using
->> public gpiolib APIs, right ?
->>
->> One question about 2. there are 2 ways to do this:
->>
->> i. Have the module_init() function loop over all
->> x86_dev_info members which will result in calling
->> x86_android_tablet_get_gpiod() and have it generate
->> one big gpiod_lookup_table for all GPIOs needed
->> in one go. At which point x86_android_tablet_get_gpiod()
->> goes away and can be directly replaced with gpiod_get()
->> calls on the pdev.
->>
->> ii. Keep x86_android_tablet_get_gpiod() and have it
->> generate a gpiod_lookup_table with just 1 entry for
->> the GPIO which its caller wants. Register the lookup
->> table, do the gpiod_get() and then immediately
->> unregister the lookup table again.
->>
->> ii. Would be easier for me to implement, especially
->> since there is also some custom (board specific)
->> init code calling x86_android_tablet_get_gpiod()
->> which would require some special handling for i.
->>
->> OTOH I guess some people will consider ii. somewhat
->> ugly, although AFAICT it is perfectly ok to use
->> the gpiolib lookup APIs this way.
->>
->> Can you please let me known if you are ok with ii,
->> or if you would prefer me going with solution i. ?
->>
-> 
-> I am fine with ii. I have recently sent a patch that does exactly that
-> in one of the SPI drivers. It's ugly but it's better than what we have
-> now.
-
-Ok, I have just finished implementing this using the ii. method.
-
-I'll post a patch-series for this for review right after this email.
-
-After that series x86-android-tablets should no longer be a problem
-wrt using any private gpiolib APIs.
-
-Regards,
-
-Hans
-
-
+diff --git a/drivers/hte/hte-tegra194.c b/drivers/hte/hte-tegra194.c
+index 6fe6897047ac..9fd3c00ff695 100644
+--- a/drivers/hte/hte-tegra194.c
++++ b/drivers/hte/hte-tegra194.c
+@@ -407,12 +407,15 @@ static int tegra_hte_line_xlate(struct hte_chip *gc,
+ 		return -EINVAL;
+ 
+ 	/*
++	 * GPIO consumers can access GPIOs in two ways:
+ 	 *
+-	 * There are two paths GPIO consumers can take as follows:
+-	 * 1) The consumer (gpiolib-cdev for example) which uses GPIO global
+-	 * number which gets assigned run time.
+-	 * 2) The consumer passing GPIO from the DT which is assigned
+-	 * statically for example by using TEGRA194_AON_GPIO gpio DT binding.
++	 * 1) Using the global GPIO numberspace.
++	 *
++	 * This is the old, now DEPRECATED method and should not be used in
++	 * new code. TODO: Check if tegra is even concerned by this.
++	 *
++	 * 2) Using GPIO descriptors that can be assigned to consumer devices
++	 * using device-tree, ACPI or lookup tables.
+ 	 *
+ 	 * The code below addresses both the consumer use cases and maps into
+ 	 * HTE/GTE namespace.
+-- 
+2.39.2
 
