@@ -1,61 +1,61 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A52D514
-	for <timestamp@lists.linux.dev>; Wed,  4 Oct 2023 11:59:43 +0000 (UTC)
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4529d1238a9so1024192137.3
-        for <timestamp@lists.linux.dev>; Wed, 04 Oct 2023 04:59:42 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3570D514
+	for <timestamp@lists.linux.dev>; Wed,  4 Oct 2023 12:01:10 +0000 (UTC)
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4545d8a95d9so887318137.2
+        for <timestamp@lists.linux.dev>; Wed, 04 Oct 2023 05:01:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1696420782; x=1697025582; darn=lists.linux.dev;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1696420869; x=1697025669; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6AACATPPHgIuz8FxZ7eCyvrDEuOEhlDx+Kvd4JOYuOA=;
-        b=nDJVg97Shi+im8iHAgQrD9j8m5PclfbsrQ2QO2adgCjs5Als68GzAnGcWeIo3N937D
-         W5G7RAKOgLEuqyWQ52v4qmzB3oy1xNrwaJbqfRFaoj1M5dWFmg3m8Z2kUGcOobTbiDMk
-         kP/JM3/rGZMn6Eva9/2Ae2UalQmP8IgNbmsLlRUnZQdb+ZM8FdSPhP8Y/SEPrGiFhZ14
-         WQ9YyiVlh+VT/CmiKenFW12SOt5Q1xe1GURPUaGf4YUzH3fQFNRbrX/+/+/DDPCXZIZM
-         rPc6quanH4aDCvdja+ydM7dA8uRrB8gIVWF2/QIbKKXZKvLk6bHenIJJ3ZN1rPthGlzC
-         5z9w==
+        bh=5VxF9d0mojGG7o4cVpSUHCY76AoqXAbBRiV4n80jKEw=;
+        b=x+NC6NyOLCwhC5oS1IHJSNjaYammlQLY3EQJl8qt7rJRn5gqyAU13lXrTy/fBi4FwO
+         a0k275tXw5wuUqWfzHsvK0b/7uF6aZE3OQBgcm9CzmoOKWRAZ4PW1suWNei+xL0DVe4Z
+         ImD5/DE5BURJmskiQyX3QZ8Brfd3ctdMazZAO0oex6YdCvoSBLI+s7+n28pgH9lpGraC
+         6CbubQLB7W71HPP2uDNt8H0KI1ZaR2m6Nt9WbJC3fhWs6SBifBOg12DQEpE7kupYLJMv
+         eT3mzMZRV8BAtQ6H60iClUrHmDEajYHgJYzJFZH0E9EiinFajOAVE/3Zz2mTRt1WipX0
+         DQ2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696420782; x=1697025582;
+        d=1e100.net; s=20230601; t=1696420869; x=1697025669;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6AACATPPHgIuz8FxZ7eCyvrDEuOEhlDx+Kvd4JOYuOA=;
-        b=OLHkwYuBW+aAHxh8Zm5EF0WFZwCpuck9GLJyICjCerQgHLgkmForiLnK+3vr1hfJXL
-         Hi4d5idpfPFXyvbxJsQ2b3ae8hIAOlowl/GJIdy6uyPJt68dGsFZxIwSN4ks4sznTd7O
-         Fx5/oSmC0BnymWC4vhGE+nqiXf4w7caeM79mv3QCAElc1GHbtT0MMgK+Kd1fWX7vEfQq
-         ou0oVWkOgmocks9NiHAmaScedcF/+CyQ/mCqPz3+UT/Gih/sVfe2HfGAnBH8pdseClzl
-         LcOVFrOfEv8IfUqkB/cCkHr4jCD8KnJz6nwgAXQJ3Nc4a4v/iD/hBtmcqaOb2zTV3LAD
-         438Q==
-X-Gm-Message-State: AOJu0Yx4b5mA9WvnYnvl7rAMC70UfoTWtTcgO4cxCQVNVyt/wTUoOWOo
-	B2SpAZvgJlH5bDvfEMq0qskLJ5ZGsyJ4AxEDPNF5jg==
-X-Google-Smtp-Source: AGHT+IHumK2wxKHooMcCivaS2pM5etsFaTr9cIpwm6I5vcIaNG/mZmLCE1Sz7hn/phh+XU0GX2azNlHCgSET25mhNNk=
-X-Received: by 2002:a67:e3ab:0:b0:452:5798:64bd with SMTP id
- j11-20020a67e3ab000000b00452579864bdmr1197006vsm.35.1696420782057; Wed, 04
- Oct 2023 04:59:42 -0700 (PDT)
+        bh=5VxF9d0mojGG7o4cVpSUHCY76AoqXAbBRiV4n80jKEw=;
+        b=wx17pT19PrrDSNa6AmxSgFqIoL7nCDSQ1AWoLVSOcSN0Gb/+w/hqGTZeeUbUWtaSft
+         DqWjN2/zDDFc3js3oSYUFXFDHLgFaBe0XxVXijxBPlid0LfmsxdR3uOpLe6F4TwlJu+G
+         ssHTxNP6U6TYjFj5lAA+bl8Vtt7fsEpBCX/7MQgTlVxRDtt9YbvXcLr9KN8uu1kU1v5i
+         UzkIQK10KCeM/3d+rNMiDyPX0KTVDLFjgN/WGZIaHhyhK7pq9ivrjgERFmHmkKur4raI
+         +YihqL2X8qH7lp6GCCgVPUr6irlSvqrTOfQVKpV9BoAGZ0EZeNEXzZj87mm5r3w30kHQ
+         bA0A==
+X-Gm-Message-State: AOJu0Yzy8BR6fts8QgkTE32Fjfidgwp4PBpgCLLT6CgbFka3XwO7fs7h
+	YksS34Nwft4zj/hMDjjD5pPxfiFW18zdk1WpnFjnPw==
+X-Google-Smtp-Source: AGHT+IEx3AgtVmbiogi6y/J2HxxHzWhr7s02jCF0ZQyoHV8FsEEVFDac4kKEaiIaQ5/oedvf5e19/1rxUgniaHEkusM=
+X-Received: by 2002:a67:efc8:0:b0:44e:9afe:c5b9 with SMTP id
+ s8-20020a67efc8000000b0044e9afec5b9mr1545555vsp.23.1696420869527; Wed, 04 Oct
+ 2023 05:01:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-16-brgl@bgdev.pl>
-In-Reply-To: <20230905185309.131295-16-brgl@bgdev.pl>
+References: <20230905185309.131295-1-brgl@bgdev.pl> <20230905185309.131295-15-brgl@bgdev.pl>
+ <CACRpkda9=VULj4Cy_sit-UpUQnVEbS-RJKAeULVCw8ZCRTq1sw@mail.gmail.com>
+In-Reply-To: <CACRpkda9=VULj4Cy_sit-UpUQnVEbS-RJKAeULVCw8ZCRTq1sw@mail.gmail.com>
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 4 Oct 2023 13:59:31 +0200
-Message-ID: <CAMRc=MeBKovkC-VbvWNJWk_UjU4FGguEW7gy=L-2saA7kiPijQ@mail.gmail.com>
-Subject: Re: [RFT PATCH 15/21] arm: omap1: ams-delta: stop using gpiochip_find()
-To: Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
+Date: Wed, 4 Oct 2023 14:00:58 +0200
+Message-ID: <CAMRc=MdTk1B4MEh9C624Upm_EcaQgJd9OU-AGfU0G-DU1+qk6A@mail.gmail.com>
+Subject: Re: [RFT PATCH 14/21] hte: tegra194: don't access struct gpio_chip
+To: Linus Walleij <linus.walleij@linaro.org>, Dipen Patel <dipenp@nvidia.com>
+Cc: Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
 	Tony Lindgren <tony@atomide.com>, Russell King <linux@armlinux.org.uk>, 
 	Mika Westerberg <mika.westerberg@linux.intel.com>, 
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Dipen Patel <dipenp@nvidia.com>, Thierry Reding <thierry.reding@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Hans de Goede <hdegoede@redhat.com>, 
-	Mark Gross <markgross@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org, 
+	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Hans de Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>, 
+	linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
 	linux-acpi@vger.kernel.org, timestamp@lists.linux.dev, 
 	linux-tegra@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
@@ -63,94 +63,35 @@ Cc: linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 5, 2023 at 8:53=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl> =
-wrote:
+On Thu, Sep 7, 2023 at 9:28=E2=80=AFAM Linus Walleij <linus.walleij@linaro.=
+org> wrote:
 >
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> On Tue, Sep 5, 2023 at 8:53=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
 >
-> gpiochip_find() is going away as it's not hot-unplug safe. This platform
-> is not affected by any of the related problems as this GPIO controller
-> cannot really go away but in order to finally remove this function, we
-> need to convert it to using gpio_device_find() as well.
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Using struct gpio_chip is not safe as it will disappear if the
+> > underlying driver is unbound for any reason. Switch to using reference
+> > counted struct gpio_device and its dedicated accessors.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  arch/arm/mach-omap1/board-ams-delta.c | 36 +++++++++++++--------------
->  1 file changed, 17 insertions(+), 19 deletions(-)
+> As Andy points out add <linux/cleanup.h>, with that fixed:
+> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 >
-> diff --git a/arch/arm/mach-omap1/board-ams-delta.c b/arch/arm/mach-omap1/=
-board-ams-delta.c
-> index 9808cd27e2cf..a28ea6ac1eba 100644
-> --- a/arch/arm/mach-omap1/board-ams-delta.c
-> +++ b/arch/arm/mach-omap1/board-ams-delta.c
-> @@ -560,22 +560,6 @@ static struct gpiod_lookup_table *ams_delta_gpio_tab=
-les[] __initdata =3D {
->         &ams_delta_nand_gpio_table,
->  };
+> I think this can be merged into the gpio tree after leaving some
+> slack for the HTE maintainer to look at it, things look so much
+> better after this.
 >
-> -/*
-> - * Some drivers may not use GPIO lookup tables but need to be provided
-> - * with GPIO numbers.  The same applies to GPIO based IRQ lines - some
-> - * drivers may even not use GPIO layer but expect just IRQ numbers.
-> - * We could either define GPIO lookup tables then use them on behalf
-> - * of those devices, or we can use GPIO driver level methods for
-> - * identification of GPIO and IRQ numbers. For the purpose of the latter=
-,
-> - * defina a helper function which identifies GPIO chips by their labels.
-> - */
-> -static int gpiochip_match_by_label(struct gpio_chip *chip, void *data)
-> -{
-> -       char *label =3D data;
-> -
-> -       return !strcmp(label, chip->label);
-> -}
-> -
->  static struct gpiod_hog ams_delta_gpio_hogs[] =3D {
->         GPIO_HOG(LATCH2_LABEL, LATCH2_PIN_KEYBRD_DATAOUT, "keybrd_dataout=
-",
->                  GPIO_ACTIVE_HIGH, GPIOD_OUT_LOW),
-> @@ -615,14 +599,28 @@ static void __init modem_assign_irq(struct gpio_chi=
-p *chip)
->   */
->  static void __init omap_gpio_deps_init(void)
->  {
-> +       struct gpio_device *gdev;
->         struct gpio_chip *chip;
->
-> -       chip =3D gpiochip_find(OMAP_GPIO_LABEL, gpiochip_match_by_label);
-> -       if (!chip) {
-> -               pr_err("%s: OMAP GPIO chip not found\n", __func__);
-> +       /*
-> +        * Some drivers may not use GPIO lookup tables but need to be pro=
-vided
-> +        * with GPIO numbers. The same applies to GPIO based IRQ lines - =
-some
-> +        * drivers may even not use GPIO layer but expect just IRQ number=
-s.
-> +        * We could either define GPIO lookup tables then use them on beh=
-alf
-> +        * of those devices, or we can use GPIO driver level methods for
-> +        * identification of GPIO and IRQ numbers.
-> +        *
-> +        * This reference will be leaked but that's alright as this devic=
-e
-> +        * never goes down.
-> +        */
-> +       gdev =3D gpio_device_find_by_label(OMAP_GPIO_LABEL);
-> +       if (!gdev) {
-> +               pr_err("%s: OMAP GPIO device not found\n", __func__);
->                 return;
->         }
->
-> +       chip =3D gpio_device_get_chip(gdev);
-> +
->         /*
->          * Start with FIQ initialization as it may have to request
->          * and release successfully each OMAP GPIO pin in turn.
-> --
-> 2.39.2
->
+> Yours,
+> Linus Walleij
 
-Patch applied, thanks!
+Dipen,
+
+if you could give this patch a test and possibly ack it for me to take
+it through the GPIO tree (or go the immutable tag from HTE route) then
+it would be great. This is the last user of gpiochip_find() treewide,
+so with it we could remove it entirely for v6.7.
 
 Bart
