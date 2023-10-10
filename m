@@ -1,95 +1,160 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2061.outbound.protection.outlook.com [40.107.237.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A0E30FB4
-	for <timestamp@lists.linux.dev>; Tue, 10 Oct 2023 15:18:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F5B27462
+	for <timestamp@lists.linux.dev>; Tue, 10 Oct 2023 16:12:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fgWcli1r"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696951131; x=1728487131;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=nlNBWQ2A0/Oiqs4e9gC1rp7hpzNQKUXy0oakOEFBbE4=;
-  b=fgWcli1rmeRub3tp3fkG7RAvfuG+66+zeVycgt4k7uNfdBoVPX/N1DUO
-   mcehfo0UswqaF5Srhgg2Vma98B64aIGTSEkn3MrkVVf1gVl7SIqnRkqDh
-   LR4dZ7Fp88Gzi/ZlDFXx2J7TN0w+v+VsozFdRp8sqOBjvo5nX0mZiXvxt
-   79nmajYWuIBZHJUZh5QwxdmlnQoo5BEdCnV8SpZkHn0weuhCUsk1M+kx0
-   NHsoYqp/n58YnMzVV7lfWXGtsV+M/6hbNxG2xN283El46tJPBZwo20IxZ
-   EA88vs+uFJa9iv3SuHg3FzfTWZoGpHx3vBLrBahtrrUSes5OnKs1ZVK9C
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="415439402"
-X-IronPort-AV: E=Sophos;i="6.03,213,1694761200"; 
-   d="scan'208";a="415439402"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2023 08:17:14 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="1084830072"
-X-IronPort-AV: E=Sophos;i="6.03,213,1694761200"; 
-   d="scan'208";a="1084830072"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by fmsmga005.fm.intel.com with ESMTP; 10 Oct 2023 08:17:11 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id 2801135A; Tue, 10 Oct 2023 18:17:09 +0300 (EEST)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Dipen Patel <dipenp@nvidia.com>,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	timestamp@lists.linux.dev,
-	linux-tegra@vger.kernel.org
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Andy Shevchenko <andy@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>
-Subject: [PATCH v1 0/4] hte: Improve GPIO handling and other cleanups
-Date: Tue, 10 Oct 2023 18:17:05 +0300
-Message-Id: <20231010151709.4104747-1-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.40.0.1.gaa8946217a0b
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="PCc7yT0Z"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=jAKvN2Tt4hwxl7K3FijUMukcVxEc8n9k44Go1OaqQDpUygiPaF4Ahb9Xf1zS5FzF59S7KNbObHlTLH9DzRTwKZ10gmdRyaHxH6nSBkSOLJwyVuBiMmrXcC7ogAeZ5s+QwUyRTOffxhgWVHAiaMgU5QOPrSXSeAZ0cTMC9iSO6vMYkEEUCt3oPOrukV+Rk+vBkGWqQC03wioVNGgpG++c82vyNug9YddMYNJUWUZOaWlSZ1Xw+5AMQhWL1rbTnUzALWQxp4NbbGyJFxRMlNP3eDj1vHoF4uG4J7sXOcaKW1CCNe6gCnbEGbaxT/7fYCHZnadgf6Cu4Atnp+QV3hatcQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uulNyNynxxpxbMUSW6+37kbiJpg2PhHk/TSdre8niJ8=;
+ b=cG4qJRN+Gk/Wi42I9VIRD3YCtUpu7bGe9D5i9YSaiPC873Ba74hHABWnN+0OpijCiQBRl2HVn7ta9ozHkbImdsGQxcnEoxX5cX89fmwcGUAnsjQEiHx/+ClwJnxekc5XxRnEBOJFtK1rth+T0OioSwZZoB2C2fVYUhHeA96EOb44Wxl63ilfvVTzv951/slcMRJlNx0nzWZTwr8YjeoyD6X6wAeBpJJRbIaEcElpaoCwdnM0AwORWbRhbaLJfQ+vO/iaTCPzSvkeT08WOIB6k8+y7jrTehnHzgtU0AFeGHiZGcH8gNh9mIdUEz+36uUzMM42zlTu84cqnM91T9IJlA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uulNyNynxxpxbMUSW6+37kbiJpg2PhHk/TSdre8niJ8=;
+ b=PCc7yT0ZPAbmgOWzpyiLxvQ2xmWT8dwd644qRYG0WtF/WdtQYEL4gwdOmyKufPciV7x0Ce41hddxh61WXbi67p2XA5UQMn6pa0vmcnuvxJldaHK0N9ZIbA5+kW074oSYBkQV9JEeEWBU43IkhKqf1mzMoKBEhHgMI6AmUsFX5B4CuYeJp35K4xRlbMUc+AJ6vFOFBFB2xe9j3lw1GQONZG2SGnISQm+Our/uA9eccT4RbgZsMVFSZieX0JcdlPrS223Tq1rWZ9OLB6RjjRryMLJbeHYZyBn8DhEbOXKCA7ihfqSVRaTs2B/eFo3OMIT4v3Beh/OVnyKuJU57JFeGuA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA1PR12MB6604.namprd12.prod.outlook.com (2603:10b6:208:3a0::7)
+ by BL1PR12MB5849.namprd12.prod.outlook.com (2603:10b6:208:384::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6863.36; Tue, 10 Oct
+ 2023 16:12:13 +0000
+Received: from IA1PR12MB6604.namprd12.prod.outlook.com
+ ([fe80::8814:146:e28e:6eea]) by IA1PR12MB6604.namprd12.prod.outlook.com
+ ([fe80::8814:146:e28e:6eea%4]) with mapi id 15.20.6863.032; Tue, 10 Oct 2023
+ 16:12:13 +0000
+Message-ID: <59939570-3779-ef90-2a72-7be32a30e368@nvidia.com>
+Date: Tue, 10 Oct 2023 09:12:09 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.15.1
+Subject: Re: [PATCH v1 1/1] hte: Use kasprintf() instead of fixed buffer
+ formatting
+Content-Language: en-US
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ timestamp@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20231010141123.3909596-1-andriy.shevchenko@linux.intel.com>
+X-Nvconfidentiality: public
+From: Dipen Patel <dipenp@nvidia.com>
+In-Reply-To: <20231010141123.3909596-1-andriy.shevchenko@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BYAPR05CA0064.namprd05.prod.outlook.com
+ (2603:10b6:a03:74::41) To IA1PR12MB6604.namprd12.prod.outlook.com
+ (2603:10b6:208:3a0::7)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB6604:EE_|BL1PR12MB5849:EE_
+X-MS-Office365-Filtering-Correlation-Id: c31876ca-072f-4b83-af93-08dbc9aba9c3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	ozBySbNvJj5+LzS1t1HnomTqNGT1rRm+0mLQp01cRPGKKsgYJ7PrcDXaa68Ww6o07v+UdVqhOzVGTRDstoEpGQ9AKUD0lgq/fgV5r11h0L2pzSdyvjIz2CF7NdmCX2OO0IsNhmTeC68hRyJYaiLfouCKMQ73UmOo0T4sBQEkY86WLj/2W1PlmUBSnQZPDZFpkgkYAI1OwYpfEoucdH4tXvGi6QlQGWcZQyyxH7/cpPK0+NJKuQZwws12VTgyvPzWYZUD7238KlGchLleeAkHmkpN7awVmAox2ptyV5/fFUfKA2pjRwvXHhaWb7fHuN/kr9JTnsQOlNvkqqkHBfQ3hXuT8Z4wtnBXSnwMqsV2udp1k+OK84t4sJ/Ij/+W65T48UJKdDNNFSxMOV9UOQHKBoJDSF2JRsC5mUeUrJK1o89GasCln13iKekA83wXIhgiLOX/nABjwApZNkhc1PGCAJAqGydZKf1HfoPF2rfdmhcCz2rhBVr2jXvxqIsH1MvgaQjUMsU+mxsnp2452c9CKJQSSR9w5+gr5pbttfew497GKokqoUMM03yu00goxkgJ43l7qvmJJawKAgN4bYJCIyhWTovqsrcVL/CfA3zi/nQAAl0F86sVv607XPTxPd4MVm8YlFMT5F2QzpGTNl6dyQ==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB6604.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(346002)(366004)(396003)(136003)(376002)(230922051799003)(64100799003)(451199024)(186009)(1800799009)(2906002)(2616005)(83380400001)(26005)(66556008)(66476007)(66946007)(8676002)(6666004)(5660300002)(6506007)(8936002)(53546011)(6512007)(41300700001)(478600001)(6486002)(316002)(36756003)(86362001)(31696002)(38100700002)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?WnRwUElLTkxuOFJyeFpKQm13dEVORzBua1RWS2xwN1V4U3ZiK1RWemhGSUps?=
+ =?utf-8?B?cXloM0VwMmZXMEkvaUFjVGVjMytJNCtQOU1aWlhYUVVUR2VNM0lwUStpUXhr?=
+ =?utf-8?B?bk10V254SUptaDZDUUFZQWpSbncydWNDeEpDQlJCR29TOXZiMlEvMXZ2dW96?=
+ =?utf-8?B?U1BUU1BPYWdST0JWUG51WXZ6TE9oeEtBT1RpQUVhMU83U1hPTk80Mmsyejc0?=
+ =?utf-8?B?cUw0L2J6KzBLUlZXZ3ZrdGFqOVFqeGtZbEdzWUZmWHI3bEJUdHhNVG5IS2FD?=
+ =?utf-8?B?WllNcnpldXhhaFpZbndJN0UxeWFwZmxmSyticCtMWXUrcFpKc29BbFFZck9F?=
+ =?utf-8?B?Z0JmMDdYUW1vbWNxcnRUeCtVMkFKVUlhWlE0dFY0NURIZ21PVXAveEwvcWpO?=
+ =?utf-8?B?ZjBmUGFIeDJId09SVzc0SUROaVJBaGJreHluWjhmbEhVZ21ONjcvRDAxeTB5?=
+ =?utf-8?B?dHRwT2l0RVlrL1g2SmM4M1JOYUl6RW9aVVV1QlFTeEp1MTNwR0wrVnM2WWxT?=
+ =?utf-8?B?TjVoemV1ZTlTOE1Rck04clhtTS8rZ2JIcXpNM2dITzZpeDJUcnE5VWtCWFVE?=
+ =?utf-8?B?TktYUHdHTnU0UE9zWVdrcTg4UFpnMUg0U252TlM0cWhIeDVzeDJzbWtvSXBL?=
+ =?utf-8?B?d2xzWXNnN2xTMlNyeTM0SFJXUVErQUR1d21yQzY3ZUZBQVNSdm5DN3V4SHpO?=
+ =?utf-8?B?allCdWV6b2xpMXpCRFlJTUE4Z0s1NVNWbkJYK0hPZnRFeEkxSFlHMEd3UHA3?=
+ =?utf-8?B?dmtyUzRNRDhZbGsxRmh5MFBseWd2RHoxU1JWMllJNVl5UGNJb0E1aHgzWlY3?=
+ =?utf-8?B?b2prYWJBSG9RaTJWL2toaENCZElIMk5BODZYbFZ3aFFiVlYxQjkvdSs2NUdD?=
+ =?utf-8?B?T1hPN0laZmtnRkVMckJ1bEQremIzajRNRHVFbE5BbldHMVAvb243bUhVMHd0?=
+ =?utf-8?B?RTg5WlgvYVlTVGFhaXM2KzlZUnBFRmZxbVBIa0xqZExQaDdYYkpjU2NaSXQ1?=
+ =?utf-8?B?Ly9BWEFzeHdKeWgwcDRJMUJRQWNuM3hCQ0lVaVpBTEJaREFMZmRSZmczZVQr?=
+ =?utf-8?B?Ny9GTlBxMTBDdjRxdlN1VmR6Q3NwQ0djUnlGSWw3M3dIUWdLdHV1eHFlL0RY?=
+ =?utf-8?B?dkNHTmFocVNGMUxvd1A2dnYrVHZuUSs4eUJLV0xGT0FiUmF4YVlyWHZVZ0Ji?=
+ =?utf-8?B?NjhlcWNnM3VLd0dWbklaT1BUU1kxM1F3SUd1MUEwc0dlQllVTmQ1dHUxSlpQ?=
+ =?utf-8?B?VFVCdEI3T1pRSTBOSkVaL08zcitiSlNjbms4ZGhQczk1eWJZREQ4Qy8rczRk?=
+ =?utf-8?B?c2gwMVRiVzJqNVowTWRtRnJKWkt5T2lrR3JOdmNQdDdHL3dwQU1JcHBLcjUr?=
+ =?utf-8?B?SXZuQTZsakFmbGluNkdaeHAwQ0R6RC92Y2ppZlQxMk1jZm9MQzFOOFN5ci8x?=
+ =?utf-8?B?WmVTdTB2NGxYQmI2V1A1RzhEcW1Rck1YcTdEQmw2ZUt2enpOcC9udksvbUR1?=
+ =?utf-8?B?clFPT3BvS2hoa01SUG9sbkw5MEFWN3FDaHd4M3JHM2xhMU9xVjkvaWc3cnVr?=
+ =?utf-8?B?WEV0S2FNcUEwaUw2MURSZDhIcU1jRFhPVW1JMHRvM1djU1ZKemI1ZjRod01W?=
+ =?utf-8?B?b3ZlOExZVUh2SnlLVmg2b0VZanNJUytXM3lYYmtFMGJTenZIWi93OUkxb2xG?=
+ =?utf-8?B?Snl6dVUyOFJPeVd5MlllbjJqVUIrN3BNSXN5Y0NpSGtaYnl6RTlhYzZhanNn?=
+ =?utf-8?B?R1Y2ZXJFNHpGTzM3NG5QSjRvdUpnVEZqTk5oLzFscE5WVGxWR0djZU5kWGhX?=
+ =?utf-8?B?bU80NDVMc0dVY2ZaMWoyVWJkSkxUOXJRVjJoSHRFQW9IbFUyMUxUTmlWOW01?=
+ =?utf-8?B?NDJ3VHhpc2JTYXdvUW9QSkdzZjF1cWFoUFV5SkVYOWh1ZmdnS0dTMGdLcUR3?=
+ =?utf-8?B?eG9Falo0L0VOdTM3bVVSeXdVbHdCTXkvYUZSUm1CRHYvWm9NRExENXFFc2pQ?=
+ =?utf-8?B?UXQ0cnFiYWthUHA4MDRrTjU0ZXpKK1BzNkZhZmYvVFBBUDZlVHhWamhjSmVa?=
+ =?utf-8?B?eWV4MTlKd28ya3htVzUvTkN1SWk3amhwK0NvUXJhT2dNam5FQm96Tmdzc1p6?=
+ =?utf-8?Q?tb362PeuorvZQ8QI6mT7a5Cfe?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c31876ca-072f-4b83-af93-08dbc9aba9c3
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6604.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Oct 2023 16:12:12.9576
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: aSOcJHsPXvRsDSyhsZE5Ylq/xs+i/CDfBV77U//9hjIlMY6SSDaI67DfcumpBtC037C1P3TeycPzjma8cYl5XQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5849
 
-This is a series provides a new API to GPIO library (so far only
-available in the GPIO tree), and respective update to the Tegra
-HTE driver. On top a couple of other cleaups (patches 3 & 4, they
-can be applied separately).
-
-Patch 2 inherited tags from its respective discussion thread [1],
-but I believe the Tested-by needs to be confirmed again.
-
-Due to dependencies this either should be applied to the GPIO tree,
-or to the HTE when GPIO updates land the upstream (optionally with
-the first patch be applied even now to the GPIO tree independently).
-
-Another option is to have an immutable branch or tag, but I assume
-that was discussed and rejected (?) in [1].
-
-Link: https://lore.kernel.org/linux-gpio/20230905185309.131295-15-brgl@bgdev.pl/ [1]
-Cc: Dipen Patel <dipenp@nvidia.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-
-Andy Shevchenko (3):
-  gpiolib: provide gpio_device_find_by_fwnode()
-  hte: tegra194: Remove redundant dev_err()
-  hte: tegra194: Switch to LATE_SIMPLE_DEV_PM_OPS()
-
-Bartosz Golaszewski (1):
-  hte: tegra194: don't access struct gpio_chip
-
- drivers/gpio/gpiolib.c      | 20 ++++++++++++++++
- drivers/hte/hte-tegra194.c  | 46 +++++++++++++++++++------------------
- include/linux/gpio/driver.h |  1 +
- 3 files changed, 45 insertions(+), 22 deletions(-)
-
--- 
-2.40.0.1.gaa8946217a0b
-
+On 10/10/23 7:11 AM, Andy Shevchenko wrote:
+> Improve readability and maintainability by replacing a hardcoded string
+> allocation and formatting by the use of the kasprintf() helper.
+> 
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> ---
+>  drivers/hte/hte.c | 13 ++++---------
+>  1 file changed, 4 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/hte/hte.c b/drivers/hte/hte.c
+> index 1fd8d2d4528b..23a6eeb8c506 100644
+> --- a/drivers/hte/hte.c
+> +++ b/drivers/hte/hte.c
+> @@ -17,8 +17,6 @@
+>  #include <linux/debugfs.h>
+>  #include <linux/device.h>
+>  
+> -#define HTE_TS_NAME_LEN		10
+> -
+>  /* Global list of the HTE devices */
+>  static DEFINE_SPINLOCK(hte_lock);
+>  static LIST_HEAD(hte_devices);
+> @@ -389,13 +387,10 @@ static int __hte_req_ts(struct hte_ts_desc *desc, hte_ts_cb_t cb,
+>  
+>  	atomic_inc(&gdev->ts_req);
+>  
+> -	ei->line_name = NULL;
+> -	if (!desc->attr.name) {
+> -		ei->line_name = kzalloc(HTE_TS_NAME_LEN, GFP_KERNEL);
+> -		if (ei->line_name)
+> -			scnprintf(ei->line_name, HTE_TS_NAME_LEN, "ts_%u",
+> -				  desc->attr.line_id);
+> -	}
+> +	if (desc->attr.name)
+> +		ei->line_name = NULL;
+> +	else
+> +		ei->line_name = kasprintf(GFP_KERNEL, "ts_%u", desc->attr.line_id);
+>  
+>  	hte_ts_dbgfs_init(desc->attr.name == NULL ?
+>  			  ei->line_name : desc->attr.name, ei);
+Reviewed-by: Dipen Patel <dipenp@nvidia.com>
