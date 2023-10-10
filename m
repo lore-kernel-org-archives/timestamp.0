@@ -1,38 +1,38 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640564736B
-	for <timestamp@lists.linux.dev>; Tue, 10 Oct 2023 15:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497A030FB4
+	for <timestamp@lists.linux.dev>; Tue, 10 Oct 2023 15:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fruV9EC6"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="k6YKOrzT"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696951039; x=1728487039;
+  t=1696951129; x=1728487129;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=b+eQ/uwdz+URzIJFW2ABqaZbfeJbxTuJSgGGfs7US3E=;
-  b=fruV9EC6mCD5DvrnyTIe6bLhwf9+p0BB57jzvdjnJLiMaMOOiO7D7i4B
-   OK45OsyA+1e0YcLFz1Nkt0zUr1+CPsra++Uk7ZRgOn+zg70oHjoYlU8H8
-   5hxkCkrrFJ0SbuVgNytgd3h9Vx0FDgOLbuVdolgAgrBKHzouU4iC1R2mG
-   nIY1jtHsFQIpVqqN8DCwSpfFMlvAp5CquqKhsau9BovLtPonSQwc8BORJ
-   zSG1uYkWs4YzJrf+9LISQ4qKKV8AtdQ5RVQJpm0OWmjwlrvq0QrwyWiPD
-   mJWfij8Edw2jazUhPcd7nQTqK0nlmx4XdhN9hI3QAiujCS6dsl7q+gU6B
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="363771582"
+  bh=w1u+oz+TxHGbO6VqcwI4Fu7bojupIN05OR98eU3NVvk=;
+  b=k6YKOrzTcWraLLYtcZGaCknOPXiLRdTgnEN3Q+PiVGgJnLSnl4ra4Keu
+   k2aU3hWbjAsQl8xvd2lAkuiOJXm2xycJwwn+ScK76Gh61g1j9rqONSoyD
+   8m42ZYcErBooFAora60pJE6C+/Gac134ueCZYCw++Uw9xnYp8wHwlTCtX
+   rvTcOmEOcYU+4L7l0lR35aNpgDQ7h2zWnr623cawIlAGJs1CUz5MEfPjS
+   Q4KunvwkPsqdYBG51ta0c/kErq/UC5JQiGjH9GH9yEL4+S5lE2x/M4EbK
+   zUSMb0v4OwtFRlY6fM1gO8htLNsztS20wQP4K41lR9TPpzZ6HmciRsQ4G
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="415439397"
 X-IronPort-AV: E=Sophos;i="6.03,213,1694761200"; 
-   d="scan'208";a="363771582"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2023 08:17:14 -0700
+   d="scan'208";a="415439397"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2023 08:17:14 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="823812775"
+X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="1084830070"
 X-IronPort-AV: E=Sophos;i="6.03,213,1694761200"; 
-   d="scan'208";a="823812775"
+   d="scan'208";a="1084830070"
 Received: from black.fi.intel.com ([10.237.72.28])
-  by fmsmga004.fm.intel.com with ESMTP; 10 Oct 2023 08:17:11 -0700
+  by fmsmga005.fm.intel.com with ESMTP; 10 Oct 2023 08:17:10 -0700
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id 524C671B; Tue, 10 Oct 2023 18:17:10 +0300 (EEST)
+	id 33E8D93; Tue, 10 Oct 2023 18:17:10 +0300 (EEST)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
@@ -46,9 +46,9 @@ Cc: Linus Walleij <linus.walleij@linaro.org>,
 	Andy Shevchenko <andy@kernel.org>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Jonathan Hunter <jonathanh@nvidia.com>
-Subject: [PATCH v1 4/4] hte: tegra194: Switch to LATE_SIMPLE_DEV_PM_OPS()
-Date: Tue, 10 Oct 2023 18:17:09 +0300
-Message-Id: <20231010151709.4104747-5-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v1 1/4] gpiolib: provide gpio_device_find_by_fwnode()
+Date: Tue, 10 Oct 2023 18:17:06 +0300
+Message-Id: <20231010151709.4104747-2-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.40.0.1.gaa8946217a0b
 In-Reply-To: <20231010151709.4104747-1-andriy.shevchenko@linux.intel.com>
 References: <20231010151709.4104747-1-andriy.shevchenko@linux.intel.com>
@@ -60,56 +60,59 @@ List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-SET_LATE_SYSTEM_SLEEP_PM_OPS is deprecated, replace it with
-LATE_SYSTEM_SLEEP_PM_OPS() and use pm_sleep_ptr() for setting
-the driver's pm routines. We can now remove the __maybe_unused
-qualifier in the suspend and resume functions.
+One of the ways of looking up GPIO devices is using their fwnode.
+Provide a helper for that to avoid every user implementing their
+own matching function.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/hte/hte-tegra194.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/gpio/gpiolib.c      | 20 ++++++++++++++++++++
+ include/linux/gpio/driver.h |  1 +
+ 2 files changed, 21 insertions(+)
 
-diff --git a/drivers/hte/hte-tegra194.c b/drivers/hte/hte-tegra194.c
-index 30ef1750a9fa..30fa7c0a555e 100644
---- a/drivers/hte/hte-tegra194.c
-+++ b/drivers/hte/hte-tegra194.c
-@@ -815,7 +815,7 @@ static int tegra_hte_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 7b4d12b714a3..31c06a32cb8a 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -1142,6 +1142,26 @@ struct gpio_device *gpio_device_find_by_label(const char *label)
  }
+ EXPORT_SYMBOL_GPL(gpio_device_find_by_label);
  
--static int __maybe_unused tegra_hte_resume_early(struct device *dev)
-+static int tegra_hte_resume_early(struct device *dev)
- {
- 	u32 i;
- 	struct tegra_hte_soc *gs = dev_get_drvdata(dev);
-@@ -836,7 +836,7 @@ static int __maybe_unused tegra_hte_resume_early(struct device *dev)
- 	return 0;
- }
++static int gpio_chip_match_by_fwnode(struct gpio_chip *gc, void *fwnode)
++{
++	return device_match_fwnode(&gc->gpiodev->dev, fwnode);
++}
++
++/**
++ * gpio_device_find_by_fwnode() - wrapper around gpio_device_find() finding
++ *                                the GPIO device by its fwnode
++ * @fwnode: Firmware node to lookup
++ *
++ * Returns:
++ * Reference to the GPIO device or NULL. Reference must be released with
++ * gpio_device_put().
++ */
++struct gpio_device *gpio_device_find_by_fwnode(const struct fwnode_handle *fwnode)
++{
++	return gpio_device_find((void *)fwnode, gpio_chip_match_by_fwnode);
++}
++EXPORT_SYMBOL_GPL(gpio_device_find_by_fwnode);
++
+ /**
+  * gpio_device_get() - Increase the reference count of this GPIO device
+  * @gdev: GPIO device to increase the refcount for
+diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
+index f8ad7f40100c..ae4162d3f1d3 100644
+--- a/include/linux/gpio/driver.h
++++ b/include/linux/gpio/driver.h
+@@ -611,6 +611,7 @@ struct gpio_chip *gpiochip_find(void *data,
+ struct gpio_device *gpio_device_find(void *data,
+ 				int (*match)(struct gpio_chip *gc, void *data));
+ struct gpio_device *gpio_device_find_by_label(const char *label);
++struct gpio_device *gpio_device_find_by_fwnode(const struct fwnode_handle *fwnode);
  
--static int __maybe_unused tegra_hte_suspend_late(struct device *dev)
-+static int tegra_hte_suspend_late(struct device *dev)
- {
- 	u32 i;
- 	struct tegra_hte_soc *gs = dev_get_drvdata(dev);
-@@ -856,15 +856,14 @@ static int __maybe_unused tegra_hte_suspend_late(struct device *dev)
- }
- 
- static const struct dev_pm_ops tegra_hte_pm = {
--	SET_LATE_SYSTEM_SLEEP_PM_OPS(tegra_hte_suspend_late,
--				     tegra_hte_resume_early)
-+	LATE_SYSTEM_SLEEP_PM_OPS(tegra_hte_suspend_late, tegra_hte_resume_early)
- };
- 
- static struct platform_driver tegra_hte_driver = {
- 	.probe = tegra_hte_probe,
- 	.driver = {
- 		.name = "tegra_hte",
--		.pm = &tegra_hte_pm,
-+		.pm = pm_slee_ptr(&tegra_hte_pm),
- 		.of_match_table = tegra_hte_of_match,
- 	},
- };
+ struct gpio_device *gpio_device_get(struct gpio_device *gdev);
+ void gpio_device_put(struct gpio_device *gdev);
 -- 
 2.40.0.1.gaa8946217a0b
 
