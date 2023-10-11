@@ -1,108 +1,95 @@
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1314379D4
-	for <timestamp@lists.linux.dev>; Wed, 11 Oct 2023 09:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410461CFBE
+	for <timestamp@lists.linux.dev>; Wed, 11 Oct 2023 10:06:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="ZRlsqX2u"
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-49a99c43624so2377312e0c.2
-        for <timestamp@lists.linux.dev>; Wed, 11 Oct 2023 02:34:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1697016843; x=1697621643; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=amS2AGWHC9KublVJ1Jpa3dwEwkd9FC/Qfrwz2qjG5V0=;
-        b=ZRlsqX2upEhaAnkzKgBto668UM54fOmRDOcuSbeASZUvuqYwK+eAvyv5SMOIa0tfgy
-         30ppm46RNZM7W0nic4axjTA8FajXUzbKOObj/tWiRPGvR9iDqOekVQmzBwaVVe8TvOEq
-         ZuzRQdRf/WudXnGG3+E87U0141C3PNiYtiD2UHQzwWfb+NNq5sZ5SnJUHHVCwVe4LR2Q
-         /9cNE2fAoCFlcOKoFk4uf7IgcMOXzwm7DCuyFgTtaoCawFZrVLek2XhKuMWWoFN8ejY0
-         x/PBCMItEVgbN8/na7rKUzp0ca62bouxHnoVMkKfojazJMiteTRqjiL4KCMEZIv/gGDt
-         mb4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697016843; x=1697621643;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=amS2AGWHC9KublVJ1Jpa3dwEwkd9FC/Qfrwz2qjG5V0=;
-        b=ViRjv011vfFJ2WIdXfn6vRP3qIs2Kz9WGeaMV/Pto+lLYp3xOB2vH7PlZyEK0ph2yC
-         tbL5LO9+rrz5AwH3TKusCMBwnwqhFx/TkijWc21XKgZVMUgXEt9DryVVv5fwsRxzWz/J
-         xgkjVN0GbKGNfc3hRgSAvBNKgNtbkfIYlWSknpXnth8VuRgdFJq0z6lcJUY0jjjzOtMt
-         L3y/N0nuBX40T+Mtjudo1pGUQN3HncKQukZgMvYCap9ywzV7K9TRupptHRCk5jEkVn3l
-         IPV0b2KwHPp8LVXHDFOSijx22AG1LEixZNo+GylnAANQT22MUn3h6UWJCwWmYNQ+xL+i
-         2dJw==
-X-Gm-Message-State: AOJu0YyUHkAi0qq57+oJfZD0RsMslYfxR+xtO5h9/VNEYvx38ZKPcB84
-	TissekGps1tQbDr5SJqeymqoE2jaORtw30mfVDew/Q==
-X-Google-Smtp-Source: AGHT+IGkIVkgSmG4dkgU+VBkUH+FMIsXlPaccGP9vqrk6hShP3Gs1TPG08W3iXU77qMOioF8utaz21CClfuklwaJ4wo=
-X-Received: by 2002:ac5:ca1a:0:b0:49d:efe:520c with SMTP id
- c26-20020ac5ca1a000000b0049d0efe520cmr17438575vkm.12.1697016842719; Wed, 11
- Oct 2023 02:34:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WESyMG1Z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697018808; x=1728554808;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=F8DEoimETRvu/FJ7It/A46cbcbQMcDIctzYXV2885B4=;
+  b=WESyMG1Z93+IFmHtJ3nb3IyYcdK618bej8ysn1zFM0s41BbJvQhgCEb3
+   yiMDMGKFyDjhSUq91IjASYtb6XR0A7N84ePpP31YYsS39oW0/IxOPsux8
+   mYHE/CPtHNihne59SJochiBt8c7Y0lg4pmhrSiQW6Z4xjWDtIGRIU9wYF
+   N3XEvjuEcrGv4n5TIbGoqP8TIc9MTslvxkI03TJQNSxSMRLmdvMfsMemO
+   m4Et42CKv1pyDC/cNpQehWbMDT1+wXk7fGXmZiQpOfBGD5mb8xq5CbrSN
+   ew+f09Ek7He9zn9CIWBGbAN+C+zwCwgo+vk9473kfdcWg5Vsb4YzVnUZD
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="364910013"
+X-IronPort-AV: E=Sophos;i="6.03,214,1694761200"; 
+   d="scan'208";a="364910013"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2023 03:06:47 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="844500470"
+X-IronPort-AV: E=Sophos;i="6.03,214,1694761200"; 
+   d="scan'208";a="844500470"
+Received: from unknown (HELO smile.fi.intel.com) ([10.237.72.54])
+  by FMSMGA003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2023 03:06:44 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.97-RC1)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1qqW6z-00000004aTj-2qgE;
+	Wed, 11 Oct 2023 13:06:41 +0300
+Date: Wed, 11 Oct 2023 13:06:41 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Dipen Patel <dipenp@nvidia.com>, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, timestamp@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>
+Subject: Re: [PATCH v1 0/4] hte: Improve GPIO handling and other cleanups
+Message-ID: <ZSZzsfaunP5yRvZ4@smile.fi.intel.com>
+References: <20231010151709.4104747-1-andriy.shevchenko@linux.intel.com>
+ <CAMRc=Mdiuth0=XPBsoStXN81ydfpUfqm1BMc2TZOT4Kmx6jNkA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231010151709.4104747-1-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20231010151709.4104747-1-andriy.shevchenko@linux.intel.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 11 Oct 2023 11:33:51 +0200
-Message-ID: <CAMRc=Mdiuth0=XPBsoStXN81ydfpUfqm1BMc2TZOT4Kmx6jNkA@mail.gmail.com>
-Subject: Re: [PATCH v1 0/4] hte: Improve GPIO handling and other cleanups
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Dipen Patel <dipenp@nvidia.com>, 
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	timestamp@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	Linus Walleij <linus.walleij@linaro.org>, Andy Shevchenko <andy@kernel.org>, 
-	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=Mdiuth0=XPBsoStXN81ydfpUfqm1BMc2TZOT4Kmx6jNkA@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Tue, Oct 10, 2023 at 5:18=E2=80=AFPM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> This is a series provides a new API to GPIO library (so far only
-> available in the GPIO tree), and respective update to the Tegra
-> HTE driver. On top a couple of other cleaups (patches 3 & 4, they
-> can be applied separately).
->
-> Patch 2 inherited tags from its respective discussion thread [1],
-> but I believe the Tested-by needs to be confirmed again.
->
-> Due to dependencies this either should be applied to the GPIO tree,
-> or to the HTE when GPIO updates land the upstream (optionally with
-> the first patch be applied even now to the GPIO tree independently).
->
-> Another option is to have an immutable branch or tag, but I assume
-> that was discussed and rejected (?) in [1].
+On Wed, Oct 11, 2023 at 11:33:51AM +0200, Bartosz Golaszewski wrote:
+> On Tue, Oct 10, 2023 at 5:18 PM Andy Shevchenko
+> <andriy.shevchenko@linux.intel.com> wrote:
+> >
+> > This is a series provides a new API to GPIO library (so far only
+> > available in the GPIO tree), and respective update to the Tegra
+> > HTE driver. On top a couple of other cleaups (patches 3 & 4, they
+> > can be applied separately).
+> >
+> > Patch 2 inherited tags from its respective discussion thread [1],
+> > but I believe the Tested-by needs to be confirmed again.
+> >
+> > Due to dependencies this either should be applied to the GPIO tree,
+> > or to the HTE when GPIO updates land the upstream (optionally with
+> > the first patch be applied even now to the GPIO tree independently).
+> >
+> > Another option is to have an immutable branch or tag, but I assume
+> > that was discussed and rejected (?) in [1].
+> 
+> The series looks good to me. I'd like to take patches 1 and 2 through
+> the GPIO tree once v2 is out. This way we could potentially remove
+> gpiochip_find() for v6.7 already.
 
-The series looks good to me. I'd like to take patches 1 and 2 through
-the GPIO tree once v2 is out. This way we could potentially remove
-gpiochip_find() for v6.7 already.
+It would be nice to see it being removed sooner than later!
+I'm waiting for the test results by Dipen, I'll send the v2
+ASAP if tests pass.
 
-Bart
+-- 
+With Best Regards,
+Andy Shevchenko
 
->
-> Link: https://lore.kernel.org/linux-gpio/20230905185309.131295-15-brgl@bg=
-dev.pl/ [1]
-> Cc: Dipen Patel <dipenp@nvidia.com>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
->
-> Andy Shevchenko (3):
->   gpiolib: provide gpio_device_find_by_fwnode()
->   hte: tegra194: Remove redundant dev_err()
->   hte: tegra194: Switch to LATE_SIMPLE_DEV_PM_OPS()
->
-> Bartosz Golaszewski (1):
->   hte: tegra194: don't access struct gpio_chip
->
->  drivers/gpio/gpiolib.c      | 20 ++++++++++++++++
->  drivers/hte/hte-tegra194.c  | 46 +++++++++++++++++++------------------
->  include/linux/gpio/driver.h |  1 +
->  3 files changed, 45 insertions(+), 22 deletions(-)
->
-> --
-> 2.40.0.1.gaa8946217a0b
->
+
