@@ -1,44 +1,44 @@
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C45354F0
-	for <timestamp@lists.linux.dev>; Wed, 11 Oct 2023 05:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C08DF5B
+	for <timestamp@lists.linux.dev>; Wed, 11 Oct 2023 05:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jmStfOkL"
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-7b0a16f0338so2750148241.0
-        for <timestamp@lists.linux.dev>; Tue, 10 Oct 2023 22:54:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kZXH7XjY"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-41820eecff2so40389481cf.1
+        for <timestamp@lists.linux.dev>; Tue, 10 Oct 2023 22:55:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697003686; x=1697608486; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1697003757; x=1697608557; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DiBJtKSXozbM0r46s6SPSgE4x00q8wuaRms3SXA5/DM=;
-        b=jmStfOkLUMz9+hyezroDcBdOCHZYcNrLa7YGnvQpx13SuMT6ad5xVl9GbtoULLJMze
-         ewNleFAOT4yE15pviC/jpgSnZVyD80/FK6qLPbiOhsV/0thB0PlBM57JF/0bzdcMBnsP
-         A/0KOiRMMRWhDmKNFurVPKrQieW6PsGIuAj6lzO5eXN/e92P7CVLD2rYSpOOOrdglq9e
-         WBCGxxqFO60JzJlIbwZi44p/zPCMWUwL/3EBwlZF4sYNjlYiJ9Zr37r86Jwo+mHDzTkd
-         xdlOKnwOWbNzpxcsrTvAqN0Nf6aMBSybf43rdVL8+2vbpJChy7vbRd2z3739t7SBo+FO
-         jT1Q==
+        bh=mTjpQvyMHkbUpLu3ihyopH9dpMDT8ryAdeqR+3nM3c0=;
+        b=kZXH7XjYEyeIHxqyag9IOdGt3/iNZuKDWJW0Osc9s5F8Z7IBROYVSRNClbqAoi8Mgw
+         rHj2Phbq+d0t5Xec9LRjPu61bLm7w2G5rIXlI2xWSi1XKiS+0PvuvwuSQwOTaOIh09SM
+         ZFsuj0Kxe2eekVPGCoh7uWEK4iIcWhLJj4Bv1kV7sO/0JYt9ZQUjvXlnwAqGalBmvveL
+         0ySAzZeBWwALiYIXXlnftcgU1Xki+pLYduZ3FcMvQALYic7UctTKyIFPou8Pk0yndRCs
+         GludFDXGDIuj23lGbA0a/sTN3MVY/lB0E7epJvggeM+ak5htheCwE0XHDMUcqNqP/xDR
+         0Rpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697003686; x=1697608486;
+        d=1e100.net; s=20230601; t=1697003757; x=1697608557;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DiBJtKSXozbM0r46s6SPSgE4x00q8wuaRms3SXA5/DM=;
-        b=idB3j7dcQP4s2pR/okXy9i5f54+TRSdeaCz8h5hprGlFWXkPJbInDfjxsNgCNbxIgc
-         O2pex4G9cxeUnjlXV2/zwaXl6pK10eUYivj6bWzvIGrb65EpkOIYMg5SSRg+Fzy0rhtu
-         QtleEwdu6+OLvtwfbhJCqiYOGlPrdpn1RZBH4V1v3qcMLxl0pqW3R+5p63rP2SOHX8u9
-         AANGiQXOAEMkv3Wv6DCLXjVMDtwuQZWE2zHvCRXPb4IK9jgPt2mxY8y58Ybi1s83/k54
-         6/wd7G0gF0ivQ/awnmLDdAMKbWeumtahblg9wKMPjzLy0JuHlOYYpoWPIJ/i8mmnuKIx
-         9png==
-X-Gm-Message-State: AOJu0Yz4iE9bC++83bgwOEDuHrhUJqQ/UE+10xRDZWvYaP1h/7UWAbWn
-	z5QPrr1VbjAV7QVSbaWSmXZ0S7+MAejiaTrYR9o=
-X-Google-Smtp-Source: AGHT+IHA9B34pMhcmDUBfDewbK1peGnr0ieNQbmb7QYwL7I9suY7sO1Vkh0n8/Iorr3X+CjyMV9ta3PrINSdPOu6mrE=
-X-Received: by 2002:a67:fe88:0:b0:44e:9313:b045 with SMTP id
- b8-20020a67fe88000000b0044e9313b045mr19458526vsr.7.1697003685723; Tue, 10 Oct
- 2023 22:54:45 -0700 (PDT)
+        bh=mTjpQvyMHkbUpLu3ihyopH9dpMDT8ryAdeqR+3nM3c0=;
+        b=FcqwjCOq3yUdzZhpirOo7rbTTp8dECph7dVzSIg1JjES8ki8SbkLkrirDy3mCezqsf
+         +OGpRnits5g+IH2uurqoXXeqO48liNjGbSwUO+ovkQYsEztt5uRooZ70zPejxpEmSCWK
+         /WNVKp6aSXHKqPN5ixwM0vBI1s1VhOTHHQ4SuNG6SuChkWhJhIAiYHEeYQkS6aXVACGC
+         wuiTX0YYUakRx+5olv97cwej7DAU7ENIlcjXo3vaxncjcqbpbxVXwB79GTrXhsbbidZ2
+         A9sfzP9PG02NA7f8js9aAMZ+8nueUqQl4HncEOuVb+JWecNQtXiKew0ZPMfIOII6OcZW
+         LgDw==
+X-Gm-Message-State: AOJu0YyyfmaO1aFOIsP3raj/ZYJCqhRUr89piT6TpecWx4F8byPrzCPW
+	g/mOfNTkunGdpBn3u/tKsGRp9ATDDj/8N7VKXdE=
+X-Google-Smtp-Source: AGHT+IFIeFo8MDm4RDbVOvfQd2TQwRCkzHVhlunlbXpiCiir1RpoyTNxTr2ClGYp+hsDBzw9ZQx44MeKbyGLy1S7+ew=
+X-Received: by 2002:a0c:f194:0:b0:66c:ff4f:a35f with SMTP id
+ m20-20020a0cf194000000b0066cff4fa35fmr3144687qvl.51.1697003757216; Tue, 10
+ Oct 2023 22:55:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
@@ -46,13 +46,12 @@ List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20231010151709.4104747-1-andriy.shevchenko@linux.intel.com>
- <20231010151709.4104747-3-andriy.shevchenko@linux.intel.com>
- <3e1e6acf-5862-9f35-cbe6-72bb17cf3851@nvidia.com> <147fe15c-13d3-60dc-bd49-cd0cb40126e9@nvidia.com>
-In-Reply-To: <147fe15c-13d3-60dc-bd49-cd0cb40126e9@nvidia.com>
+ <20231010151709.4104747-5-andriy.shevchenko@linux.intel.com> <0db37cd0-9cb9-41bc-c2aa-0a01c0295ed0@nvidia.com>
+In-Reply-To: <0db37cd0-9cb9-41bc-c2aa-0a01c0295ed0@nvidia.com>
 From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Wed, 11 Oct 2023 08:54:09 +0300
-Message-ID: <CAHp75VdgM0riV6Y2PHnU14ZTN_4-eiXevFhi-gsbQPwrkicArw@mail.gmail.com>
-Subject: Re: [PATCH v1 2/4] hte: tegra194: don't access struct gpio_chip
+Date: Wed, 11 Oct 2023 08:55:21 +0300
+Message-ID: <CAHp75VcRKnWRNxTafsG2f+tWrF-6yQjECLpyn_S-VK78SfL8VQ@mail.gmail.com>
+Subject: Re: [PATCH v1 4/4] hte: tegra194: Switch to LATE_SIMPLE_DEV_PM_OPS()
 To: Dipen Patel <dipenp@nvidia.com>
 Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, linux-gpio@vger.kernel.org, 
@@ -63,18 +62,16 @@ Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 10, 2023 at 10:31=E2=80=AFPM Dipen Patel <dipenp@nvidia.com> wr=
+On Tue, Oct 10, 2023 at 10:36=E2=80=AFPM Dipen Patel <dipenp@nvidia.com> wr=
 ote:
-> On 10/10/23 9:19 AM, Dipen Patel wrote:
-> > On 10/10/23 8:17 AM, Andy Shevchenko wrote:
+> On 10/10/23 8:17 AM, Andy Shevchenko wrote:
 
-> >> +                    hte_dev->gdev =3D
-> >> +                            gpio_device_find_by_fwnode(of_fnode_handl=
-e(gpio_ctrl));
+> > +             .pm =3D pm_slee_ptr(&tegra_hte_pm),
 >
-> I think there is typo for of_fnode*. Should it be of_fwnode*?
+> typo, pm_sleep_ptr instead?
 
-Yep, it's a typo, can you. fix manually for the test, please?
+Indeed. On my x86_64 this code slipped from compilation. I will try
+harder to compile-test it next time.
 
 --=20
 With Best Regards,
