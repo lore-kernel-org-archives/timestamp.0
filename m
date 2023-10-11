@@ -1,44 +1,44 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C08DF5B
-	for <timestamp@lists.linux.dev>; Wed, 11 Oct 2023 05:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1314379D4
+	for <timestamp@lists.linux.dev>; Wed, 11 Oct 2023 09:34:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kZXH7XjY"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-41820eecff2so40389481cf.1
-        for <timestamp@lists.linux.dev>; Tue, 10 Oct 2023 22:55:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="ZRlsqX2u"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-49a99c43624so2377312e0c.2
+        for <timestamp@lists.linux.dev>; Wed, 11 Oct 2023 02:34:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697003757; x=1697608557; darn=lists.linux.dev;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1697016843; x=1697621643; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mTjpQvyMHkbUpLu3ihyopH9dpMDT8ryAdeqR+3nM3c0=;
-        b=kZXH7XjYEyeIHxqyag9IOdGt3/iNZuKDWJW0Osc9s5F8Z7IBROYVSRNClbqAoi8Mgw
-         rHj2Phbq+d0t5Xec9LRjPu61bLm7w2G5rIXlI2xWSi1XKiS+0PvuvwuSQwOTaOIh09SM
-         ZFsuj0Kxe2eekVPGCoh7uWEK4iIcWhLJj4Bv1kV7sO/0JYt9ZQUjvXlnwAqGalBmvveL
-         0ySAzZeBWwALiYIXXlnftcgU1Xki+pLYduZ3FcMvQALYic7UctTKyIFPou8Pk0yndRCs
-         GludFDXGDIuj23lGbA0a/sTN3MVY/lB0E7epJvggeM+ak5htheCwE0XHDMUcqNqP/xDR
-         0Rpw==
+        bh=amS2AGWHC9KublVJ1Jpa3dwEwkd9FC/Qfrwz2qjG5V0=;
+        b=ZRlsqX2upEhaAnkzKgBto668UM54fOmRDOcuSbeASZUvuqYwK+eAvyv5SMOIa0tfgy
+         30ppm46RNZM7W0nic4axjTA8FajXUzbKOObj/tWiRPGvR9iDqOekVQmzBwaVVe8TvOEq
+         ZuzRQdRf/WudXnGG3+E87U0141C3PNiYtiD2UHQzwWfb+NNq5sZ5SnJUHHVCwVe4LR2Q
+         /9cNE2fAoCFlcOKoFk4uf7IgcMOXzwm7DCuyFgTtaoCawFZrVLek2XhKuMWWoFN8ejY0
+         x/PBCMItEVgbN8/na7rKUzp0ca62bouxHnoVMkKfojazJMiteTRqjiL4KCMEZIv/gGDt
+         mb4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697003757; x=1697608557;
+        d=1e100.net; s=20230601; t=1697016843; x=1697621643;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mTjpQvyMHkbUpLu3ihyopH9dpMDT8ryAdeqR+3nM3c0=;
-        b=FcqwjCOq3yUdzZhpirOo7rbTTp8dECph7dVzSIg1JjES8ki8SbkLkrirDy3mCezqsf
-         +OGpRnits5g+IH2uurqoXXeqO48liNjGbSwUO+ovkQYsEztt5uRooZ70zPejxpEmSCWK
-         /WNVKp6aSXHKqPN5ixwM0vBI1s1VhOTHHQ4SuNG6SuChkWhJhIAiYHEeYQkS6aXVACGC
-         wuiTX0YYUakRx+5olv97cwej7DAU7ENIlcjXo3vaxncjcqbpbxVXwB79GTrXhsbbidZ2
-         A9sfzP9PG02NA7f8js9aAMZ+8nueUqQl4HncEOuVb+JWecNQtXiKew0ZPMfIOII6OcZW
-         LgDw==
-X-Gm-Message-State: AOJu0YyyfmaO1aFOIsP3raj/ZYJCqhRUr89piT6TpecWx4F8byPrzCPW
-	g/mOfNTkunGdpBn3u/tKsGRp9ATDDj/8N7VKXdE=
-X-Google-Smtp-Source: AGHT+IFIeFo8MDm4RDbVOvfQd2TQwRCkzHVhlunlbXpiCiir1RpoyTNxTr2ClGYp+hsDBzw9ZQx44MeKbyGLy1S7+ew=
-X-Received: by 2002:a0c:f194:0:b0:66c:ff4f:a35f with SMTP id
- m20-20020a0cf194000000b0066cff4fa35fmr3144687qvl.51.1697003757216; Tue, 10
- Oct 2023 22:55:57 -0700 (PDT)
+        bh=amS2AGWHC9KublVJ1Jpa3dwEwkd9FC/Qfrwz2qjG5V0=;
+        b=ViRjv011vfFJ2WIdXfn6vRP3qIs2Kz9WGeaMV/Pto+lLYp3xOB2vH7PlZyEK0ph2yC
+         tbL5LO9+rrz5AwH3TKusCMBwnwqhFx/TkijWc21XKgZVMUgXEt9DryVVv5fwsRxzWz/J
+         xgkjVN0GbKGNfc3hRgSAvBNKgNtbkfIYlWSknpXnth8VuRgdFJq0z6lcJUY0jjjzOtMt
+         L3y/N0nuBX40T+Mtjudo1pGUQN3HncKQukZgMvYCap9ywzV7K9TRupptHRCk5jEkVn3l
+         IPV0b2KwHPp8LVXHDFOSijx22AG1LEixZNo+GylnAANQT22MUn3h6UWJCwWmYNQ+xL+i
+         2dJw==
+X-Gm-Message-State: AOJu0YyUHkAi0qq57+oJfZD0RsMslYfxR+xtO5h9/VNEYvx38ZKPcB84
+	TissekGps1tQbDr5SJqeymqoE2jaORtw30mfVDew/Q==
+X-Google-Smtp-Source: AGHT+IGkIVkgSmG4dkgU+VBkUH+FMIsXlPaccGP9vqrk6hShP3Gs1TPG08W3iXU77qMOioF8utaz21CClfuklwaJ4wo=
+X-Received: by 2002:ac5:ca1a:0:b0:49d:efe:520c with SMTP id
+ c26-20020ac5ca1a000000b0049d0efe520cmr17438575vkm.12.1697016842719; Wed, 11
+ Oct 2023 02:34:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
@@ -46,33 +46,63 @@ List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20231010151709.4104747-1-andriy.shevchenko@linux.intel.com>
- <20231010151709.4104747-5-andriy.shevchenko@linux.intel.com> <0db37cd0-9cb9-41bc-c2aa-0a01c0295ed0@nvidia.com>
-In-Reply-To: <0db37cd0-9cb9-41bc-c2aa-0a01c0295ed0@nvidia.com>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Wed, 11 Oct 2023 08:55:21 +0300
-Message-ID: <CAHp75VcRKnWRNxTafsG2f+tWrF-6yQjECLpyn_S-VK78SfL8VQ@mail.gmail.com>
-Subject: Re: [PATCH v1 4/4] hte: tegra194: Switch to LATE_SIMPLE_DEV_PM_OPS()
-To: Dipen Patel <dipenp@nvidia.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, timestamp@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andy@kernel.org>, 
+In-Reply-To: <20231010151709.4104747-1-andriy.shevchenko@linux.intel.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 11 Oct 2023 11:33:51 +0200
+Message-ID: <CAMRc=Mdiuth0=XPBsoStXN81ydfpUfqm1BMc2TZOT4Kmx6jNkA@mail.gmail.com>
+Subject: Re: [PATCH v1 0/4] hte: Improve GPIO handling and other cleanups
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Dipen Patel <dipenp@nvidia.com>, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	timestamp@lists.linux.dev, linux-tegra@vger.kernel.org, 
+	Linus Walleij <linus.walleij@linaro.org>, Andy Shevchenko <andy@kernel.org>, 
 	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 10, 2023 at 10:36=E2=80=AFPM Dipen Patel <dipenp@nvidia.com> wr=
-ote:
-> On 10/10/23 8:17 AM, Andy Shevchenko wrote:
-
-> > +             .pm =3D pm_slee_ptr(&tegra_hte_pm),
+On Tue, Oct 10, 2023 at 5:18=E2=80=AFPM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
 >
-> typo, pm_sleep_ptr instead?
+> This is a series provides a new API to GPIO library (so far only
+> available in the GPIO tree), and respective update to the Tegra
+> HTE driver. On top a couple of other cleaups (patches 3 & 4, they
+> can be applied separately).
+>
+> Patch 2 inherited tags from its respective discussion thread [1],
+> but I believe the Tested-by needs to be confirmed again.
+>
+> Due to dependencies this either should be applied to the GPIO tree,
+> or to the HTE when GPIO updates land the upstream (optionally with
+> the first patch be applied even now to the GPIO tree independently).
+>
+> Another option is to have an immutable branch or tag, but I assume
+> that was discussed and rejected (?) in [1].
 
-Indeed. On my x86_64 this code slipped from compilation. I will try
-harder to compile-test it next time.
+The series looks good to me. I'd like to take patches 1 and 2 through
+the GPIO tree once v2 is out. This way we could potentially remove
+gpiochip_find() for v6.7 already.
 
---=20
-With Best Regards,
-Andy Shevchenko
+Bart
+
+>
+> Link: https://lore.kernel.org/linux-gpio/20230905185309.131295-15-brgl@bg=
+dev.pl/ [1]
+> Cc: Dipen Patel <dipenp@nvidia.com>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+>
+> Andy Shevchenko (3):
+>   gpiolib: provide gpio_device_find_by_fwnode()
+>   hte: tegra194: Remove redundant dev_err()
+>   hte: tegra194: Switch to LATE_SIMPLE_DEV_PM_OPS()
+>
+> Bartosz Golaszewski (1):
+>   hte: tegra194: don't access struct gpio_chip
+>
+>  drivers/gpio/gpiolib.c      | 20 ++++++++++++++++
+>  drivers/hte/hte-tegra194.c  | 46 +++++++++++++++++++------------------
+>  include/linux/gpio/driver.h |  1 +
+>  3 files changed, 45 insertions(+), 22 deletions(-)
+>
+> --
+> 2.40.0.1.gaa8946217a0b
+>
