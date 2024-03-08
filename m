@@ -1,208 +1,106 @@
-Received: from aposti.net (aposti.net [89.234.176.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2006D41745
-	for <timestamp@lists.linux.dev>; Wed, 24 Jan 2024 15:18:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.234.176.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42626524DB
+	for <timestamp@lists.linux.dev>; Fri,  8 Mar 2024 08:51:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706109510; cv=none; b=W/nqwCzabHaVRCMEdXNigLHt8vQb8dS+Kk6Rqmnntf+UeH+/j4oDD/5VKoHDW5Dd9vcDyFgaWRCbmqKHlzmXEhWWiAdMfFMNaKkKGKh7ouDZbFg/lVQgNUX/vyFbYMALMrPqd5mFHrL+XnqPlRFVQAipJtq8s3CHA176pQyPwr8=
+	t=1709887917; cv=none; b=tKiS5RR/0+0s/FPPRqVHEPqxcmVlIuxaAtLpitjkB9HSaUx3Ju7ZlaxZ8VusdgPtTWuhWc92jE14LIohDpiuakfYuTQWqdMt6qRJQVTs2D+4DzMMLbNsMXqBkUNbrfcWgksn3+jmFS2e8VIr9W2tq61DKAZ3ZkRJJqFVdLdq2SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706109510; c=relaxed/simple;
-	bh=w8A9JHdanRpfyHvSrn/mEIENOTNdAlcHthcwWFUPqfM=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Nb/8hHd+F26L2DCtduUoKiuatWXBkzxR4HGE+p1hzao2HXktL1nSMuoOh1y96lnjTMHOWdXIutsKRZJknLRcHn6RVswURnC/l4cVim77G+dOXleXGxkv/jfxxdtKbSLyzy4/gl+KBElrL4ZQ5DuZWZbnfeOBfFZ2ZMLl1W1oQ0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net; spf=pass smtp.mailfrom=crapouillou.net; dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b=ljaCEeJO; arc=none smtp.client-ip=89.234.176.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crapouillou.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b="ljaCEeJO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-	s=mail; t=1706109507;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=w8A9JHdanRpfyHvSrn/mEIENOTNdAlcHthcwWFUPqfM=;
-	b=ljaCEeJOT9n4ixyZCsmlbmZ/mLC1U0SpQajYOvnaqklofY3LVw/urX5058dAD4U9Mgs3M1
-	jf0yYxzuKAKQrZJAi4DPRYTQaiyGz3QjhBYWn53s7fP++GQ1B5VBmg+zPGHZ7mZYOOentd
-	wCNIHiCQsBErUiJMJPaXvxdxzK3E2e4=
-Message-ID: <fa113407241a6e9c0b7815d87a6294035ac98459.camel@crapouillou.net>
-Subject: Re: [PATCH 19/21] gpio: swnode: replace gpiochip_find() with
- gpio_device_find_by_label()
-From: Paul Cercueil <paul@crapouillou.net>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik
- <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>, Russell King
- <linux@armlinux.org.uk>, Mika Westerberg <mika.westerberg@linux.intel.com>,
-  Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Linus Walleij
- <linus.walleij@linaro.org>, Dipen Patel <dipenp@nvidia.com>, Thierry Reding
- <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, Hans de
- Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>,
- linux-arm-kernel@lists.infradead.org,  linux-omap@vger.kernel.org,
- linux-kernel@vger.kernel.org,  linux-gpio@vger.kernel.org,
- linux-acpi@vger.kernel.org,  timestamp@lists.linux.dev,
- linux-tegra@vger.kernel.org,  platform-driver-x86@vger.kernel.org, Bartosz
- Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Wed, 24 Jan 2024 16:18:24 +0100
-In-Reply-To: <CAMRc=MdwAaQ1Prtweu9znEL+mbyxSmmKhL65PG+=YKniCD1c9w@mail.gmail.com>
-References: <20230905185309.131295-1-brgl@bgdev.pl>
-	 <20230905185309.131295-20-brgl@bgdev.pl>
-	 <83ad61e2f9d62621f42d8738f6028103fe8bfb94.camel@crapouillou.net>
-	 <CAMRc=MdwAaQ1Prtweu9znEL+mbyxSmmKhL65PG+=YKniCD1c9w@mail.gmail.com>
-Autocrypt: addr=paul@crapouillou.net; prefer-encrypt=mutual;
- keydata=mQENBF0KhcEBCADkfmrzdTOp/gFOMQX0QwKE2WgeCJiHPWkpEuPH81/HB2dpjPZNW03ZMLQfECbbaEkdbN4YnPfXgcc1uBe5mwOAPV1MBlaZcEt4M67iYQwSNrP7maPS3IaQJ18ES8JJ5Uf5UzFZaUawgH+oipYGW+v31cX6L3k+dGsPRM0Pyo0sQt52fsopNPZ9iag0iY7dGNuKenaEqkYNjwEgTtNz8dt6s3hMpHIKZFL3OhAGi88wF/21isv0zkF4J0wlf9gYUTEEY3Eulx80PTVqGIcHZzfavlWIdzhe+rxHTDGVwseR2Y1WjgFGQ2F+vXetAB8NEeygXee+i9nY5qt9c07m8mzjABEBAAG0JFBhdWwgQ2VyY3VlaWwgPHBhdWxAY3JhcG91aWxsb3UubmV0PokBTgQTAQoAOBYhBNdHYd8OeCBwpMuVxnPua9InSr1BBQJdCoXBAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEHPua9InSr1BgvIH/0kLyrI3V0f33a6D3BJwc1grbygPVYGuC5l5eMnAI+rDmLR19E2yvibRpgUc87NmPEQPpbbtAZt8On/2WZoE5OIPdlId/AHNpdgAtGXo0ZX4LGeVPjxjdkbrKVHxbcdcnY+zzaFglpbVSvp76pxqgVg8PgxkAAeeJV+ET4t0823Gz2HzCL/6JZhvKAEtHVulOWoBh368SYdolp1TSfORWmHzvQiCCCA+j0cMkYVGzIQzEQhX7Urf9N/nhU5/SGLFEi9DcBfXoGzhyQyLXflhJtKm3XGB1K/pPulbKaPcKAl6rIDWPuFpHkSbmZ9r4KFlBwgAhlGy6nqP7O3u7q23hRW5AQ0EXQqFwQEIAMo+MgvYHsyjX3Ja4Oolg1Txzm8woj30ch2nACFCqaO0R/1kLj2VVeLrDyQUOlXx9PD6IQI4M8wy8m0sR4wV2p/g/paw7k65cjzYYLh+FdLNyO7IW
-	YXndJO+wDPi3aK/YKUYepqlP+QsmaHNYNdXEQDRKqNfJg8t0f5rfzp9ryxd1tCnbV+tG8VHQWiZXNqN7062DygSNXFUfQ0vZ3J2D4oAcIAEXTymRQ2+hr3Hf7I61KMHWeSkCvCG2decTYsHlw5Erix/jYWqVOtX0roOOLqWkqpQQJWtU+biWrAksmFmCp5fXIg1Nlg39v21xCXBGxJkxyTYuhdWyu1yDQ+LSIUAEQEAAYkBNgQYAQoAIBYhBNdHYd8OeCBwpMuVxnPua9InSr1BBQJdCoXBAhsMAAoJEHPua9InSr1B4wsH/Az767YCT0FSsMNt1jkkdLCBi7nY0GTW+PLP1a4zvVqFMo/vD6uz1ZflVTUAEvcTi3VHYZrlgjcxmcGu239oruqUS8Qy/xgZBp9KF0NTWQSl1iBfVbIU5VV1vHS6r77W5x0qXgfvAUWOH4gmN3MnF01SH2zMcLiaUGF+mcwl15rHbjnT3Nu2399aSE6cep86igfCAyFUOXjYEGlJy+c6UyT+DUylpjQg0nl8MlZ/7Whg2fAU9+FALIbQYQzGlT4c71SibR9T741jnegHhlmV4WXXUD6roFt54t0MSAFSVxzG8mLcSjR2cLUJ3NIPXixYUSEn3tQhfZj07xIIjWxAYZo=
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1709887917; c=relaxed/simple;
+	bh=bpBoKQxkhhcUtk1eVpmAwtJYGHzt5lvHcl+mpGFv34Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mQ/W421I+TnqLn84lQr4kNfi3SOlqQV0l900IyaoUNyZj/R/Cu9UWUQWMQNl9W5f2WglgG8nRTTQmh1l1fpuWabj9tvPjwVDv+ULIIucO5eenTmK8TTw/aWHiGFNEgdfZKGVQmx2sQKOqaLfq1I22A+y7Z4Eal21zrx2Nd9PuuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1riVxF-0006vX-Ls; Fri, 08 Mar 2024 09:51:49 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1riVxF-0056N6-6t; Fri, 08 Mar 2024 09:51:49 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1riVxF-00245U-0P;
+	Fri, 08 Mar 2024 09:51:49 +0100
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Dipen Patel <dipenp@nvidia.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	timestamp@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	kernel@pengutronix.de
+Subject: [PATCH] hte: tegra-194: Convert to platform remove callback returning void
+Date: Fri,  8 Mar 2024 09:51:07 +0100
+Message-ID:  <0b0a5d3816973ee88d4be9fe9f2349065a42cbff.1709886922.git.u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1830; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=bpBoKQxkhhcUtk1eVpmAwtJYGHzt5lvHcl+mpGFv34Y=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBl6tF9loxXme5Y3qwJPajmNWAgaJ1pdGq5vIuAA 88wYvqqSmeJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZerRfQAKCRCPgPtYfRL+ TuVXB/42XSB7OGYbpBihN9q6ey2xFSC7cCInsqwJwMy1VcOzC5T1kgv72DPW8/LHJvqLX/kxyf3 esi9QFjTELCt8iJNpALTzzdvek329axuaMlfhIv4zsmECVCRWAr0xm/rcqhsiehOOBfbvqPjXUu m9ugldRSIQAypvzJIhRETjiaXj6HdYGugxe2xGewxMK4SAiYz78s2Q4TWw39w0jGGF2S/N38OQC ynovLKiB5P3QAj7YERQ6P9vxcfFqHxv0TBFoB0926/v2XpDTb0V4B8V5GGQmruiiZLxAtEw216F WnIqq5w/YceeMKVIFyIRib8yF9r04qMEPi6Rf4a0ZUGwtcFr
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: timestamp@lists.linux.dev
 
-Le mercredi 24 janvier 2024 =C3=A0 16:04 +0100, Bartosz Golaszewski a
-=C3=A9crit=C2=A0:
-> On Wed, Jan 24, 2024 at 3:59=E2=80=AFPM Paul Cercueil <paul@crapouillou.n=
-et>
-> wrote:
-> >=20
-> > Hi Bartosz,
-> >=20
-> > Le mardi 05 septembre 2023 =C3=A0 20:53 +0200, Bartosz Golaszewski a
-> > =C3=A9crit :
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >=20
-> > > We're porting all users of gpiochip_find() to using
-> > > gpio_device_find().
-> > > Update the swnode GPIO code.
-> > >=20
-> > > Signed-off-by: Bartosz Golaszewski
-> > > <bartosz.golaszewski@linaro.org>
-> > > ---
-> > > =C2=A0drivers/gpio/gpiolib-swnode.c | 29 ++++++++++++----------------=
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
+
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
+
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+---
+ drivers/hte/hte-tegra194-test.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
+index ab2edff018eb..8ee038ccf601 100644
+--- a/drivers/hte/hte-tegra194-test.c
++++ b/drivers/hte/hte-tegra194-test.c
+@@ -214,7 +214,7 @@ static int tegra_hte_test_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static int tegra_hte_test_remove(struct platform_device *pdev)
++static void tegra_hte_test_remove(struct platform_device *pdev)
+ {
+ 	(void)pdev;
+ 
+@@ -222,13 +222,11 @@ static int tegra_hte_test_remove(struct platform_device *pdev)
+ 	gpiod_put(hte.gpio_in);
+ 	gpiod_put(hte.gpio_out);
+ 	del_timer_sync(&hte.timer);
 -
-> > > =C2=A01 file changed, 12 insertions(+), 17 deletions(-)
-> > >=20
-> > > diff --git a/drivers/gpio/gpiolib-swnode.c
-> > > b/drivers/gpio/gpiolib-
-> > > swnode.c
-> > > index b5a6eaf3729b..56c8519be538 100644
-> > > --- a/drivers/gpio/gpiolib-swnode.c
-> > > +++ b/drivers/gpio/gpiolib-swnode.c
-> > > @@ -31,31 +31,26 @@ static void swnode_format_propname(const char
-> > > *con_id, char *propname,
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 strscpy(propname, "gpios", max_size);
-> > > =C2=A0}
-> > >=20
-> > > -static int swnode_gpiochip_match_name(struct gpio_chip *chip,
-> > > void
-> > > *data)
-> > > +static struct gpio_device *swnode_get_gpio_device(struct
-> > > fwnode_handle *fwnode)
-> > > =C2=A0{
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0 return !strcmp(chip->label, data);
-> > > -}
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0 const struct software_node *gdev_node;
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0 struct gpio_device *gdev;
-> > >=20
-> > > -static struct gpio_chip *swnode_get_chip(struct fwnode_handle
-> > > *fwnode)
-> > > -{
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0 const struct software_node *chip_node;
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0 struct gpio_chip *chip;
-> > > -
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0 chip_node =3D to_software_node(fwnode);
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0 if (!chip_node || !chip_node->name)
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0 gdev_node =3D to_software_node(fwnode);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0 if (!gdev_node || !gdev_node->name)
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 return ERR_PTR(-EINVAL);
-> > >=20
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0 chip =3D gpiochip_find((void *)chip_node->n=
-ame,
-> > > swnode_gpiochip_match_name);
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0 return chip ?: ERR_PTR(-EPROBE_DEFER);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0 gdev =3D gpio_device_find_by_label((void *)=
-gdev_node->name);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0 return gdev ?: ERR_PTR(-EPROBE_DEFER);
-> > > =C2=A0}
-> > >=20
-> > > =C2=A0struct gpio_desc *swnode_find_gpio(struct fwnode_handle *fwnode=
-,
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const char *con_id, unsign=
-ed int
-> > > idx,
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsigned long *flags)
-> > > =C2=A0{
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0 struct gpio_device *gdev __free(gpio_device=
-_put) =3D NULL;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const struct software_node *swnode;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct fwnode_reference_args args;
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0 struct gpio_chip *chip;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct gpio_desc *desc;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 char propname[32]; /* 32 is max size o=
-f property name */
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int error;
-> > > @@ -77,12 +72,12 @@ struct gpio_desc *swnode_find_gpio(struct
-> > > fwnode_handle *fwnode,
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 return ERR_PTR(error);
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > >=20
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0 chip =3D swnode_get_chip(args.fwnode);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0 gdev =3D swnode_get_gpio_device(args.fwnode=
-);
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fwnode_handle_put(args.fwnode);
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0 if (IS_ERR(chip))
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 return ERR_CAST(chip);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0 if (IS_ERR(gdev))
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 return ERR_CAST(gdev);
-> >=20
-> > I'm a bit late to the party, sorry.
-> >=20
-> > I'm looking at how __free() should be used to use it in my own
-> > patchset, and I was wondering if this code actually works.
-> >=20
-> > What happens if swnode_get_gpio_device() returns an error pointer?
-> > Won't that cause a call to gpio_device_put() with the invalid
-> > pointer?
-> >=20
-> > Cheers,
-> > -Paul
-> >=20
->=20
-> No. because the __free() callback is defined as:
->=20
-> DEFINE_FREE(gpio_device_put, struct gpio_device *,
-> =C2=A0=C2=A0=C2=A0 if (!IS_ERR_OR_NULL(_T)) gpio_device_put(_T))
+-	return 0;
+ }
+ 
+ static struct platform_driver tegra_hte_test_driver = {
+ 	.probe = tegra_hte_test_probe,
+-	.remove = tegra_hte_test_remove,
++	.remove_new = tegra_hte_test_remove,
+ 	.driver = {
+ 		.name = "tegra_hte_test",
+ 		.of_match_table = tegra_hte_test_of_match,
 
-Disregard my previous email, I'm stupid. This actually checks that the
-pointer is non-null.
-
-Cheers,
--Paul
-
->=20
-> Bart
->=20
-> > >=20
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0 desc =3D gpiochip_get_desc(chip, args.args[=
-0]);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0 desc =3D gpiochip_get_desc(gdev->chip, args=
-.args[0]);
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 *flags =3D args.args[1]; /* We expect =
-native GPIO flags */
-> > >=20
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pr_debug("%s: parsed '%s' property of =
-node '%pfwP[%d]' -
-> > > status (%d)\n",
-> >=20
+base-commit: 8ffc8b1bbd505e27e2c8439d326b6059c906c9dd
+-- 
+2.43.0
 
