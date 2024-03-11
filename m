@@ -1,106 +1,122 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42626524DB
-	for <timestamp@lists.linux.dev>; Fri,  8 Mar 2024 08:51:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA904D9E8
+	for <timestamp@lists.linux.dev>; Mon, 11 Mar 2024 16:04:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709887917; cv=none; b=tKiS5RR/0+0s/FPPRqVHEPqxcmVlIuxaAtLpitjkB9HSaUx3Ju7ZlaxZ8VusdgPtTWuhWc92jE14LIohDpiuakfYuTQWqdMt6qRJQVTs2D+4DzMMLbNsMXqBkUNbrfcWgksn3+jmFS2e8VIr9W2tq61DKAZ3ZkRJJqFVdLdq2SE=
+	t=1710173050; cv=none; b=omHzlkDUrEePa2NJ5aoWilgzf+XCL7SEwh4tUCm61Gahc3IZrs8fKqiNPxHDxgfV4nqs8YqfFa9n5Q3r8wcNIb1wyN7M0HzoUq47Z8tlBwtdUCLy3GyWLy2uO8JDX2+j7gob9qDVL8IOhlCRDcLZnfo13lnPNfpmo0LkfGWPtNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709887917; c=relaxed/simple;
-	bh=bpBoKQxkhhcUtk1eVpmAwtJYGHzt5lvHcl+mpGFv34Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mQ/W421I+TnqLn84lQr4kNfi3SOlqQV0l900IyaoUNyZj/R/Cu9UWUQWMQNl9W5f2WglgG8nRTTQmh1l1fpuWabj9tvPjwVDv+ULIIucO5eenTmK8TTw/aWHiGFNEgdfZKGVQmx2sQKOqaLfq1I22A+y7Z4Eal21zrx2Nd9PuuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1riVxF-0006vX-Ls; Fri, 08 Mar 2024 09:51:49 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1riVxF-0056N6-6t; Fri, 08 Mar 2024 09:51:49 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1riVxF-00245U-0P;
-	Fri, 08 Mar 2024 09:51:49 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Dipen Patel <dipenp@nvidia.com>
-Cc: Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	timestamp@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	kernel@pengutronix.de
-Subject: [PATCH] hte: tegra-194: Convert to platform remove callback returning void
-Date: Fri,  8 Mar 2024 09:51:07 +0100
-Message-ID:  <0b0a5d3816973ee88d4be9fe9f2349065a42cbff.1709886922.git.u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1710173050; c=relaxed/simple;
+	bh=eAF47USsvl6GvU6CcbuiuNsY6BM5J/F4iddiICFuahI=;
+	h=Content-Type:Mime-Version:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=CLqfxQlZbtHgAupXE7R+q2LHqBZX1FsOaXBYqn7I5VUlQ6HUkC6SKTndkltYmytOJYGbhhAvl3IiModJuJtgHaHsPf3zUKgoAJWesmzL3JSlV5NHhGXAF3ic9KtYv4cIe9t2YjTIm3OBMepdbru3wMusxjlxtwE2pD1CG2DnrVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dvWe7m9z; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dvWe7m9z"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5684ea117a3so2875859a12.0
+        for <timestamp@lists.linux.dev>; Mon, 11 Mar 2024 09:04:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710173047; x=1710777847; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cvFf2k0hLdwTCSIUw1b2M4KOaEGLFXLzuaUdA5ebJIk=;
+        b=dvWe7m9zD/nVjWXiLuyWu07tx8byaVhD9bb+AYP0Zg8EMczXl1hDX5wbUhcNGGXeH7
+         8b/SX284xF9yaHcvLMbO705VXo1hoNtwBLT5xLj3VAJqchGXo++932McBUrFDGix4K9A
+         BzOsdxCsLzOABIB2Xh5x/b+YwhNOAkpuRmu8RPr8nI0qRMRAxhJJranJU0FqwMTcu2MF
+         K9HDzB9ebwVG/Vz6frVm/cOt2tSiVvUBQRGnCCLNlF9+rudceijZSbV2ud+l/t9eCHhX
+         3fD7VoM/+pBMR+uFsoccw2YMXZ0P+43XVY1ylY61+ulj7sNZfRwUM8Jjgwn+Ho/OwQMx
+         ZHIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710173047; x=1710777847;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cvFf2k0hLdwTCSIUw1b2M4KOaEGLFXLzuaUdA5ebJIk=;
+        b=CX1Nc/0D13uXHRfeOPOWVHVJmgRhxzKdJoJwyE9DqgB/Wd0yHmqruXzTx5IPS1kzTn
+         Cbjhwjmzqut92YrT3Lv0hVL63FuppHnkv4BhYA1lowA/ONH4hd2LGGiyuK/b6GOVoYuz
+         q0T3LauabBb3+AIfYYEAV/zwbf+Uzjq1Lo219LfFVMPA4NMR0HysXHSdH06lOeKqxvb6
+         1KHRIzgVeAfdnQeDEPjSuj9eRKq+OYdeaMduzRL+lujueJbm5Oiy3C+hIiraLidpCEJt
+         Latx/ahZsrHO7SPP1XQraeoo3NjIFedP45hl0HWhoyBI6RjLD3ToZ34aHaQxFXPPVBjO
+         Gopg==
+X-Forwarded-Encrypted: i=1; AJvYcCWJI/GCr7fooMvXyLrU43Ewr8852+oBNSEli3QmJEESql2fSi93jhA1SDGarcJHbJ2uQ23ZZJUpn9VXK+76EC6hdviU/Ifou39C
+X-Gm-Message-State: AOJu0YyRY2F7pNHf2EFAFSUrmGREGpmJNA5rhqdYKhxj9PU+kciuq95H
+	oCw75Wz3sPegLCg84Pzu15Pin+Kdpw53srZ5tT60criebWhsLoch
+X-Google-Smtp-Source: AGHT+IF3/wqnxno1PQ5O/Un7JaS4AMZcCQLtv0MunU2CN2KzLO75PZEjJhGMu4csFW2tBl37PcI+jA==
+X-Received: by 2002:a50:cd15:0:b0:566:16e4:b6b3 with SMTP id z21-20020a50cd15000000b0056616e4b6b3mr4253238edi.36.1710173046751;
+        Mon, 11 Mar 2024 09:04:06 -0700 (PDT)
+Received: from localhost (p200300e41f162000f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f16:2000:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id s20-20020a05640217d400b00566ea8e9f38sm3033913edy.40.2024.03.11.09.04.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Mar 2024 09:04:06 -0700 (PDT)
+Content-Type: multipart/signed;
+ boundary=a67836c0427bcb0ce7e2976400776a51e382e07418ed8532f736485bec42;
+ micalg=pgp-sha256; protocol="application/pgp-signature"
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+Mime-Version: 1.0
+Date: Mon, 11 Mar 2024 17:04:05 +0100
+Message-Id: <CZR1QZ6F6QA4.2YFL58PNYHE0P@gmail.com>
+Cc: "Jonathan Hunter" <jonathanh@nvidia.com>, <timestamp@lists.linux.dev>,
+ <linux-tegra@vger.kernel.org>, <kernel@pengutronix.de>
+Subject: Re: [PATCH] hte: tegra-194: Convert to platform remove callback
+ returning void
+From: "Thierry Reding" <thierry.reding@gmail.com>
+To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+ "Dipen Patel" <dipenp@nvidia.com>
+X-Mailer: aerc 0.16.0-1-0-g560d6168f0ed-dirty
+References: <0b0a5d3816973ee88d4be9fe9f2349065a42cbff.1709886922.git.u.kleine-koenig@pengutronix.de>
+In-Reply-To: <0b0a5d3816973ee88d4be9fe9f2349065a42cbff.1709886922.git.u.kleine-koenig@pengutronix.de>
+
+--a67836c0427bcb0ce7e2976400776a51e382e07418ed8532f736485bec42
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1830; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=bpBoKQxkhhcUtk1eVpmAwtJYGHzt5lvHcl+mpGFv34Y=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBl6tF9loxXme5Y3qwJPajmNWAgaJ1pdGq5vIuAA 88wYvqqSmeJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZerRfQAKCRCPgPtYfRL+ TuVXB/42XSB7OGYbpBihN9q6ey2xFSC7cCInsqwJwMy1VcOzC5T1kgv72DPW8/LHJvqLX/kxyf3 esi9QFjTELCt8iJNpALTzzdvek329axuaMlfhIv4zsmECVCRWAr0xm/rcqhsiehOOBfbvqPjXUu m9ugldRSIQAypvzJIhRETjiaXj6HdYGugxe2xGewxMK4SAiYz78s2Q4TWw39w0jGGF2S/N38OQC ynovLKiB5P3QAj7YERQ6P9vxcfFqHxv0TBFoB0926/v2XpDTb0V4B8V5GGQmruiiZLxAtEw216F WnIqq5w/YceeMKVIFyIRib8yF9r04qMEPi6Rf4a0ZUGwtcFr
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: timestamp@lists.linux.dev
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+On Fri Mar 8, 2024 at 9:51 AM CET, Uwe Kleine-K=C3=B6nig wrote:
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is ignored (apart
+> from emitting a warning) and this typically results in resource leaks.
+>
+> To improve here there is a quest to make the remove callback return
+> void. In the first step of this quest all drivers are converted to
+> .remove_new(), which already returns void. Eventually after all drivers
+> are converted, .remove_new() will be renamed to .remove().
+>
+> Trivially convert this driver from always returning zero in the remove
+> callback to the void returning variant.
+>
+> Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+> ---
+>  drivers/hte/hte-tegra194-test.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+Acked-by: Thierry Reding <treding@nvidia.com>
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+--a67836c0427bcb0ce7e2976400776a51e382e07418ed8532f736485bec42
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/hte/hte-tegra194-test.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
-index ab2edff018eb..8ee038ccf601 100644
---- a/drivers/hte/hte-tegra194-test.c
-+++ b/drivers/hte/hte-tegra194-test.c
-@@ -214,7 +214,7 @@ static int tegra_hte_test_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int tegra_hte_test_remove(struct platform_device *pdev)
-+static void tegra_hte_test_remove(struct platform_device *pdev)
- {
- 	(void)pdev;
- 
-@@ -222,13 +222,11 @@ static int tegra_hte_test_remove(struct platform_device *pdev)
- 	gpiod_put(hte.gpio_in);
- 	gpiod_put(hte.gpio_out);
- 	del_timer_sync(&hte.timer);
--
--	return 0;
- }
- 
- static struct platform_driver tegra_hte_test_driver = {
- 	.probe = tegra_hte_test_probe,
--	.remove = tegra_hte_test_remove,
-+	.remove_new = tegra_hte_test_remove,
- 	.driver = {
- 		.name = "tegra_hte_test",
- 		.of_match_table = tegra_hte_test_of_match,
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmXvK3YACgkQ3SOs138+
+s6HfcRAAo1TclDTpQAvLx8p+fqtLLph42rATzcRewTFPKzcvFVtSqgrJApanWri2
+a+7Wx2QHOxA+Xrq/7z07ILjxbobztUFlQ4HN0/vhz1iUmhPcwJc7gyQhO7i80D/z
+5Jb1uLd4jtSvEl8BJ5x3+vdDKcQDY33kwC0IMeniBrEBkw/G8vONNFyjHqU4xjh9
+H5VvStZd/yxwd4ZlNGFI1PFBmtOtdZ8x6WPVQDuoHAj+AdwtTgA1t35NHlET+RtZ
+OHflL4fl6xlDm94/CpbM0Lxp7ynpGROMitbvx0AVh5V+sQFl4WXWlDDWuOSkiZd7
+fgP6ysDO+7CdbRLw3QYtSW4DbRLFoIw3SdLIT379sziWN6vlEAjDt2JuvCuMNrj0
+8pcOQhShvJO4B+rz/OO6fHuUrdcqEcIAsWxCfzJDyiJv1IrjSuQc+WB/m6fN/P2N
+bsPaxZkk3PBpcfniVUMw4x9IuKgtaD8SBgzH2/UWkfOqQ4xPZ1isV3y92jAbTOsH
+cSwGra5i6z997nvCpe2uCXOy5j+ZHSUdkbj9SLOUz9QxsRDJ9+2wrC0alQKcB0Uj
+a99szkJNlCUoLvWNeP/Sk5v8UaqsLoc8YNWiriu446Bee4lA6+IAhPntWsRuJtnt
+PXwBbOFS35c+zdA9Gh8OMb8iQiBrIiDs88willhGP4mQd1ull1M=
+=c35F
+-----END PGP SIGNATURE-----
 
-base-commit: 8ffc8b1bbd505e27e2c8439d326b6059c906c9dd
--- 
-2.43.0
-
+--a67836c0427bcb0ce7e2976400776a51e382e07418ed8532f736485bec42--
