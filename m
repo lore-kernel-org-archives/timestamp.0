@@ -1,63 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDBE181BBB;
-	Tue, 14 May 2024 22:00:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C6F839FE
+	for <timestamp@lists.linux.dev>; Mon,  3 Jun 2024 23:22:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715724021; cv=none; b=Q4heyWH7vSLEkuz9Wgd6cT0LwR4DVtkSUafkiRpeTaYa6QLjaj70C+3gQJ7a+hjRN7mTlGr2fuUbdIjnmSNxnKQCriutwkSaJl6bFXf/Mkl0GtwZaCWRvzC7Fn7i9iizUlqAcWbKW0C9RV78hiY9ra0S4c2cZ5x7heGHj0mPCQc=
+	t=1717456962; cv=none; b=TBQVakEKNSLtRlq0dsMs4FFxTeKIKly8j0NWefYosOHDQJQ1dif7Pt6HNQR8Z09u5nJrHH+KEwSxCjcQVVkkVeq0F2LCa7w5VtLETqJ8rR15ySBNVA+LL+MOUfH9slksUxVj/xyI0j3TDgHYobwFvS6s2/BFFLADScaOld1ZCpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715724021; c=relaxed/simple;
-	bh=RgAVT9b0FGE2pjgzTSzULhoTV8L95uztNagoVglzXbI=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=Ycsm2jWlsbfwjyyDPue2Nol8yVRoYFHBQCA5ZYuFyKxjznvzTppamPzFm3AxEMjd3VOv7o4lD5doxP6EyMAcKZrVa9S7UkEuAudxANqPUoAV3kvVQz3rs54iPQDt6R34hBkxpujr5DfgSj2X1CjmzYM/mrXXQLvi+8LNWqkq1ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eBvR8s0r; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717456962; c=relaxed/simple;
+	bh=4nnPRcl+QHvF8cHD3oo3FD0nWhbmVspa5R3NuXCR+sg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=XjmcIk9x8GKK26fVwf7L+uw0zEvLeg/S8YsFXxf59ixFg/8jFzXNWZneA94+h+WTEXAGO2Ubbr3D0znHNlqUTMGCSNDnHNCw5ZCdyS24NwgIOBaaW7BeChm4GYd0yrFYSRJgl2i8lwvPOOu0HykBfkAG3fNtdmSM5fcqWuF+yBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=U5EGqjGd; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eBvR8s0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 22326C32786;
-	Tue, 14 May 2024 22:00:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715724021;
-	bh=RgAVT9b0FGE2pjgzTSzULhoTV8L95uztNagoVglzXbI=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=eBvR8s0rzNfEYqhJrxQJJgEtWLTVv4glgsL1gY9l/C2lLXDgD6Nln85FwRPT46eku
-	 Oi578rqVYpYUQCZg56BwDvvc2DddUJeN6zWjzFF8XYnX6Suur+qNrkqvwz0BMm600x
-	 uODRsHh1c0FIXoqNSWiiIG6xKsf3wKODMc8Pa78vRRaj27yel0/mN/tdQzC8jvVGpP
-	 1Hm4rnB2wXZDngAM+ofdXVhuqychTUGEzSeIyCJ7xDu+dxfB+sT1Owqo9i7UDhf9Ss
-	 Y1mTRIjlgBUikr6/GKI3oEkeuIJe6pyLIPWhEB+LB8jpvon0t08drF4CYNJmFX2Ax2
-	 RqJ6PkJuNU6fQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 18891C1614E;
-	Tue, 14 May 2024 22:00:21 +0000 (UTC)
-Subject: Re: [GIT PULL] hte: Changes for v6.10-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <20240514064812.183839-1-dipenp@nvidia.com>
-References: <20240514064812.183839-1-dipenp@nvidia.com>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <20240514064812.183839-1-dipenp@nvidia.com>
-X-PR-Tracked-Remote: ssh://git@gitolite.kernel.org/pub/scm/linux/kernel/git/pateldipen1984/linux.git tags/for-6.10-rc1
-X-PR-Tracked-Commit-Id: 297f26dbf870d4f19591b74a0ab535c327917b81
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 00fddaf58854717a075f3690c828b61290701e7e
-Message-Id: <171572402109.23495.10986002603633790584.pr-tracker-bot@kernel.org>
-Date: Tue, 14 May 2024 22:00:21 +0000
-To: Dipen Patel <dipenp@nvidia.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, dipenp@nvidia.com, u.kleine-koenig@pengutronix.de, linux-kernel@vger.kernel.org, timestamp@lists.linux.dev
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="U5EGqjGd"
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 453D260p031534;
+	Mon, 3 Jun 2024 23:22:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=dIZDgI+MnBLX7qt0dELaC9
+	bnjOBSE4WoivnWsEYn/TU=; b=U5EGqjGdXpvWXYh5w4ngpfwUxi3XToAOiToGBB
+	+KZp/NDESN8erLF4z1E+r/aGpPAVIs9R7bsJwHBZ+Iwrp4zwlPOrUXFPMqucz7Tn
+	WkigJa6PwlmMY4BAv1HpVoDCkhSL6WQGu4i/96KxFcaoV5EPSvsCJPcjdJedjh5t
+	psBDNSAYn93vvTkBKIuRRhNsWvLsgiH9N5IbMadHTN32YBaKk2ZCONOYvyaTts7h
+	8Jdk3ClJu81Z+m4VoKhNVfWLpY0JxV1xoVLNb9BgHVYuHZW/afPQBqwC7FMWbz1r
+	jiLYU9BWBB3eY5JeMMGaIJgYfbblbPgkVtvmDE2wO+H3xRtQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw4bd7nh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Jun 2024 23:22:39 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 453NMc9B003052
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 3 Jun 2024 23:22:38 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Jun 2024
+ 16:22:38 -0700
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
+Date: Mon, 3 Jun 2024 16:22:37 -0700
+Subject: [PATCH] hte: tegra-194: add missing MODULE_DESCRIPTION() macro
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240603-md-hte-tegra194-test-v1-1-83c959a0afdd@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIADxQXmYC/x3MQQrCMBCF4auUWTuQxBCqVxEXaTNtBmyUmVQKp
+ Xc3dve+xft3UBImhXu3g9CXld+lwV46GHMsMyGnZnDGeRPMFZeEuRJWmiXam29DK4bQO+uS9c5
+ M0K4foYm3M/t4Ng9RCQeJZcz/2IvLuuEStZLAcfwAram1RIUAAAA=
+To: Dipen Patel <dipenp@nvidia.com>,
+        Thierry Reding
+	<thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>
+CC: <timestamp@lists.linux.dev>, <linux-tegra@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
+        "Jeff
+ Johnson" <quic_jjohnson@quicinc.com>
+X-Mailer: b4 0.13.0
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: qJyYLZ-5Fy71dLIl0vHWTZrpxD47GSS5
+X-Proofpoint-GUID: qJyYLZ-5Fy71dLIl0vHWTZrpxD47GSS5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-06-03_17,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ phishscore=0 malwarescore=0 priorityscore=1501 mlxscore=0 impostorscore=0
+ bulkscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406030189
 
-The pull request you sent on Mon, 13 May 2024 23:48:12 -0700:
+make allmodconfig && make W=1 C=1 reports:
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/hte/hte-tegra194-test.o
 
-> ssh://git@gitolite.kernel.org/pub/scm/linux/kernel/git/pateldipen1984/linux.git tags/for-6.10-rc1
+Add the missing invocation of the MODULE_DESCRIPTION() macro.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/00fddaf58854717a075f3690c828b61290701e7e
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+---
+ drivers/hte/hte-tegra194-test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thank you!
+diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
+index 8ee038ccf601..df631b5100d2 100644
+--- a/drivers/hte/hte-tegra194-test.c
++++ b/drivers/hte/hte-tegra194-test.c
+@@ -235,4 +235,5 @@ static struct platform_driver tegra_hte_test_driver = {
+ module_platform_driver(tegra_hte_test_driver);
+ 
+ MODULE_AUTHOR("Dipen Patel <dipenp@nvidia.com>");
++MODULE_DESCRIPTION("NVIDIA Tegra HTE (Hardware Timestamping Engine) test driver");
+ MODULE_LICENSE("GPL");
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+---
+base-commit: a693b9c95abd4947c2d06e05733de5d470ab6586
+change-id: 20240603-md-hte-tegra194-test-668212d1420f
+
