@@ -1,63 +1,71 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from arara2.ipen.br (arara2.ipen.br [200.136.52.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFD01B86E1;
-	Thu, 18 Jul 2024 01:27:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B671547CC
+	for <timestamp@lists.linux.dev>; Fri, 13 Dec 2024 06:01:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=200.136.52.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721266034; cv=none; b=DtZns/zUiilkA0W63lF79nViRXqhK7Ltu06tFYx0Jw4ceqGoMESjz34Ck/pD2+CGt6sizVX6m7SldAcY/Hj/+GRgYKt2VfQCOx5oLASQU9TepfSWA9Im/wDc8oeil4PQz29ukoZPk8W8BeOsUT7DZ33OpsAfpbVy6qWXani54iE=
+	t=1734069696; cv=none; b=RO0k3ZNaG8O75FfGhQc48qMlog9cBQLptwYQM0hxA15NRaPPcM/cqz4sqbSIedKrC/oHPEgY35kIk3VPQEykyZG5gBbv0v29M/jTXarKXxPauhCHUKbagCtkDDPMD/B9ui5E/KlOI/ArTitRj+bNkjp+5JZIObZZcUj9CCwJw+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721266034; c=relaxed/simple;
-	bh=qMB/Z8D6rlJyTlkgxLAkSlGELdcQyIiViUWDUTvwvmo=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=nctDBvCu9idCgJHnD+oYolcJfh9cdfj2G7b4ZS3MuCsV5yeZpvaFyuWCq4zfcfAER17FydO31H81+VHNEIqStDt7zgFWAwhMJXGqz8UYjHx7Hb2ME7//AQwQEmJGJi7tWOtxmRCPkNoMlVCy6OCSv6+V58iX1fHg7wGf8FwTa/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XU4rzxE5; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XU4rzxE5"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 91A14C4AF0E;
-	Thu, 18 Jul 2024 01:27:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721266034;
-	bh=qMB/Z8D6rlJyTlkgxLAkSlGELdcQyIiViUWDUTvwvmo=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=XU4rzxE5jey3+OE/SiV0KhTMxbJndPFOSP08p8DbiaY4fFfF+Cfb6VvjFbwhYYAEx
-	 MZX26k7id6hIM4ZtMm6JtVEkB2piz1t2nmFPyoesGG/XsA+EKukejhXTrs91SHURTQ
-	 f0E6AOPCeqj557MCIwH6l7CkfkoZtqCaIF6sDN5GN26B7wa47UiCLA5LQPWUbIzQtR
-	 epkB6XNNyvbAdIz/GNjTZU5vW7hGE52BlAQLVohZlwn5yvITzUkQkog5NStzjdC4M9
-	 RbHzSdWy2VIOZNJzw9HoAj5QGgOV5t0pbPqYem7vnOJF4csIFPQ4/eaaalKpqDxlP+
-	 53aDXEXSbS76w==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 89C5EC433E9;
-	Thu, 18 Jul 2024 01:27:14 +0000 (UTC)
-Subject: Re: [GIT PULL] hte: Changes for v6.11-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <20240716181335.954154-1-dipenp@nvidia.com>
-References: <20240716181335.954154-1-dipenp@nvidia.com>
-X-PR-Tracked-List-Id: <timestamp.lists.linux.dev>
-X-PR-Tracked-Message-Id: <20240716181335.954154-1-dipenp@nvidia.com>
-X-PR-Tracked-Remote: ssh://git@gitolite.kernel.org/pub/scm/linux/kernel/git/pateldipen1984/linux.git tags/for-6.11-rc1
-X-PR-Tracked-Commit-Id: 9e4259716f60c96c069a38e826884ad783dc4eb4
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 5b9ac6c2a735f5b1721e0bc7331f8707190f9ef6
-Message-Id: <172126603455.24030.8171643356561529823.pr-tracker-bot@kernel.org>
-Date: Thu, 18 Jul 2024 01:27:14 +0000
-To: Dipen Patel <dipenp@nvidia.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, dipenp@nvidia.com, quic_jjohnson@quicinc.com, linux-kernel@vger.kernel.org, timestamp@lists.linux.dev
+	s=arc-20240116; t=1734069696; c=relaxed/simple;
+	bh=Cgr97JBiSX1QIcd2ZZZsKVChGTY1ZlWJ/4AhaVFA7Wc=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=HEcqMbWxdA9bdFL9GP+37gJRZziLu/Xe9Rc+/ut5xby3JxwVcqq5tZeYDTLlWJTxdUcTg7hWY4vkPv7RqiT+B1BLCzWbYfX0ZabuFWFHb+HnJB0EoCSiMllL1ISxBfr2BGEco9Iam/jBN9CftITVk9n6+Q2ssoplY2MnJpafcMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ipen.br; spf=pass smtp.mailfrom=ipen.br; arc=none smtp.client-ip=200.136.52.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ipen.br
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ipen.br
+X-ASG-Debug-ID: 1734069637-055fc729ec1486810009-hv9o7D
+Received: from arara.ipen.br (webmail.ipen.br [10.0.10.11]) by arara2.ipen.br with ESMTP id EEBOu03CQ6ybbRw3 for <timestamp@lists.linux.dev>; Fri, 13 Dec 2024 03:01:25 -0300 (BRT)
+X-Barracuda-Envelope-From: TCWM179347@ipen.br
+X-Barracuda-RBL-Trusted-Forwarder: 10.0.10.11
+Received: from ipen.br (unknown [102.129.145.191])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by arara.ipen.br (Postfix) with ESMTPSA id 93231FBE5B8
+	for <timestamp@lists.linux.dev>; Fri, 13 Dec 2024 01:25:29 -0300 (-03)
+Reply-To: t.mazowieckie@mazowieckie.org
+X-Barracuda-Effective-Source-IP: UNKNOWN[102.129.145.191]
+X-Barracuda-Apparent-Source-IP: 102.129.145.191
+X-Barracuda-RBL-IP: 102.129.145.191
+From: <TCWM179347@ipen.br>
+To: timestamp@lists.linux.dev
+Subject:  I urge you to understand my viewpoint accurately.
+Date: 13 Dec 2024 12:25:28 +0800
+X-ASG-Orig-Subj: I urge you to understand my viewpoint accurately.
+Message-ID: <20241213122528.F54B0D8C664914BB@ipen.br>
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Barracuda-Connect: webmail.ipen.br[10.0.10.11]
+X-Barracuda-Start-Time: 1734069685
+X-Barracuda-URL: https://10.40.40.18:443/cgi-mod/mark.cgi
+X-Barracuda-Scan-Msg-Size: 512
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-BRTS-Evidence: 34fbb5788938ad5710ad28835fd12206-499-txt
+X-Virus-Scanned: by bsmtpd at ipen.br
+X-Barracuda-Spam-Score: 0.00
+X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=1000.0 tests=NO_REAL_NAME
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.45577
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.00 NO_REAL_NAME           From: does not include a real name
 
-The pull request you sent on Tue, 16 Jul 2024 11:13:35 -0700:
+I am Tomasz Chmielewski, a Portfolio Manager and Chartered=20
+Financial Analyst affiliated with Iwoca Poland Sp. Z OO in=20
+Poland. I have the privilege of working with distinguished=20
+investors who are eager to support your company's current=20
+initiatives, thereby broadening their investment portfolios. If=20
+this proposal aligns with your interests, I invite you to=20
+respond, and I will gladly share more information to assist you.
 
-> ssh://git@gitolite.kernel.org/pub/scm/linux/kernel/git/pateldipen1984/linux.git tags/for-6.11-rc1
-
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/5b9ac6c2a735f5b1721e0bc7331f8707190f9ef6
-
-Thank you!
-
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+=20
+Yours sincerely,=20
+Tomasz Chmielewski Warsaw, Mazowieckie,
+=20
+Poland.
