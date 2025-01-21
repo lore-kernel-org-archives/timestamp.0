@@ -1,71 +1,103 @@
-Received: from arara2.ipen.br (arara2.ipen.br [200.136.52.33])
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B671547CC
-	for <timestamp@lists.linux.dev>; Fri, 13 Dec 2024 06:01:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=200.136.52.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA6314EC5B
+	for <timestamp@lists.linux.dev>; Tue, 21 Jan 2025 15:19:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734069696; cv=none; b=RO0k3ZNaG8O75FfGhQc48qMlog9cBQLptwYQM0hxA15NRaPPcM/cqz4sqbSIedKrC/oHPEgY35kIk3VPQEykyZG5gBbv0v29M/jTXarKXxPauhCHUKbagCtkDDPMD/B9ui5E/KlOI/ArTitRj+bNkjp+5JZIObZZcUj9CCwJw+E=
+	t=1737472774; cv=none; b=nDPMKV8WFhpa3VqFe34LQAOUfAqa4Ht1m3Ww+tHkwDphlr6rUFtJDCnTHwrseLvAkLfVOupnU04c0w97CxuxJ5lPC7sMjW202Di0fzfKxy7B8DD5RwfuqBWAAud7OZhrXRxnVmkYGrrhx0rwVtGkUIbegXUADJisazA3ROnD37o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734069696; c=relaxed/simple;
-	bh=Cgr97JBiSX1QIcd2ZZZsKVChGTY1ZlWJ/4AhaVFA7Wc=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=HEcqMbWxdA9bdFL9GP+37gJRZziLu/Xe9Rc+/ut5xby3JxwVcqq5tZeYDTLlWJTxdUcTg7hWY4vkPv7RqiT+B1BLCzWbYfX0ZabuFWFHb+HnJB0EoCSiMllL1ISxBfr2BGEco9Iam/jBN9CftITVk9n6+Q2ssoplY2MnJpafcMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ipen.br; spf=pass smtp.mailfrom=ipen.br; arc=none smtp.client-ip=200.136.52.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ipen.br
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ipen.br
-X-ASG-Debug-ID: 1734069637-055fc729ec1486810009-hv9o7D
-Received: from arara.ipen.br (webmail.ipen.br [10.0.10.11]) by arara2.ipen.br with ESMTP id EEBOu03CQ6ybbRw3 for <timestamp@lists.linux.dev>; Fri, 13 Dec 2024 03:01:25 -0300 (BRT)
-X-Barracuda-Envelope-From: TCWM179347@ipen.br
-X-Barracuda-RBL-Trusted-Forwarder: 10.0.10.11
-Received: from ipen.br (unknown [102.129.145.191])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by arara.ipen.br (Postfix) with ESMTPSA id 93231FBE5B8
-	for <timestamp@lists.linux.dev>; Fri, 13 Dec 2024 01:25:29 -0300 (-03)
-Reply-To: t.mazowieckie@mazowieckie.org
-X-Barracuda-Effective-Source-IP: UNKNOWN[102.129.145.191]
-X-Barracuda-Apparent-Source-IP: 102.129.145.191
-X-Barracuda-RBL-IP: 102.129.145.191
-From: <TCWM179347@ipen.br>
-To: timestamp@lists.linux.dev
-Subject:  I urge you to understand my viewpoint accurately.
-Date: 13 Dec 2024 12:25:28 +0800
-X-ASG-Orig-Subj: I urge you to understand my viewpoint accurately.
-Message-ID: <20241213122528.F54B0D8C664914BB@ipen.br>
+	s=arc-20240116; t=1737472774; c=relaxed/simple;
+	bh=J9Pxde6A+iw7H1/Rk922hQRKg2/vxGfLY5TxwEmXAbY=;
+	h=Message-ID:Date:MIME-Version:To:CC:From:Subject:Content-Type; b=LqfbQgCHQhziO/nl4W8tqK+txPduXTGzI4tsTZCA/gZmHqoJOyXyOH6sBvOgtRLIFeNYDJxma3cTW3rP7DV1vA1OOBFNgltxNCyGOlH2wRG/AWwoql+9X4xDtOpmCLBpLUrfm224XVk0UtwH6+nVav6O4PXYBN29C6LdckUGhIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=EDYM4KaC; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="EDYM4KaC"
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 341A5A1398;
+	Tue, 21 Jan 2025 16:19:29 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=mail; bh=YvSKUk5v6EFDKQLEGztTw1EfOLgqPgtPZVAGwGdWSV8=; b=
+	EDYM4KaCJlzn5nU9DaE4/F2L53G9QcUJe5kNRIsYjfViLqTIbit6OzIbFGniH+LF
+	Djy9tgYfH5znDGs/uz68zNkaNbcP1FHKRRnc/DYOzr7ajZWphvK+vZ3Mik3DDhFg
+	iCxjDhcmC0tL4y7QtgcuKydotWHPllcnh7IdbPDzgr3ki7tPuvBgpF3jWcC42IBe
+	UqaVatbPIVtT3pJIhlxDeXqew2mas2O4YHMpo4ahVaeOnzFJuVjlx8SINHN3aDG5
+	fIC1tOzBpkAv87Dj6C2pQzPxExAyWbppKWZRsMDBG7ZzaNu027OwXqU3885gpcuA
+	9VIE7NXepx/qdYuTRxOedmGVbfQMhllfsZcBVEl0ovkzCUU9dSytbiAGJNFO7IU7
+	QA8zbjBWySvbXhPI2cleKV7Wz3YIpEBH5N2pmmjdqLcXitjWLkeDKOuMLU6kds9l
+	Gc+DUI77fjTqcfNZBIvC3Iy6U8Gbgg0ZW1qadfMlC+aANiYqfOWiP4+lbAlPQx9e
+	cOL2rlSfNV+0BdfylzzCn9sqbpXRQHJDsVoDMyEPCxfAA68fIzxvar7LIyVnyypj
+	t8uzptbHQIjMBmFVhGHDgYet6xErA53fcjR3hj0kLs0AHBvQh//J3H7/YtqPgaSR
+	GD21DQqFvLw2T3IsR5esHk7KEEz3aGciGpU0dvRMJMc=
+Message-ID: <f2ec8a55-42ad-498a-b793-072444dcb92e@prolan.hu>
+Date: Tue, 21 Jan 2025 16:19:27 +0100
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Barracuda-Connect: webmail.ipen.br[10.0.10.11]
-X-Barracuda-Start-Time: 1734069685
-X-Barracuda-URL: https://10.40.40.18:443/cgi-mod/mark.cgi
-X-Barracuda-Scan-Msg-Size: 512
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-BRTS-Evidence: 34fbb5788938ad5710ad28835fd12206-499-txt
-X-Virus-Scanned: by bsmtpd at ipen.br
-X-Barracuda-Spam-Score: 0.00
-X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=1000.0 tests=NO_REAL_NAME
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.45577
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.00 NO_REAL_NAME           From: does not include a real name
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: <linux-iio@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<timestamp@lists.linux.dev>
+CC: William Breathitt Gray <wbg@kernel.org>, Jonathan Cameron
+	<jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, Daniel Lezcano
+	<daniel.lezcano@linaro.org>, Thomas Gleixner <tglx@linutronix.de>, "Dipen
+ Patel" <dipenp@nvidia.com>
+From: =?UTF-8?B?Q3PDs2vDoXMgQmVuY2U=?= <csokas.bence@prolan.hu>
+Subject: [Q] Frequency & duty cycle measurement?
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: ATLAS.intranet.prolan.hu (10.254.0.229) To
+ ATLAS.intranet.prolan.hu (10.254.0.229)
+X-EsetResult: clean, is OK
+X-EsetId: 37303A2980D9485267746B
 
-I am Tomasz Chmielewski, a Portfolio Manager and Chartered=20
-Financial Analyst affiliated with Iwoca Poland Sp. Z OO in=20
-Poland. I have the privilege of working with distinguished=20
-investors who are eager to support your company's current=20
-initiatives, thereby broadening their investment portfolios. If=20
-this proposal aligns with your interests, I invite you to=20
-respond, and I will gladly share more information to assist you.
+Hi all,
 
-=20
-Yours sincerely,=20
-Tomasz Chmielewski Warsaw, Mazowieckie,
-=20
-Poland.
+we want to measure the frequency and duty cycle of a signal (relating to 
+power consumption) using a hardware timer in our SoC (Microchip 
+SAMA5D2). The hardware is capable of taking a snapshot of the timer 
+value into another dedicated register pair (RA, RB) on the 
+rising/falling edges, and a small `devmem`-based userspace utility was 
+created as a working PoC. Now we want to move to a "proper" kernelspace 
+solution.
+
+However, none of the existing drivers seem to be able to do this; the 
+closest was `drivers/counter/microchip-tcb-capture.c`, but that only 
+seems to count one type of edge (rising/falling), and cannot give us the 
+time between them, which would be needed for duty cycle calculation. The 
+only other driver I could find was 
+`drivers/clocksource/timer-atmel-tcb.c`, which again seems incapable of 
+such measurements. Therefore, a new module will probably be needed; the 
+question then becomes: which API to implement.
+
+As `microchip-tcb-capture.c` uses the Generic Counter Interface, that 
+was obviously a first stop. However, from what I could see, you can only 
+represent (1) the number of times an edge has been encountered, and (2) 
+rotary encodings (quadrature and direction-step decoders); and not the 
+time between edges.
+
+IIO_ALTVOLTAGE and IIO_CHAN_INFO_FREQUENCY/_PHASE also seemed promising 
+(although the lack of IIO_CHAN_INFO_DUTY_CYCLE already posed a problem), 
+until I saw that all current drivers are frequency *generators*, and not 
+measurers, the latter seems to be completely unimplemented.
+
+The only other contender I could find was the Hardware Timestamping 
+Engine (HTE), but again, it's not clear whether (1) the API is even 
+capable of relaying duty cycle information to userspace and (2) if it 
+is, how would one go about implementing it.
+
+It is also entirely possible I missed a driver or API that could handle 
+this better, if so, please don't keep it to yourselves.
+
+So, how could one go about implementing such a driver?
+
+Bence
+
