@@ -1,218 +1,168 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CBF7603F;
-	Mon, 27 Jan 2025 15:00:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2DF1BEF85
+	for <timestamp@lists.linux.dev>; Thu, 30 Jan 2025 13:59:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737990007; cv=none; b=LDEfEYJWZy5A8wyUjowhMNiJIzrpGwyL/fqF1ZCtmJ0Jn0F5T29wy9wdr5t1nqKZLEAtszebm5hDMsQyBuxDNb58+hUva7/tw/lO3z/dPaYbhU/9KN+bgEC0XKgSLibQ8CEjgli6XZSY/QHlUVLbAovtbX3m192sS1P6ixeJzXo=
+	t=1738245574; cv=none; b=NR7Txe+sSrtXisTJGPdllWDfgDzR0a0vzhckiBh35epGDLLciEY+DgUikedQRI9WlSwlMSTpvyXyE+EhF5mdBse07brwrfdOvoGditXYBUrFPdFsX0RbqwYLIjK65O9ysnVPgH78X+v+qB15y2FcGPVMXc/ANYUOI+SHTqKRQQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737990007; c=relaxed/simple;
-	bh=kwWDA3rU/cN1R71j7vGPxnBKK1HlIAFQmbB0t+RzmOs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=or1vn/wZ3je39D9BRh1LH8DbyxyZW8qw60cYK9eddiXZb8pPb6gW8Tb2NcFCT3Ts088Fij5Tue5FTolht37S+5eCkv9e1KcJq7venex8a6mxpXNaImjvE5TNCKXv/a+MhRBHXoUfH4JK3xuWw4KlNCam9Qpsau/yP23ERKXE96M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MQxBegs7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1738245574; c=relaxed/simple;
+	bh=tZdAwVRnQ4igyPwEBO4YSIA7EcR59sAQ2Am4iy9ll3I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=px4bUxHAXTUcPiXBRZqdCNwZn2zVHWi/lVFVFF1VuP9WQE+vNMVIZLj6aUNSWBxvpbPr8Yj8yHjGY3j3327krPiE2doEa17pOGLfVDHa2App6e7M2mbazgZ+jbVDrRenYa8vpJVyd2obAJteO7dgD2yreo0swJO0+XOUEGRyVZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=nIEAFtAj; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MQxBegs7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D289C4CEE1;
-	Mon, 27 Jan 2025 15:00:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737990006;
-	bh=kwWDA3rU/cN1R71j7vGPxnBKK1HlIAFQmbB0t+RzmOs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MQxBegs7WBv1X6v9R6uZ4y4VWC7i1wv6T0vRcg/AZI6Z1pVGJp6ykCPdx3rrmDEjX
-	 P4NYIOez+Mek1EWFaAZk/aVox/bR1ZYYyNTerOPKUXJk+yq0HhOy8vw4n1U+bqTfJZ
-	 AHK8io7hDUAlfBxaoHpgHZIYerrjrSwbDz1YF1r7ChOQen17LtQ6eygYXy35pIOro0
-	 l4JcDUV2n0tGoOjpUxjlVGc2cPLyN4fuSUTv59iElin3ids3qO1hd7+pAeePLdpPuq
-	 obNzopT0ST0SRco6R+3TBGhFxT7PUaXhpxfnlrmJeQkEcrfe7f0XSGtmDcnZ24j5ye
-	 vhGXQDcZalJ0w==
-Date: Tue, 28 Jan 2025 00:00:02 +0900
-From: William Breathitt Gray <wbg@kernel.org>
-To: =?iso-8859-1?B?Q3Pza+Fz?= Bence <csokas.bence@prolan.hu>
-Cc: linux-iio@vger.kernel.org,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	linux-arm-kernel@lists.infradead.org, timestamp@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Dipen Patel <dipenp@nvidia.com>, dlechner@baylibre.com
-Subject: Re: [Q] Frequency & duty cycle measurement?
-Message-ID: <Z5efcokgHix-k3lW@ishi>
-References: <f2ec8a55-42ad-498a-b793-072444dcb92e@prolan.hu>
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="nIEAFtAj"
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 985E7A0472;
+	Thu, 30 Jan 2025 14:59:21 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=mail; bh=M8qq1IPzgBd/vMLJUXF0
+	AzXwyZ9z/lMINXwf8wvq/cU=; b=nIEAFtAj+A4yA5OmrTiy4fPGRifiC41xrudj
+	1cssfFbbIGlpnBoGWIWHI+0Iu5hEFHl0al20J20PjvANxpho8DPv+XGQdJldHu4G
+	SpUvn6jbUz8aIme7kdQrBKDg9ml2BEFr7QoEZg1NXstmiTA6Paq9aFx56bgE7WXN
+	TjJgwGfUpJJEZaTBmP6J7dvcCmIkZ6GYcPHk64T7b3eKHptuRyWaAemDG9YFIlFi
+	3dGGSevBFSx1HVrnDKH4v/5T6jsy4MIDldWpok54fHfNw5Dp0BV/+2/otBZkxsju
+	BRP7lOpLazzHzzwZAMsdI1vg9TJLQ8BavQQgj0OUUrmHOGO+0cy++5CFjptpc1Pb
+	vKDPA8J+f6EbC4aC5nJuD1NuHGPfvx9y8llgaZE/U2VLhT270mbfWGbEO0NFhGhJ
+	VKX9ktDNEHA6a8Da7U1HkQGLhXRSj3BiBpITvdqC4/TtMg1kFxsssfNAmmnoj8nN
+	z9n+mrrzrjWRa+4fU0gHyofBowiyAnOIAOeOWfsHdSXeBgFpr4/3jjObkTEGbyt5
+	ywg4iEWqRca8PMWlXAvXj+lQhh7xtvwd2M0fH1gSR66IePitBXKBPletkT1Ni45a
+	rOIWCA0D42tXF9n7gvEhLEx+1yIWdD01gy7BIiR3tyODKpBHFearVt2s+ItZPbYb
+	cd+DDVA=
+Message-ID: <dffc0f18-799a-4fc7-a6b5-2fa270e1fc58@prolan.hu>
+Date: Thu, 30 Jan 2025 14:59:20 +0100
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="L5rYZ1lkBZvzecLd"
-Content-Disposition: inline
-In-Reply-To: <f2ec8a55-42ad-498a-b793-072444dcb92e@prolan.hu>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Q] Frequency & duty cycle measurement?
+To: William Breathitt Gray <wbg@kernel.org>
+CC: <linux-iio@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<timestamp@lists.linux.dev>, Jonathan Cameron <jic23@kernel.org>, "Lars-Peter
+ Clausen" <lars@metafoo.de>, Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Thomas Gleixner" <tglx@linutronix.de>, Dipen Patel <dipenp@nvidia.com>,
+	<dlechner@baylibre.com>
+References: <f2ec8a55-42ad-498a-b793-072444dcb92e@prolan.hu>
+ <Z5efcokgHix-k3lW@ishi>
+Content-Language: en-US
+From: =?UTF-8?B?Q3PDs2vDoXMgQmVuY2U=?= <csokas.bence@prolan.hu>
+In-Reply-To: <Z5efcokgHix-k3lW@ishi>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: ATLAS.intranet.prolan.hu (10.254.0.229) To
+ ATLAS.intranet.prolan.hu (10.254.0.229)
+X-EsetResult: clean, is OK
+X-EsetId: 37303A2980D94852667467
 
+Hi William,
 
---L5rYZ1lkBZvzecLd
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2025. 01. 27. 16:00, William Breathitt Gray wrote:
+> In the userspace application, you would setup a Counter "watch" to
+> collect each desired timer value on the respective Counter events; I
+> assume RA and RB are Count 0 and Count 1 respectively, but if they
+> represent something else please let me know:
+> 
+>      static struct counter_watch watches[2] = {
+>              {
+>                      /* Component data: Count 0 count */
+>                      .component.type = COUNTER_COMPONENT_COUNT,
+>                      .component.scope = COUNTER_SCOPE_COUNT,
+>                      .component.parent = 0,
+>                      /* Event type: Capture */
+>                      .event = COUNTER_EVENT_CAPTURE,
+>                      /* Device event channel 0 */
+>                      .channel = 0,
+>              },
+>              {
+>                      /* Component data: Count 1 count */
+>                      .component.type = COUNTER_COMPONENT_COUNT,
+>                      .component.scope = COUNTER_SCOPE_COUNT,
+>                      .component.parent = 1,
+>                      /* Event type: Capture */
+>                      .event = COUNTER_EVENT_CAPTURE,
+>                      /* Device event channel 0 */
+>                      .channel = 0,
+>              },
+>      };
+>      ...
+>      int main(void)
+>      {
+>              int fd;
+>              int i;
+> 	    unsigned long long delta_ts, delta_ra, delta_rb;
+> 	    double ra_frequency, rb_frequency, rb_ra;
+>              struct counter_event first_capture[2], second_capture[2];
+>              
+>              /* Open Counter chrdev */
+>              fd = open("/dev/counter0", O_RDWR);
+>              
+>              for (i = 0; i < 2; i++) {
+> 	            /* Register all Counter watches */
+>                      ioctl(fd, COUNTER_ADD_WATCH_IOCTL, watches + i);
+>              }
+> 	    /* Start collecting Counter events */
+>              ioctl(fd, COUNTER_ENABLE_EVENTS_IOCTL);
+>              
+>              for (;;) {
+> 	        /* Read first Counter event capture */
+>              	read(fd, first_capture, sizeof(first_capture));
+> 	        /* Read second Counter event capture */
+>              	read(fd, second_capture, sizeof(second_capture));
+>                  
+> 		/* Within each capture, timestamp is the same so only
+> 		 * first element of each capture needs to be compared */
+> 		delta_ts = second_capture[0].timestamp - first_capture[0].timestamp;
+> 		/* Compute deltas of timer register pair RA and RB.
+> 		delta_ra = second_capture[0].value - first_capture[0].value;
+> 		delta_rb = second_capture[1].value - first_capture[1].value;
+>                  
+> 		ra_frequency = (double)delta_ra / delta_ts;
+> 		rb_frequency = (double)delta_rb / delta_ts;
+> 		rb_ra = (double)delta_rb / delta_ra;
+>                  
+>              	printf("RA frequency: %ld\n"
+> 		       "RB frequency: %ld\n"
+> 		       "RB per RA: %ld\n"
+>              	       ra_frequency, rb_frequency, rb_ra);
+>              }
+>              
+>              return 0;
+>      }
+> 
+> If RA and RB are provided as a memory buffer on your device, you can
+> instead expose them via DEFINE_COUNTER_ARRAY_CAPTURE() such as the
+> ti-ecap-capture driver does, then perform your userspace computations
+> by utilizing those respective "capture" array attribute values (via
+> chrdev like the example above or alternatively via sysfs).
 
-On Tue, Jan 21, 2025 at 04:19:27PM +0100, Cs=F3k=E1s Bence wrote:
-> Hi all,
->=20
-> we want to measure the frequency and duty cycle of a signal (relating to
-> power consumption) using a hardware timer in our SoC (Microchip SAMA5D2).
-> The hardware is capable of taking a snapshot of the timer value into anot=
-her
-> dedicated register pair (RA, RB) on the rising/falling edges, and a small
-> `devmem`-based userspace utility was created as a working PoC. Now we want
-> to move to a "proper" kernelspace solution.
->=20
-> However, none of the existing drivers seem to be able to do this; the
-> closest was `drivers/counter/microchip-tcb-capture.c`, but that only seems
-> to count one type of edge (rising/falling), and cannot give us the time
-> between them, which would be needed for duty cycle calculation. The only
-> other driver I could find was `drivers/clocksource/timer-atmel-tcb.c`, wh=
-ich
-> again seems incapable of such measurements. Therefore, a new module will
-> probably be needed; the question then becomes: which API to implement.
->=20
-> As `microchip-tcb-capture.c` uses the Generic Counter Interface, that was
-> obviously a first stop. However, from what I could see, you can only
-> represent (1) the number of times an edge has been encountered, and (2)
-> rotary encodings (quadrature and direction-step decoders); and not the ti=
-me
-> between edges.
->=20
-> IIO_ALTVOLTAGE and IIO_CHAN_INFO_FREQUENCY/_PHASE also seemed promising
-> (although the lack of IIO_CHAN_INFO_DUTY_CYCLE already posed a problem),
-> until I saw that all current drivers are frequency *generators*, and not
-> measurers, the latter seems to be completely unimplemented.
->=20
-> The only other contender I could find was the Hardware Timestamping Engine
-> (HTE), but again, it's not clear whether (1) the API is even capable of
-> relaying duty cycle information to userspace and (2) if it is, how would =
-one
-> go about implementing it.
->=20
-> It is also entirely possible I missed a driver or API that could handle t=
-his
-> better, if so, please don't keep it to yourselves.
->=20
-> So, how could one go about implementing such a driver?
->=20
-> Bence
+Thanks for your extensive explanation! With 
+DEFINE_COUNTER_ARRAY_CAPTURE() I was able to expose RA and RB as 
+`/sys/bus/counter/devices/counter0/count0/capture{0,1}`, and could 
+verify that by replacing `devmem` calls with read()-reopen(), our PoC 
+code still works. Now I want to use the chardev interface, but I 
+couldn't find how to set up the watches appropriately. So far I have:
 
-Hi Bence,
+	{
+		.component.type = COUNTER_COMPONENT_EXTENSION,
+		// also tried COUNTER_COMPONENT_COUNT
+		.component.scope = COUNTER_SCOPE_COUNT,
+		.component.parent = 0,
+		.component.id = X, // also tried this instead:
+		// .channel = X,
+		.event = COUNTER_EVENT_CAPTURE,
+	},
 
-You could use the Counter chrdev interface to get frequency of counter
-events such as rising/falling edges, as well as associating timer values
-and snapshots. Do you get an interrupt on each timer snapshot, or is it
-just a circular array buffer that gets filled until your purge it? The
-implementation might look something like the following.
+However, with this, the first read() never comes back.
 
-In the kernel driver, you would push a counter event for each capture; I
-assume your hardware issues an interrupt each time a rising/falling edge
-occurs:
+Bence
 
-    static irqreturn_t sama5d2_isr(int irq, void *dev_id)
-    {
-            struct counter_device *counter =3D dev_id;
-            counter_push_event(counter, COUNTER_EVENT_CAPTURE, 0);
-            return IRQ_HANDLED;
-    }
-
-In the userspace application, you would setup a Counter "watch" to
-collect each desired timer value on the respective Counter events; I
-assume RA and RB are Count 0 and Count 1 respectively, but if they
-represent something else please let me know:
-
-    static struct counter_watch watches[2] =3D {
-            {
-                    /* Component data: Count 0 count */
-                    .component.type =3D COUNTER_COMPONENT_COUNT,
-                    .component.scope =3D COUNTER_SCOPE_COUNT,
-                    .component.parent =3D 0,
-                    /* Event type: Capture */
-                    .event =3D COUNTER_EVENT_CAPTURE,
-                    /* Device event channel 0 */
-                    .channel =3D 0,
-            },
-            {
-                    /* Component data: Count 1 count */
-                    .component.type =3D COUNTER_COMPONENT_COUNT,
-                    .component.scope =3D COUNTER_SCOPE_COUNT,
-                    .component.parent =3D 1,
-                    /* Event type: Capture */
-                    .event =3D COUNTER_EVENT_CAPTURE,
-                    /* Device event channel 0 */
-                    .channel =3D 0,
-            },
-    };
-    ...
-    int main(void)
-    {
-            int fd;
-            int i;
-	    unsigned long long delta_ts, delta_ra, delta_rb;
-	    double ra_frequency, rb_frequency, rb_ra;
-            struct counter_event first_capture[2], second_capture[2];
-           =20
-            /* Open Counter chrdev */
-            fd =3D open("/dev/counter0", O_RDWR);
-           =20
-            for (i =3D 0; i < 2; i++) {
-	            /* Register all Counter watches */
-                    ioctl(fd, COUNTER_ADD_WATCH_IOCTL, watches + i);
-            }
-	    /* Start collecting Counter events */
-            ioctl(fd, COUNTER_ENABLE_EVENTS_IOCTL);
-           =20
-            for (;;) {
-	        /* Read first Counter event capture */
-            	read(fd, first_capture, sizeof(first_capture));
-	        /* Read second Counter event capture */
-            	read(fd, second_capture, sizeof(second_capture));
-               =20
-		/* Within each capture, timestamp is the same so only
-		 * first element of each capture needs to be compared */
-		delta_ts =3D second_capture[0].timestamp - first_capture[0].timestamp;
-		/* Compute deltas of timer register pair RA and RB.
-		delta_ra =3D second_capture[0].value - first_capture[0].value;
-		delta_rb =3D second_capture[1].value - first_capture[1].value;
-               =20
-		ra_frequency =3D (double)delta_ra / delta_ts;
-		rb_frequency =3D (double)delta_rb / delta_ts;
-		rb_ra =3D (double)delta_rb / delta_ra;
-               =20
-            	printf("RA frequency: %ld\n"
-		       "RB frequency: %ld\n"
-		       "RB per RA: %ld\n"
-            	       ra_frequency, rb_frequency, rb_ra);
-            }
-           =20
-            return 0;
-    }
-
-If RA and RB are provided as a memory buffer on your device, you can
-instead expose them via DEFINE_COUNTER_ARRAY_CAPTURE() such as the
-ti-ecap-capture driver does, then perform your userspace computations
-by utilizing those respective "capture" array attribute values (via
-chrdev like the example above or alternatively via sysfs).
-
-Do you think this design would work for your needs?
-
-William Breathitt Gray
-
---L5rYZ1lkBZvzecLd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQSNN83d4NIlKPjon7a1SFbKvhIjKwUCZ5efcgAKCRC1SFbKvhIj
-K3d3AQChNnJh7TbDSsRfyR6M/PqsPlzEiiOD9LM1ho9hnfjDnwEA886rI7ZOW9JN
-vfUSJkgvn1NVCBo5qrdZDHO5ORKlAAM=
-=zv8x
------END PGP SIGNATURE-----
-
---L5rYZ1lkBZvzecLd--
