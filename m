@@ -1,163 +1,143 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AC520C034;
-	Tue,  4 Feb 2025 23:37:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E40A21A427
+	for <timestamp@lists.linux.dev>; Wed,  5 Feb 2025 09:30:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738712256; cv=none; b=KBVSDnKtIMNM36wIX4OQ5EGwWBFu8C32DaU3ogJGLkiWbUoYOSTh84vFbfOolq2j/2C8GCyYCKkKC82Y6gFp3cG2xeA4wP5L+cKSaycbtnHE8NG8+YUuWdYl8wysD0K+uzN6P+ybUkdCaLpmTm4JmG1jYysTBQElXhG5wpgO28s=
+	t=1738747832; cv=none; b=u/SuqrBX7nUJjJvOSX/j2lhWBB75AeC1h1qjkZIoi2opP9ewhjGqFLeyfKas+wlAAobxHuKSwGEdzsGoKgTvTDJb3jFigI2fYLEF/5tYv2zQvkeY/PbxiX4/MZ56WBnXTqsX2jvGJL3+o3BdG3zTaMjl0OdO1uP8AryY6+JUINA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738712256; c=relaxed/simple;
-	bh=vAY8VLfiDAEQkW2QlXq5vU119DGdr5y1FVx5inPsSCI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jiGAocK+tW3qfHabs3f6Ha2Rs8+nOgYgT7Wuj57GR5gdVR3PdtWbchDcwh8F7kdU+DN8uajHrvRaRw7duqZQgKDc9tTARDbzIO4HRtBCgm04vobMckbi2S3qwIZVtrs3YR14XD6PRHpbrR7Y9HfD33Q1K6Wtu2K/Zi39712qYmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VKwivGzI; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1738747832; c=relaxed/simple;
+	bh=yiaG+bx3BDH8rNjqFqrNt10N9XG3vWEYJp26aaimBPU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Pryxo4EwK1W6ixEU0UWKemvdRKiSHFIfRY8Owg0QPoFr6TYA86CYDEczbSS+6XVpYm7y7JaZssccvb2gqINWDWvNEKamhE/l0rcXHNaiTNEbWstIQ6ZNE4P8FqpckQ5NLAzIkQVGWZ+awz3oEUS4YuuvUHr03E031KXI7akPScs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=EhFjjncC; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VKwivGzI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B77C4CEDF;
-	Tue,  4 Feb 2025 23:37:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738712255;
-	bh=vAY8VLfiDAEQkW2QlXq5vU119DGdr5y1FVx5inPsSCI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VKwivGzIB7KSq8KgreBnpiCDIjWvwHPgeYknYhX3Kg9ltR4fZRZzNRDG51LxUu/Jc
-	 gVAvk+DnI1G7ghRdVUhcmgy+fSsdLf9bcno5Bv7v7jXBceCtmhzs5AUY1sUDv5nQmH
-	 p4lI5fHO8QVFY2PQ+XVxcFx55XQ94tgxGrBuADzVofn3/QM+FgFH0XGdyWdIxNLj3C
-	 w6M0DUGXhf9Dp9h8DNfP3IoPo9dhQE15o1JgqD6yx88avgOIPGHR1pAuPwJdJIDIKO
-	 cz2nGON1ELjxaDLMl0fywiP1a4s5FWAYHi+4z2zPXVJz8WFNQ9ABzFYk8RdectrZY/
-	 qjS4w3OSQueIA==
-Date: Wed, 5 Feb 2025 08:37:30 +0900
-From: William Breathitt Gray <wbg@kernel.org>
-To: =?iso-8859-1?B?Q3Pza+Fz?= Bence <csokas.bence@prolan.hu>
-Cc: linux-iio@vger.kernel.org,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	linux-arm-kernel@lists.infradead.org, timestamp@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Dipen Patel <dipenp@nvidia.com>, dlechner@baylibre.com
-Subject: Re: [Q] Frequency & duty cycle measurement?
-Message-ID: <Z6KkusvLFPcNvEfl@ishi>
-References: <f2ec8a55-42ad-498a-b793-072444dcb92e@prolan.hu>
- <Z5efcokgHix-k3lW@ishi>
- <dffc0f18-799a-4fc7-a6b5-2fa270e1fc58@prolan.hu>
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="EhFjjncC"
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 24CD3A079A;
+	Wed,  5 Feb 2025 10:30:28 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=mail; bh=oZmcIW5wOrNb8xct7xRf
+	me9B6Vb+WCUzLGVoJLibljY=; b=EhFjjncCvOyxRr8VieGK1+kFktivOwz8u+3q
+	+FlGiNfj+SU8TbQS8e5aRgqwmoR0Nj6iKvYlAXDYnAySvxYK+Q/Y/HTVdpiaE47H
+	ZRT4AGBaLWXqVeAEgVPqHooEbc8feSQJiO1RNDXs3e2JyvdVxw5FNOet4giM7gM+
+	PcxADs4jI3JNGaSdKcQW96oDSOiVcKnnWmdUXKoSUYZAdjsO7zYM96aYBTOeufyA
+	EiGlh5vbvE6+O6TujJne2lqg4uqiBh7rdofFgubgOeIXCgEJzN0oWCDimvpVHAQN
+	/VFBVBNWLrAhUBCPEkDdb0d2jeZoZu6+fZrkPENuwfLSSNCAfQY2eE/TPrFCyZuz
+	djJZflYO0r45jae56N/llfuXU6btwzGMvHBAH3aPi9a6aFK7LpWQzgNESstcV7FX
+	fDZ3gw+wMW3oCi7BF6hMRGFSHW0VQ2O2RDPToUbYdDDC4BhwSlPqCFTv/w0LFUbF
+	K7SSeQwHQRZt+xWBOaMQ9GGiamSH8nqRTB05unapxxjvYwiM2PbZ6jAYWTk1uyZD
+	Zg1bRnM8RafdjIOuuRrfuGWqDWvoqNU4CMt75teS4FLPrUJgJ9c+UVvYcf960jdd
+	eSTzoBgV1JxD+l9EOtChY/oTjUnxw/PuTBBF7gb7wBSUOuEGVeGOLNJVM4Jq0fH+
+	ztqSwOI=
+Message-ID: <0c74dd96-2978-46ab-a399-9c94c9529b2e@prolan.hu>
+Date: Wed, 5 Feb 2025 10:30:26 +0100
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2a9wQicw+mxwAn3v"
-Content-Disposition: inline
-In-Reply-To: <dffc0f18-799a-4fc7-a6b5-2fa270e1fc58@prolan.hu>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Q] Frequency & duty cycle measurement?
+To: William Breathitt Gray <wbg@kernel.org>
+CC: <linux-iio@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<timestamp@lists.linux.dev>, Jonathan Cameron <jic23@kernel.org>, "Lars-Peter
+ Clausen" <lars@metafoo.de>, Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Thomas Gleixner" <tglx@linutronix.de>, Dipen Patel <dipenp@nvidia.com>,
+	<dlechner@baylibre.com>
+References: <f2ec8a55-42ad-498a-b793-072444dcb92e@prolan.hu>
+ <Z5efcokgHix-k3lW@ishi> <dffc0f18-799a-4fc7-a6b5-2fa270e1fc58@prolan.hu>
+ <Z6KkusvLFPcNvEfl@ishi>
+Content-Language: en-US
+From: =?UTF-8?B?Q3PDs2vDoXMgQmVuY2U=?= <csokas.bence@prolan.hu>
+In-Reply-To: <Z6KkusvLFPcNvEfl@ishi>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: ATLAS.intranet.prolan.hu (10.254.0.229) To
+ ATLAS.intranet.prolan.hu (10.254.0.229)
+X-EsetResult: clean, is OK
+X-EsetId: 37303A2980D94852667264
 
+Hi,
 
---2a9wQicw+mxwAn3v
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2025. 02. 05. 0:37, William Breathitt Gray wrote:
+> Are you still having trouble with this? Is "X" the
+> capture{0,1}_component_id value?
 
-On Thu, Jan 30, 2025 at 02:59:20PM +0100, Cs=F3k=E1s Bence wrote:
-> Hi William,
->=20
-> On 2025. 01. 27. 16:00, William Breathitt Gray wrote:
-> > If RA and RB are provided as a memory buffer on your device, you can
-> > instead expose them via DEFINE_COUNTER_ARRAY_CAPTURE() such as the
-> > ti-ecap-capture driver does, then perform your userspace computations
-> > by utilizing those respective "capture" array attribute values (via
-> > chrdev like the example above or alternatively via sysfs).
->=20
-> Thanks for your extensive explanation! With DEFINE_COUNTER_ARRAY_CAPTURE(=
-) I
-> was able to expose RA and RB as
-> `/sys/bus/counter/devices/counter0/count0/capture{0,1}`, and could verify
-> that by replacing `devmem` calls with read()-reopen(), our PoC code still
-> works. Now I want to use the chardev interface, but I couldn't find how to
-> set up the watches appropriately. So far I have:
->=20
-> 	{
-> 		.component.type =3D COUNTER_COMPONENT_EXTENSION,
-> 		// also tried COUNTER_COMPONENT_COUNT
-> 		.component.scope =3D COUNTER_SCOPE_COUNT,
-> 		.component.parent =3D 0,
-> 		.component.id =3D X, // also tried this instead:
-> 		// .channel =3D X,
-> 		.event =3D COUNTER_EVENT_CAPTURE,
-> 	},
->=20
-> However, with this, the first read() never comes back.
->=20
-> Bence
+X is 0/1 from `/sys/bus/counter/devices/counter0/count0/capture{0,1}`, 
+which is also equal to the respective `capture{0,1}_component_id`, since 
+I don't have any other counters. I checked that beforehand.
 
-Hi Bence,
+> I apologize, the Generic Counter character device interface is
+> underdocumented so it can be a bit confusing at first; I'll submit a
+> patch improving the documentation later this cycle when I get a chance.
+> For now, let's walk through how to create an appropriate Counter watch
+> for the capture extension components you have.
 
-Are you still having trouble with this? Is "X" the
-capture{0,1}_component_id value?
+After much tinkering and reading of the `counter-chrdev.c` code, I now 
+see *something*, although it's much slower to make a measurement than 
+the sysfs `reopen()` hack.
 
-I apologize, the Generic Counter character device interface is
-underdocumented so it can be a bit confusing at first; I'll submit a
-patch improving the documentation later this cycle when I get a chance.
-For now, let's walk through how to create an appropriate Counter watch
-for the capture extension components you have.
+> The first step is to decide which event we'll monitor and on which
+> channel: we want to monitor Capture events so that's
+> COUNTER_EVENT_CAPTURE, and we want event channel 0 (n.b. 0 because
+> that's the channel parameter value passed to counter_push_event() in the
+> driver).
+> 
+> The next step is to choose the components you wish to watch: Count 0's
+> capture0 and capture1 extensions. So type is COUNTER_COMPONENT_EXTENSION
+> because we want to watch extensions, scope is COUNTER_SCOPE_COUNT
+> because we want Count extensions, and parent is 0 because we want
+> Count 0's Count extensions.
+> 
+> Finally, we need to set the component id for each extension. You get a
+> particular component's id by reading the respective *_component_id sysfs
+> attribute: so for capture{0,1} you would read capture{0,1}_component_id
+> respectively. These component id values potentially can change with
+> future driver updates, so for robustness your userspace application
+> should read the respective *_component_id sysfs attribute itself rather
+> than hardcoding the component id in the Counter watch.
+> 
+> However, for the sake of simplicity in this example, I'll assume the
+> component ids are 42 and 43 respectively for capture0 and capture1. That
+> gives us the following two watches:
+> 
+>          {
+>                  .component.type = COUNTER_COMPONENT_EXTENSION,
+>                  .component.scope = COUNTER_SCOPE_COUNT,
+>                  .component.parent = 0,
+>                  .component.id = 42,
+>                  .event = COUNTER_EVENT_CAPTURE,
+>                  .channel = 0,
+>          },
+>          {
+>                  .component.type = COUNTER_COMPONENT_EXTENSION,
+>                  .component.scope = COUNTER_SCOPE_COUNT,
+>                  .component.parent = 0,
+>                  .component.id = 43,
+>                  .event = COUNTER_EVENT_CAPTURE,
+>                  .channel = 0,
+>          },
+> 
+> Does this resolve your chardev read issue? If you're still having
+> troubling, just let me know and we can troubleshoot further to figure
+> out what's going on.
 
-The first step is to decide which event we'll monitor and on which
-channel: we want to monitor Capture events so that's
-COUNTER_EVENT_CAPTURE, and we want event channel 0 (n.b. 0 because
-that's the channel parameter value passed to counter_push_event() in the
-driver).
+I had no success using `channel = 0`, only data from `capture0` comes 
+back. If I set both `channel` AND `component.id` to X, then I start to 
+see similar values than what I get from reading sysfs. (For now I 
+hard-coded all values; I agree that the correct way would be to read 
+component IDs from sysfs, but this is still a PoC...)
 
-The next step is to choose the components you wish to watch: Count 0's
-capture0 and capture1 extensions. So type is COUNTER_COMPONENT_EXTENSION
-because we want to watch extensions, scope is COUNTER_SCOPE_COUNT
-because we want Count extensions, and parent is 0 because we want
-Count 0's Count extensions.
+Did I do something wrong in implementing the driver maybe? (See the 
+submitted patches.) And any idea as to why I might be seeing the slowdown?
 
-Finally, we need to set the component id for each extension. You get a
-particular component's id by reading the respective *_component_id sysfs
-attribute: so for capture{0,1} you would read capture{0,1}_component_id
-respectively. These component id values potentially can change with
-future driver updates, so for robustness your userspace application
-should read the respective *_component_id sysfs attribute itself rather
-than hardcoding the component id in the Counter watch.
+Bence
 
-However, for the sake of simplicity in this example, I'll assume the
-component ids are 42 and 43 respectively for capture0 and capture1. That
-gives us the following two watches:
-
-        {
-                .component.type =3D COUNTER_COMPONENT_EXTENSION,
-                .component.scope =3D COUNTER_SCOPE_COUNT,
-                .component.parent =3D 0,
-                .component.id =3D 42,
-                .event =3D COUNTER_EVENT_CAPTURE,
-                .channel =3D 0,
-        },
-        {
-                .component.type =3D COUNTER_COMPONENT_EXTENSION,
-                .component.scope =3D COUNTER_SCOPE_COUNT,
-                .component.parent =3D 0,
-                .component.id =3D 43,
-                .event =3D COUNTER_EVENT_CAPTURE,
-                .channel =3D 0,
-        },
-
-Does this resolve your chardev read issue? If you're still having
-troubling, just let me know and we can troubleshoot further to figure
-out what's going on.
-
-William Breathitt Gray
-
---2a9wQicw+mxwAn3v
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQSNN83d4NIlKPjon7a1SFbKvhIjKwUCZ6KkugAKCRC1SFbKvhIj
-KyJaAQCCZ5Mnusdt0BDtO1DMxjwY6w6GX5ZblIIVbjUWAzAvIQD9E7WICJ4aGJSf
-5ohM1mSLRyf1qHJCM1IvPkVSD/qZrwg=
-=2fNK
------END PGP SIGNATURE-----
-
---2a9wQicw+mxwAn3v--
