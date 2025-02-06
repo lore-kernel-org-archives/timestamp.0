@@ -1,172 +1,109 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08A6236429
-	for <timestamp@lists.linux.dev>; Thu,  6 Feb 2025 14:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84DB1A23A6
+	for <timestamp@lists.linux.dev>; Thu,  6 Feb 2025 18:17:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738852648; cv=none; b=ZR3kB5nmOGVZZ4HPYGTmTOSitgIs3ZrPFvYDgqu/E9XgL+0wB28c55fPSB+FCF2tXmYTwcLJp9yYeiLxuN7AZJsP6gQYhBwO5+kr36VPb/xkgCs7YjKwIzC1D8+6M2BzMlRZCsMB4yojJ3ccH/DhQqsp713QPPrVOXM55xfUGw8=
+	t=1738865840; cv=none; b=Xii6eeYPkj5z1524gsQCjmdqshch+63pWdAaHzHLxkSnuRIWQJ72M1cyb3Dvsfrs2A6QnemxxmESeySLSAWuGKES/Ybf3RECK5GkbJnVkSDahgXcHuPGk3Jh+V0SWipCHbtBq+0QxisfFlzPiXWj2eth/V2iaAPiYMt7Xx4gR8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738852648; c=relaxed/simple;
-	bh=cWW9uaj5btARuTOtAzQ7Ntg5bsR34Hrv1hOCWz5pJfk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ru9QJVfR7ao2/HX1f2ABbS4bWbgqPJlxRMeH98BCGdFAer2Gfyoh6jEkZymO6hn0B0SLjf7jGps3ibOJr5ywot6DItgcQ0HiV2/Uip7oiATE98JkwuA/zO0aXFc0DbzZCGSa+L/PnyuGCbupUzyNn3o9kkzUoD7g9bZ0xAYZ6G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=yDSpi3cF; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+	s=arc-20240116; t=1738865840; c=relaxed/simple;
+	bh=197lp3kzwItmnztsj2amEy4Ts4sUwvD5wd25DtZFya8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oecX7rYiJAiM+Rrd0SL+M1BbCWiqtMDW5Wn5cLvfQqgP9SaLH2lDKtfuJqfi0du/F/c9P901J7v+jhknTNkh+lWLVpi4/CjfoiPZOea9cp/v4kTYDqmrGirxf7UATvOvDd3Z+wZpR4fQUxlwU88UjfFOj1InLlr4GK0xuGIJtXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wedrztEr; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="yDSpi3cF"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-435f8f29f8aso7055785e9.2
-        for <timestamp@lists.linux.dev>; Thu, 06 Feb 2025 06:37:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wedrztEr"
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5439e331cceso1519459e87.1
+        for <timestamp@lists.linux.dev>; Thu, 06 Feb 2025 10:17:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1738852643; x=1739457443; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NF98C5d2ZTnvdUxMyQwmWIlQzv8/8YoukSIjQ9ItWNU=;
-        b=yDSpi3cFSyfjgVYb83X8gkkV8t23/sjT/7pnUDOnCSdE4covGCngj5yP1kGF9K4WKx
-         mQrXgXB9yCgjY5myPKbRMUak0POOT7HTS8wcOW13cDSNk1c1fz+SPTzHoBHpq87CO5rB
-         Balisob7EjVv68BilOYcADFaLPJZX3hYLL0isJ7RHujWWLLybUm437CpkU5J2XiElbHm
-         4ymgKBR0+rm/+vb/1s8cHFgMgSBkzGpkJQ9B/vH3XVFzgGeQCOgrc+5oVVWFaBARc+eg
-         DPFYcnkPRneAlfrpDD3Lo/hUDljFEocEx95wp9XSrbsii3UCrGomti3OrfBxWYhIuPld
-         hLFA==
+        d=linaro.org; s=google; t=1738865837; x=1739470637; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5MVWUvrz6I/EjcUog/wJCigSBALMduOPBpWQgvDyB4o=;
+        b=wedrztEroiYbqD3T3WGUqh7qKPKEU4qOmQn7MSXRGJa2n/NRe51J+5vMXGffYlmpMT
+         LcOo98EJVPVtjiNbpf9wV5QY5/As4tBY5SpCdNLpuIDjYgiXz8iTjMByF/XjQYw7obmk
+         +CgyzSAElqEsYbE8NeGnx1wT1Y6lpvEprjvBOIwW7LFulzGEZ+M4xNIdsDeupfYCEzcT
+         33rsTNUF8vPFxXd9jwYBAvwA5BTQ0Rd3oDp/S+Jb3HNLKz7d/xuHRFcrww5fkBJQuY7P
+         1+9jkJ1JY3UrPN6uMBvI511nVH1XTl6qrUQELnLR4dcdsnhDw6pmiM/4Pu2eLnTzz6OQ
+         wlIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738852643; x=1739457443;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NF98C5d2ZTnvdUxMyQwmWIlQzv8/8YoukSIjQ9ItWNU=;
-        b=Hycnr6PvmLVgU4IytliLyUd0ATdlM+FJ0KJ1kXJy4BK7gRVWkEBiQOyrzzrUJU3b/8
-         mQTGngHC8Kw0mymFbU0Ef9riOEgSJy58pqoAV4sDy4gcYBp9CoRJ1GMQJ9ItBgXcD5+a
-         AXNFzbndjzKe/bSqE8aHvWU5fE+1ynTJH8QziDQCKVS9tCo/kq2KxCU2HeyVardPIS8p
-         tzO+mGijJC0+lAh/zHQny7or0JJQxu9fQuYZvUhuk4VQnd10rujb2J47GdyjEnTCSzL/
-         nUnd4ZQv4a1flNvoIkYQNovp4LGUdKL8cp3QS6xERjOyxvcR5Ioqeig55MRmbH7hohCg
-         sAEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUdlwQFQXJ8Wf1/nVb9/jZNy57AZ6GgnKo2AJ1cHDRQehuZA1uOyozO+syg9NzfLBMp89xL+q0FYl4=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxvyKUxpjM3Qn2IzFhkqXnNBoD4XTseKNWiHeE+JHm05XrFm6IC
-	eMg3F+jIxq17F9pVRkmwTgNiTA7KEs8TuzmrXD/L5QJTr/Kznb/0EzfBXS7jeqI=
-X-Gm-Gg: ASbGnct9wmbnIu9406iF14CjklokQxAHZPTa2g6pEl4+aiF507Yg5K50iyZ/Cxq6EhT
-	DBRAFLxMg9RmpKd62D+HwBXy2B3aXX3dAkSbcOO0Vkglv+lNy/3hOb3R5/Jau8itEH72IsBcE1J
-	EbBbpTm0RlxoY2u0LVreoZAJoThTP1AjojHU/SnmzSviioy5QzIuIfhujKDE/2yuNCDunLNTi5X
-	wqOHcfn8V81vuGI9BiYEZsf4YdKggIGcwYHtgDYCvb2L3GJlDpXREFnPgpzIF83ux5injLdWQbU
-	3U8eSJOj66ZH
-X-Google-Smtp-Source: AGHT+IFo/YE/ZtOR+lTWdRiCCfpRQ8d0qEwBCkSp6K2f24hkXXHc1rTYV9AZD/HJU1mRVqh7TuuJCw==
-X-Received: by 2002:adf:f38f:0:b0:38d:b283:2c48 with SMTP id ffacd0b85a97d-38db4938a63mr4602821f8f.50.1738852642865;
-        Thu, 06 Feb 2025 06:37:22 -0800 (PST)
-Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:c726:a8e:825:b823])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dbdd7e5f9sm1929769f8f.57.2025.02.06.06.37.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Feb 2025 06:37:22 -0800 (PST)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Dipen Patel <dipenp@nvidia.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Cc: linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	timestamp@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH] gpiolib: don't build HTE code with CONFIG_HTE disabled
-Date: Thu,  6 Feb 2025 15:37:14 +0100
-Message-ID: <20250206143714.182230-1-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.45.2
+        d=1e100.net; s=20230601; t=1738865837; x=1739470637;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5MVWUvrz6I/EjcUog/wJCigSBALMduOPBpWQgvDyB4o=;
+        b=MRMTBsgQD2SJOglqeKeZ3JNx9tMj/ebeyV/j0L57OdU7JGsth3yAy31kMMakOWnqjN
+         Api7Gl3YCJbR63fStGp1+IpojpcR/tGG/n0WhnAx0Ny2TH9KEyI6liu4hkPDS37EnRh+
+         4RYAKAKJN56U7Vk39sCmujv0cJOwc5pw3p1Es7LrUAUQFthClDyujLIfC1+HPlyrBOTZ
+         1GRYytYzqMuBpYqttzLWllY8iNJeg1aMUC+zRweV+ojeWnOZKY80D26zod0HxhYKJ+Xb
+         M6Twb4n5b9Jp2eapx4I/1IALN3Z7jqmkIWnhD3QnT6PHXGAyiIkdMGhE8A7UUJ6z3blz
+         49NA==
+X-Forwarded-Encrypted: i=1; AJvYcCVxsME+CmFLJptanh2FlvuTFkAa6aRQrwciONkoNXohOKJO/b/nxNQ+2dL2e+3CF5n9VEzQ9kr3keM=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwOqdYA2+SwaRLPV+0oga0clDsT56O3VRUjNHmiERVhCut4D2zB
+	OBVLtMTRCbCR1MPdcBGCiWA/CSh1zcgiI6ZbQbRS9XTQkf0n0Jfel8jEKp2+/kZePRbxsPu2P7E
+	TL09VvLQHgYNWaOdooGklsxLvB59KW+FSMaZYgw==
+X-Gm-Gg: ASbGncu5EnLuNt0xE5RYPqsxYvf8ThlDPpmCWQwXHZN6fB49KEfMdwcabkPBwrZwEBH
+	LxdMbp8w1d+MHrXpsjJoPwMaVJyNEMEJu8tzKNyf/EvZHjMpMUuOf7ZVbHMFMcwhDhZtOIJE=
+X-Google-Smtp-Source: AGHT+IH3sHYKWyOD5ia3rmPaUPdB8KYuQwRoGoxGcTpzNmXeS5xrmV3mgCN6Tr2QiY+B044QqFQhDWxhGS1tixCTg/o=
+X-Received: by 2002:a05:6512:1044:b0:540:1d37:e6e with SMTP id
+ 2adb3069b0e04-54405a438a5mr3117203e87.33.1738865836820; Thu, 06 Feb 2025
+ 10:17:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250206143714.182230-1-brgl@bgdev.pl>
+In-Reply-To: <20250206143714.182230-1-brgl@bgdev.pl>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Thu, 6 Feb 2025 19:17:05 +0100
+X-Gm-Features: AWEUYZmjY00VQRyj-wROvCwcjvRKMHYs9Ew0heG6nw4BijJkAe4FJsZiQNQlpkw
+Message-ID: <CACRpkdYKY-fZED=ZCjuXD5s0TYYxBsgFwJ2ga-rHkx4k6FE5Bg@mail.gmail.com>
+Subject: Re: [PATCH] gpiolib: don't build HTE code with CONFIG_HTE disabled
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Dipen Patel <dipenp@nvidia.com>, linux-gpio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, timestamp@lists.linux.dev, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Hi Bartosz,
 
-Hardware timestamping is only used on tegra186 platforms but we include
-the code and export the symbols everywhere. Shrink the binary a bit by
-compiling the relevant functions conditionally.
+On Thu, Feb 6, 2025 at 3:37=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl> =
+wrote:
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/gpio/gpiolib.c        |  2 ++
- include/linux/gpio/consumer.h | 36 +++++++++++++++++++++--------------
- 2 files changed, 24 insertions(+), 14 deletions(-)
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> Hardware timestamping is only used on tegra186 platforms but we include
+> the code and export the symbols everywhere. Shrink the binary a bit by
+> compiling the relevant functions conditionally.
+>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index be3351583508..0f4b31f4a995 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -2908,6 +2908,7 @@ int gpiod_direction_output_nonotify(struct gpio_desc *desc, int value)
- 	return ret;
- }
- 
-+#if IS_ENABLED(CONFIG_HTE)
- /**
-  * gpiod_enable_hw_timestamp_ns - Enable hardware timestamp in nanoseconds.
-  *
-@@ -2973,6 +2974,7 @@ int gpiod_disable_hw_timestamp_ns(struct gpio_desc *desc, unsigned long flags)
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(gpiod_disable_hw_timestamp_ns);
-+#endif /* CONFIG_HTE */
- 
- /**
-  * gpiod_set_config - sets @config for a GPIO
-diff --git a/include/linux/gpio/consumer.h b/include/linux/gpio/consumer.h
-index db2dfbae8edb..2175f62e2178 100644
---- a/include/linux/gpio/consumer.h
-+++ b/include/linux/gpio/consumer.h
-@@ -110,8 +110,6 @@ int gpiod_get_direction(struct gpio_desc *desc);
- int gpiod_direction_input(struct gpio_desc *desc);
- int gpiod_direction_output(struct gpio_desc *desc, int value);
- int gpiod_direction_output_raw(struct gpio_desc *desc, int value);
--int gpiod_enable_hw_timestamp_ns(struct gpio_desc *desc, unsigned long flags);
--int gpiod_disable_hw_timestamp_ns(struct gpio_desc *desc, unsigned long flags);
- 
- /* Value get/set from non-sleeping context */
- int gpiod_get_value(const struct gpio_desc *desc);
-@@ -348,18 +346,6 @@ static inline int gpiod_direction_output_raw(struct gpio_desc *desc, int value)
- 	WARN_ON(desc);
- 	return -ENOSYS;
- }
--static inline int gpiod_enable_hw_timestamp_ns(struct gpio_desc *desc,
--					       unsigned long flags)
--{
--	WARN_ON(desc);
--	return -ENOSYS;
--}
--static inline int gpiod_disable_hw_timestamp_ns(struct gpio_desc *desc,
--						unsigned long flags)
--{
--	WARN_ON(desc);
--	return -ENOSYS;
--}
- static inline int gpiod_get_value(const struct gpio_desc *desc)
- {
- 	/* GPIO can never have been requested */
-@@ -560,6 +546,28 @@ struct gpio_desc *devm_fwnode_gpiod_get_index(struct device *dev,
- 
- #endif /* CONFIG_GPIOLIB */
- 
-+#if IS_ENABLED(CONFIG_GPIOLIB) && IS_ENABLED(CONFIG_HTE)
-+int gpiod_enable_hw_timestamp_ns(struct gpio_desc *desc, unsigned long flags);
-+int gpiod_disable_hw_timestamp_ns(struct gpio_desc *desc, unsigned long flags);
-+#else
-+static inline int gpiod_enable_hw_timestamp_ns(struct gpio_desc *desc,
-+					       unsigned long flags)
-+{
-+#if !IS_ENABLED(CONFIG_GPIOLIB)
-+	WARN_ON(desc);
-+#endif
-+	return -ENOSYS;
-+}
-+static inline int gpiod_disable_hw_timestamp_ns(struct gpio_desc *desc,
-+						unsigned long flags)
-+{
-+#if !IS_ENABLED(CONFIG_GPIOLIB)
-+	WARN_ON(desc);
-+#endif
-+	return -ENOSYS;
-+}
-+#endif /* CONFIG_GPIOLIB && CONFIG_HTE */
-+
- static inline
- struct gpio_desc *devm_fwnode_gpiod_get(struct device *dev,
- 					struct fwnode_handle *fwnode,
--- 
-2.45.2
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
+> +static inline int gpiod_enable_hw_timestamp_ns(struct gpio_desc *desc,
+> +                                              unsigned long flags)
+> +{
+> +#if !IS_ENABLED(CONFIG_GPIOLIB)
+> +       WARN_ON(desc);
+> +#endif
+> +       return -ENOSYS;
+
+I think you can just:
+
+if (!IS_ENABLED(CONFIG_GPIOLIB))
+  WARN_ON()
+else
+  return -ENOSYS;
+
+here, so it's not so ifdeffy.
+The compiler will eliminate the second branch.
+
+Yours,
+Linus Walleij
