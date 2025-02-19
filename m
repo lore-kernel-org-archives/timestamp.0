@@ -1,141 +1,261 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2066.outbound.protection.outlook.com [40.107.237.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E6E1F30BE
-	for <timestamp@lists.linux.dev>; Wed, 19 Feb 2025 15:18:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739978336; cv=none; b=KLOWpRYJrFbrs7egaH+Lcr1k8CuUBB7o2vXIRCKbjtl0J/9R+U7puuxl6YaCwjoH13gbf4slWF9VZwEpfMTTfecKCpu71Wt/dVgyg7d5WJI8n1S+zzvHPx+h3pQw1vaX/VT2kmADLCHu0Cz5KfRm4AAWxUIhI9vL4+GLWeQR0BQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739978336; c=relaxed/simple;
-	bh=Nl0GYuXHmj901hRqk+t7mBIs3Q4QkEavHk7DxpHU934=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aaGLiNS/FshgJaZrVsUCuAC7Qc7CTRa8IxBBvZhwHvvR1AWg3Dk5H1ZItG4FqWGxYzD8eSyZd53YWnmkjA+v6gGd6AiPiTTBV04LXdw8DttZJoeRk5yNUzI8DlXqW/brOk9RbCkofTv69wzYqx+z0JXzo1Y8ezJzt+ql7B/xlYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HhtHuPg8; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940FF22B8B3
+	for <timestamp@lists.linux.dev>; Wed, 19 Feb 2025 22:24:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.66
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740003862; cv=fail; b=BCLhb4RNGpd/jx3dGswX0y6OW8U/fxO8mA0hdBrEnIlmLYVEEZUau2db8wVURInU8DfkhvbHJcAwrYm4nBvWkXm/x+yMssfNyHvInn5X71cWQMrLeRzVzL93pegMmkRnFU/Sj2SG7G2bUuCeX1l8D9/qtDAHRP/kTtFcDStU9zU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740003862; c=relaxed/simple;
+	bh=+EA//rzBAcQJlFmGM3FJViiohCUkRR+CB0zdIoywx60=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=f8mVCJ2TPriYUQgBp84qV4lWRo5DUWk1CKm06MlL+OEmTM5le0g2EtnxItyhC+o79b/sWw16cyCKn8RHTe25KMBaYHu4IKjOltc11JioGgrngL1vJ2WpDTPiMMNU2OLyU6SZnlH5bL3gh656OVHAigRjeb/OuMiSnXQPPQ2l8Xo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LBVYrqnv; arc=fail smtp.client-ip=40.107.237.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HhtHuPg8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739978335; x=1771514335;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Nl0GYuXHmj901hRqk+t7mBIs3Q4QkEavHk7DxpHU934=;
-  b=HhtHuPg80kVwdX8XOYVD4dJsnK23uiwYyLcX83awvPv2lIYfI8veP4L1
-   9qKorsHaphmJce+71Xi+xnNibd+SZ2kxWTac5Qc8JWML1RY6+FhUiSY5o
-   HeMiF1FXb3j4W1a+tccJDLTWMV6A+AC+WtJq8/sjKooVBkmPIq/bxdfZI
-   BVZ51TUbYv+aT3iewGP8Ilg7d6osaS0svUp3CiZO24wSIh12GbiIMzv+8
-   /k+KCsHeUGIQEiN9vWmpslWyaxWRM/NtKmUNujnhA6iLYHTn1Nymf5yij
-   z6H+MPsIt4JOTJfmbe6iTnqqQbkwMePsvNB4s/i/GrW8r8hu8LqK0yfGc
-   A==;
-X-CSE-ConnectionGUID: ivvJYKgITPqLKRmHiT+ppA==
-X-CSE-MsgGUID: YW9ZLmH7T9iK33CZ2IHG0Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11350"; a="39952991"
-X-IronPort-AV: E=Sophos;i="6.13,299,1732608000"; 
-   d="scan'208";a="39952991"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Feb 2025 07:18:55 -0800
-X-CSE-ConnectionGUID: friYgSNASTqrno0slJwQmg==
-X-CSE-MsgGUID: ltJHHssXQRGvIrWxAC+Svg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,299,1732608000"; 
-   d="scan'208";a="114724670"
-Received: from smile.fi.intel.com ([10.237.72.58])
-  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Feb 2025 07:18:52 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@intel.com>)
-	id 1tklqc-0000000D3fS-1FQh;
-	Wed, 19 Feb 2025 17:18:50 +0200
-Date: Wed, 19 Feb 2025 17:18:49 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Dipen Patel <dipenp@nvidia.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-	timestamp@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v4 1/2] gpiolib: move all includes to the top of
- gpio/consumer.h
-Message-ID: <Z7X2We_IB2oShJ5w@smile.fi.intel.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LBVYrqnv"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kRDfbZXwjhAHB2y95cRK3nTpdxRsvs6CkPmL/rwAw8VIxv+fdsQ00dGbaA4J6Rnc9COnk9Hr5oy5EKMuW3070BxbO5sgCz7PCzO+LTX7UKSyO3UMH5xvnczynVa2argLbkwhVbVlv2q9muO4A84loRunsbfuzPYV9MD39R618u+zkkyRmEAEWyO5WODKoo2pm+wB86prfToAsgB9nRUPfFLQsQPRm2D4XV78bmM45VxiYdo72EQ2nOM5Q7qDdqIeym9jRJ3xo0fXpkbECqAvxNzcv4iswncH1Q6zV53YQTuMAS6quVhWcmR9AUHe4fBSzNnirwumbqT0oJQFnJcgcg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LXosnLALzEl9o52/24UFiAMeLh4t2Sd/ESprhqXEl7s=;
+ b=HuXDoWG7RBrp37FkV9CeKW36hP3HflBaPgmfH0xFkrNaTj5cRUZ470VAynRMsARPhnDiNGLSe/nx1aa2xPc3wwWA7umr125nS2O8N4VHfc3qIlg1JHSIoFfnCjkAizj7kfUS9tYn6nm3pjVGRjuZ/9jTyzRs/N6qbWtyGg2gCPcE32xdppFhRVn9a7Iq68xuBDXt9dbZEGSdbNGHHHY99gRMttR49u3JW7iAM94HQpSyDKvdgjwQ6RAmwQeDjluKhuC9G9oqLdEonVVHwu82zlCKZvpvepcZKwlZUkmGJ8gOXYwWqxbKb6ONxjpPopfVjUn4rjIgtE0GhnHA5V4I4A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LXosnLALzEl9o52/24UFiAMeLh4t2Sd/ESprhqXEl7s=;
+ b=LBVYrqnv4x2Ojg8azTrTv8LFyX4nOb+K2oE2oYbOlnAYckthR/ZR2lYQytPlm8AN7EsViKEXj32hdfifACGpFPni2S3C2qSj2aOG1hqoH4uGkHU0EGx+lVglH6e89+RQIv2jIYuIhJwcTG9GcPfgVp4H5uq5jqv170XU7IBNsEtWPOAJuDQHWjU/0si1Ln5+kZqaWDHZWTS7TC50HvtMsaTWuQqIDKRNB2Xu6ggk+yU9L1X3K3rE+keXjIDDjeGmzEeL+1o/YZ3jxVEJhNA4VcGmbDVyleYxF1q92CqXla7pYTUVL1tKVlxznHM9vXVl52g2LG8lkGEiMxmD/Q5ovw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8209.namprd12.prod.outlook.com (2603:10b6:610:123::18)
+ by DM4PR12MB6494.namprd12.prod.outlook.com (2603:10b6:8:ba::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.19; Wed, 19 Feb
+ 2025 22:24:16 +0000
+Received: from CH3PR12MB8209.namprd12.prod.outlook.com
+ ([fe80::9127:5857:7ba5:a7f2]) by CH3PR12MB8209.namprd12.prod.outlook.com
+ ([fe80::9127:5857:7ba5:a7f2%2]) with mapi id 15.20.8466.013; Wed, 19 Feb 2025
+ 22:24:16 +0000
+Message-ID: <0bc59e86-fc8f-492a-846b-5d439cb8c5c6@nvidia.com>
+Date: Wed, 19 Feb 2025 14:24:14 -0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] gpiolib: don't build HTE code with CONFIG_HTE
+ disabled
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+ Linus Walleij <linus.walleij@linaro.org>
+Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+ timestamp@lists.linux.dev,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20250217103922.151047-1-brgl@bgdev.pl>
- <Z7XPcYtaA4COHDYj@smile.fi.intel.com>
- <CAMRc=Mf6HLoORvth1O=DLGXcSvq75-mbmPR0zXg6cm6VV-LVWA@mail.gmail.com>
+ <20250217103922.151047-2-brgl@bgdev.pl>
+Content-Language: en-US
+X-Nvconfidentiality: public
+From: Dipen Patel <dipenp@nvidia.com>
+In-Reply-To: <20250217103922.151047-2-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BY3PR05CA0037.namprd05.prod.outlook.com
+ (2603:10b6:a03:39b::12) To CH3PR12MB8209.namprd12.prod.outlook.com
+ (2603:10b6:610:123::18)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMRc=Mf6HLoORvth1O=DLGXcSvq75-mbmPR0zXg6cm6VV-LVWA@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8209:EE_|DM4PR12MB6494:EE_
+X-MS-Office365-Filtering-Correlation-Id: cf98ff5b-6973-451b-1bf7-08dd51342515
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?bDlvRnk5S3M3cnVmOVN6eUJTRTZwQ3NPa0cvNTkySlh5TU5wRk9vV29vbkJN?=
+ =?utf-8?B?bXF1QTh4YjlDclp4aVZhS2p3b2JXM2s2ZnlMS09WVG8vb08xclFBMHcrN1I1?=
+ =?utf-8?B?WitxK0s2ZU1kaXhiVndyRWFSOXEzaFJEMzJRNTlFZmpabDhuTFpQTUxCU2d0?=
+ =?utf-8?B?SVJXQmRwMVpheS9vY2VKdnN6dkdTSVJ1UFpORTNvZWhDQnBKYVEwR2ZNOHZm?=
+ =?utf-8?B?Y2xxSjIrcUJodGZ6SU9TMWFGMVNLSUZPSDk4NHY5T1crZW94cVNueGppUWpm?=
+ =?utf-8?B?SGV1b1pkTHQvcUk4RjdoWWt6clBlREd5OWJwVkhNMFNLM3hBaGlvQmh5NGZj?=
+ =?utf-8?B?QWEybjU4Njg0eVppVHo0ZFNEZEZPYXRvbGx4K3o2eWFRQUZEWkI2VHM2Ykxn?=
+ =?utf-8?B?UmdiSUV5MHpuQXJ3TFVCY0dMNFBBOWprVmpwTnZFdTZ0eGE3TVYwb1lTSTNi?=
+ =?utf-8?B?N2szKzV0UlVwZTRPTEp4anB4RFdONGU1UmxVbjVncXJja2RIQ2RSZ0ExdVlE?=
+ =?utf-8?B?dEFpYjM1UktIREd1clZpSVJyaWUyWHJNbU0yUHgxc3dMOVBVMnppNGJId25u?=
+ =?utf-8?B?Vm1BWTcwUS8xZk44V2ErYzVFamdzdVlENXZkRUsySEx3aWpzSGhjcjlCZEIx?=
+ =?utf-8?B?Nk9tOG9HUlk3am9KUk1rRlhEWFdCb1pvaVpJSFdEdGVnSHJadldKeDMvMGpq?=
+ =?utf-8?B?eXhsZzh0S3VRcGRiMzVpSHMyeGE2Smo1a0ZLN0Znc1M3bUM1ZzNZNUJUL0ly?=
+ =?utf-8?B?UUsyZVRqSUlGUko3Tmp3RkM3NFEydkxnYVRtR2duejNwdGNPYlEra21wZFZi?=
+ =?utf-8?B?OUovY0V2ZVlCU2orUG1tblkrR1NZakYzQmdrMjVKTUV4N0szbE5BNGVlcVlr?=
+ =?utf-8?B?KzJLTVpHZEdGOVpZeEtnMGtWNk9JaHVSL2RTV0QvNmJkTVc2RzVBNENiQlBQ?=
+ =?utf-8?B?eGVUdVpZaDhYVDNWeE5YZ2xuMVd3dnJaWjdmSUR1VTQreHcwSFlBVzJzemQ5?=
+ =?utf-8?B?TmFEUWM0dkcrOEx3U0Y5Q1NkRnlTbmdFOVFzVUx3Mm1lVGFmS1ZDaEJHRnFw?=
+ =?utf-8?B?dDlHSnFIdVgxMkFqSVlYOStMOFMvOHl1dko4SnI3Y01mL2Y3emdzcGMxcE5q?=
+ =?utf-8?B?UDBjYlY0eWdmZk16UnZXelJxVzM5L2EyRkRjSFErQW5zQUFteTlFNzJkOVZZ?=
+ =?utf-8?B?Nk5KSndOWllOUGlrckdYNHRHNndFRzVRajZRb2ZKVURIQTEwOFBlNW9EcVRt?=
+ =?utf-8?B?MGlVQnIvOGg2WFZKL1NLYXQ0bXViaStwdDJubnhhL1BvbDNxSjZibVBVRlRh?=
+ =?utf-8?B?R3psRTR5M2RSSWl5NlhxOWJmclp0STdjU2xVSjkxTmNHU2VjK3RsbTJManlh?=
+ =?utf-8?B?Yy9oNE9lZGlBZXNoMGNlZTRuNXJDNWtIOWZnb3RyOUUvNkxIcnNDMWZlN1Ry?=
+ =?utf-8?B?S1JsemtmN0tZQWFBMVowdVpTUDQ1d1dOZ0E3Q09HdHc0Q1N4Z2RQaDg4RklB?=
+ =?utf-8?B?M1VlanZyOGJoUjVkWHFJVU5hUU0vdGUxdjVaS01EdTVYdUJkVjNROXp6WXBv?=
+ =?utf-8?B?SUxuMDJndUtUY053NXVtaVVpMjAvU0NmMkMyNFB2N3MrbFJISWVjaTV6NXNq?=
+ =?utf-8?B?YWVLVWVkSHg0MmpJRmI3ZFNFUXJzVW9qLzlOT0JNS01sUTI0Z0IwNXZqNERZ?=
+ =?utf-8?B?alVWV0p4SUUzV2tObUFOcWJsbW5waUU5V0o3Rmlyd2VZditCMVdBSGVuQ3d1?=
+ =?utf-8?B?ZjA0OWNHaGYwS0RodEZhOWVzN0FuczRLVGRvRjZrVGYzb2lVNUREQ2RLNjZH?=
+ =?utf-8?B?YnBFU093SndVRzlZRjZxdytGbEZIeDVGUE9OQWpGc2VmaDNrMC9TWTZtN0x2?=
+ =?utf-8?Q?Wu7M0Ms3EmUeO?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8209.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?bDBxM3ZQYUYrVWlMSVM1a3QwUkF3eXlScWIzTDcwV2xlWElvYlNMVkl3MkJr?=
+ =?utf-8?B?UDhRKzVMZ0RYYlFIUXlMOUsvdTA4VUxoV016UWlYRTc5YnJXeHZYUktTYnFB?=
+ =?utf-8?B?aGxrSmxFbktoOEt5VmM3WUNFZW9sbnhZMzFNSnI2ZllwVmFkd1VyVUtmcHhZ?=
+ =?utf-8?B?MFFuSTBIN1F4d1ZoWnplMWJ5MEFlRWkvTFhKVDVQN1c4VUlDdmJucmtFVG8z?=
+ =?utf-8?B?R2o2K1lWc3JDZFhEWGNydHUzTEZQZ2k1S0NZdFVybXl4K3RKY0JvVm1hUzNE?=
+ =?utf-8?B?azZEbmpLbTZmcDRXRndSYVh3VE4ycU5mdFFVb2pjVjZYeE5SNUNBZlNPUCt4?=
+ =?utf-8?B?d2E3WWJya3ZIWlZtZXBKdDJ4TU4xWTlGU0oyV1FuTU9BMFl5VzZUaEI2VXNR?=
+ =?utf-8?B?UFQ3UlNrMnhoNSthdVM0MnlZWHJVZzZBMnB1cjVsWHM3U25CZVhraUlBVCtx?=
+ =?utf-8?B?bkJHRlBRalBGVFVDWG92M3J3YWhIRHJXYmcxWlVDSERUcFMrcG9rYmMxQ0hY?=
+ =?utf-8?B?MjBBdUw4SEVmazJHS1FHaGh2K25CUkZjMXlYVDdINzV1WVVsRGZyeHk4WHpQ?=
+ =?utf-8?B?ZGRtcDdVVTYwdWNnc3UxQjd4UWdOL3M3UWdPbjNhVnlOa2ZlQUZCckw3SC8r?=
+ =?utf-8?B?eXlreDQweWs2cUdtL09Md2lsVjQ1MXMyQ1N5SU5ZR3NkSEplRTd5MDRuUTAy?=
+ =?utf-8?B?ZjBLMVNMak51SEkvOW9sc0x1ajFRWWVGek1IUHZEL0RPczAvZlJoajl4Tnc5?=
+ =?utf-8?B?SmFyVTMwNjUyaXJDSjBQaGlYN0wvWWEwSlUzWUFXQm5TQkVwczdBQVZiTVFK?=
+ =?utf-8?B?aTlBTjNEWG1FRDNOU0dlL2hpOEhyVjdzWW1aLzBlaXZQaDUyZHRtQVp5bkJM?=
+ =?utf-8?B?Z0llV2Fjckc0T3lIOXZzRlJ5a1NUd3B3bGNqZy9maHNXcG0zUmlQUCtEYnR1?=
+ =?utf-8?B?bXJNcEVCUXlONloycFBMcEhweG9RRG80QkprSGp0SnF4RGxhZzFHbzFheitN?=
+ =?utf-8?B?ZzNxUUxmaVloQU5PSnN1ZFlDcjFuOEczY3dPQVpMTTljVERhcXRHTnZRR09l?=
+ =?utf-8?B?WDdlQlR2cnp6dWovZCtXT0l4TVZCZ2dRUkQ2cFkzODNVckxzN1RENHFwWStS?=
+ =?utf-8?B?SEhpV1k1MUw1VDlLNWRwMXFKUzI0ckhHcjlWVHFQRFI0Z2VWaWJyeDlKejRi?=
+ =?utf-8?B?QmNpUHAyMjc4OVRnR21nRjZsVnlPWWc4cmh1MEVFZE9zdm9KMWMzalRnSFBT?=
+ =?utf-8?B?N2JYV2FWMEVqY0NYSHVvWTFuS3M0blY1UUdxMW02aTY3VWpJd1ZGN1dxM2JZ?=
+ =?utf-8?B?Mmd6amVIOUl6SjRvK3FRT2dNdllld2hza2RUWUVFa1NweCtQSTF6N3l2aW5B?=
+ =?utf-8?B?RjBiNTBlUHFaM053RHUzNTVXcG00amFlL2E3eFpXbUMxNk9kRUZQQ1FndFBE?=
+ =?utf-8?B?bGhCRjJrcVJXQkhLS3RRVk9UMmNVUXVib3ZYN3d5Z0QvVGRBT1ZST3pQNXZZ?=
+ =?utf-8?B?NkZjc3lIR2VaeTZEODQ0bDBwQkpWOUJGRHhsNkxGbEkzY3dKbDFvNS9QNFF5?=
+ =?utf-8?B?ZG5RTkFFTlhHbVRqdFBMckFzZksxWVRBK0QxSGVlYUVGTWJxblNDSFVSS21R?=
+ =?utf-8?B?QWlJb1Nzc0YyTTZjRTdpVmgrbFFBM0MwVmhwZUdKWktQVWpyYkxVS0hzMWxC?=
+ =?utf-8?B?bjBxNm44bEtGdlIvZWpCbys3RXFla21tblplck5wRjlENTM3UjlYK0w3dnlo?=
+ =?utf-8?B?MkN2bHI3SmtwQVpkdlVFTE1GU3J2Q0NQSHhWa1pDUXR6QnRqdVphWFUvbW5t?=
+ =?utf-8?B?NE4vQXZJY1ZkbEtkMTFMYURzWTllN3BrZ2JmeGhTbCs3eGNLN0l1TGIvL3N3?=
+ =?utf-8?B?SjZObHMzWVpiRkhMbm85aml6dkVDOVQrRUJJdHh2ZmVoWmZ5VFlGL3lsaU9E?=
+ =?utf-8?B?ZThGekhKQkhhNlh0djBrWlhCeWtVZzhzYWZ4RUJlNWQwTThGYUIvZGU0SUdG?=
+ =?utf-8?B?WXdEUlhZRXkvcFdUMXd0MEVReU9Ma2RLNHBHR1oxZUgxTlBDdTNGdVFqRlNQ?=
+ =?utf-8?B?VFgxK3NUdzdXOVlzTnR2Sk9TY0dONHJ2U3BQNVd6N2ZuUDUxOTBIWThxM3Jw?=
+ =?utf-8?Q?q4TVmCMVf5daesjYxUwb+71WM?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cf98ff5b-6973-451b-1bf7-08dd51342515
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8209.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2025 22:24:16.1363
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: CB9mPghBneJBAKpBobtXwMTHp7tGRMwBAHRrDjiWb4TqdRcSCDvkWhWv26PHPVEnVTIJdpdNeyg76iH8XJXwQA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6494
 
-On Wed, Feb 19, 2025 at 06:35:59AM -0800, Bartosz Golaszewski wrote:
-> On Wed, 19 Feb 2025 13:32:49 +0100, Andy Shevchenko
-> <andriy.shevchenko@intel.com> said:
-> > On Mon, Feb 17, 2025 at 11:39:21AM +0100, Bartosz Golaszewski wrote:
-> >> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >>
-> >> We have several conditional includes depending on !CONFIG_GPIOLIB. This
-> >> is supposed to reduce compilation time with CONFIG_GPIOLIB=y but in
-> >> practice there's no difference on modern machines.
-> >
-> > It's not about modern machines. If every maintainer will think this way,
-> > we end up in the complete and utter dead end with the headers.
-> >
-> > I believe you at least had read the cover letter for the infamous Ingo's series
-> > about headers and how it speeds up the build (in some cases up to 70% on as you
-> > said "modern machines").
-> >
-> >> It makes adding new stubs that depend on more than just GPIOLIB harder so
-> >> move them all to the top, unduplicate them and replace asm/ with preferred
-> >> linux/ alternatives.
-> >
-> > NAK.
-> >
-> > This makes dependency hell things much worse and this is a step back on the
-> > untangling the current situation along with the slowing down the speed of the
-> > build. Please. consider to revert or discard this patch.
-> >
-> > ...
-> >
-> >>  #include <linux/bits.h>
-> >> +#include <linux/bug.h>
-> >
-> > Okay to replace, but not okay to move.
-> >
-> >>  #include <linux/err.h>
-> >> +#include <linux/errno.h>
-> >
-> > Please, double check that it uses error codes from it, otherwise err.h includes
-> > asm/errno.h with basic codes already.
-> >
-> >> +#include <linux/kernel.h>
-> >
-> > This is definitely no. Please, read what's written in the top of that file and
-> > here is just a proxy for should come in the future a kind of might_sleep.h.
-> > Do not move this one at all, please.
-> >
-> >>  #include <linux/types.h>
-
-
-Fair enough. Does this look right to you?
-
-For kernel.h definitely, for err.h you proved your point (but which was unclear
-to me as the repetitions are already being in a number).
-
-For bug.h looks also good. But I prefer to use asm/bug.h as it's the one that
-provides the APIs. Note, the reference to the recommended linux/* headers
-rather than asm/* applies to the C code or custom headers which are not under
-include/*. The latter should be optimized to what it uses exactly.
-
-So, summarizing the above I would return kernel.h to where it belongs and
-move back to asm/bug.h.
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+On 2/17/25 2:39 AM, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Hardware timestamping is only used on tegra186 platforms but we include
+> the code and export the symbols everywhere. Shrink the binary a bit by
+> compiling the relevant functions conditionally.
+> 
+> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+> Changes in v4:
+> - rebased after fixing conflicts
+> 
+>  drivers/gpio/gpiolib.c        |  2 ++
+>  include/linux/gpio/consumer.h | 36 +++++++++++++++++++++--------------
+>  2 files changed, 24 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+> index f261f7893f85..65ca749a1078 100644
+> --- a/drivers/gpio/gpiolib.c
+> +++ b/drivers/gpio/gpiolib.c
+> @@ -2906,6 +2906,7 @@ int gpiod_direction_output_nonotify(struct gpio_desc *desc, int value)
+>  	return 0;
+>  }
+>  
+> +#if IS_ENABLED(CONFIG_HTE)
+>  /**
+>   * gpiod_enable_hw_timestamp_ns - Enable hardware timestamp in nanoseconds.
+>   *
+> @@ -2971,6 +2972,7 @@ int gpiod_disable_hw_timestamp_ns(struct gpio_desc *desc, unsigned long flags)
+>  	return ret;
+>  }
+>  EXPORT_SYMBOL_GPL(gpiod_disable_hw_timestamp_ns);
+> +#endif /* CONFIG_HTE */
+>  
+>  /**
+>   * gpiod_set_config - sets @config for a GPIO
+> diff --git a/include/linux/gpio/consumer.h b/include/linux/gpio/consumer.h
+> index 0dc49b5fca5c..0b2b56199c36 100644
+> --- a/include/linux/gpio/consumer.h
+> +++ b/include/linux/gpio/consumer.h
+> @@ -114,8 +114,6 @@ int gpiod_get_direction(struct gpio_desc *desc);
+>  int gpiod_direction_input(struct gpio_desc *desc);
+>  int gpiod_direction_output(struct gpio_desc *desc, int value);
+>  int gpiod_direction_output_raw(struct gpio_desc *desc, int value);
+> -int gpiod_enable_hw_timestamp_ns(struct gpio_desc *desc, unsigned long flags);
+> -int gpiod_disable_hw_timestamp_ns(struct gpio_desc *desc, unsigned long flags);
+>  
+>  /* Value get/set from non-sleeping context */
+>  int gpiod_get_value(const struct gpio_desc *desc);
+> @@ -347,18 +345,6 @@ static inline int gpiod_direction_output_raw(struct gpio_desc *desc, int value)
+>  	WARN_ON(desc);
+>  	return -ENOSYS;
+>  }
+> -static inline int gpiod_enable_hw_timestamp_ns(struct gpio_desc *desc,
+> -					       unsigned long flags)
+> -{
+> -	WARN_ON(desc);
+> -	return -ENOSYS;
+> -}
+> -static inline int gpiod_disable_hw_timestamp_ns(struct gpio_desc *desc,
+> -						unsigned long flags)
+> -{
+> -	WARN_ON(desc);
+> -	return -ENOSYS;
+> -}
+>  static inline int gpiod_get_value(const struct gpio_desc *desc)
+>  {
+>  	/* GPIO can never have been requested */
+> @@ -559,6 +545,28 @@ struct gpio_desc *devm_fwnode_gpiod_get_index(struct device *dev,
+>  
+>  #endif /* CONFIG_GPIOLIB */
+>  
+> +#if IS_ENABLED(CONFIG_GPIOLIB) && IS_ENABLED(CONFIG_HTE)
+> +int gpiod_enable_hw_timestamp_ns(struct gpio_desc *desc, unsigned long flags);
+> +int gpiod_disable_hw_timestamp_ns(struct gpio_desc *desc, unsigned long flags);
+> +#else
+> +static inline int gpiod_enable_hw_timestamp_ns(struct gpio_desc *desc,
+> +					       unsigned long flags)
+> +{
+> +	if (!IS_ENABLED(CONFIG_GPIOLIB))
+> +		WARN_ON(desc);
+> +
+> +	return -ENOSYS;
+> +}
+> +static inline int gpiod_disable_hw_timestamp_ns(struct gpio_desc *desc,
+> +						unsigned long flags)
+> +{
+> +	if (!IS_ENABLED(CONFIG_GPIOLIB))
+> +		WARN_ON(desc);
+> +
+> +	return -ENOSYS;
+> +}
+> +#endif /* CONFIG_GPIOLIB && CONFIG_HTE */
+> +
+>  static inline
+>  struct gpio_desc *devm_fwnode_gpiod_get(struct device *dev,
+>  					struct fwnode_handle *fwnode,
+Acked-by: Dipen Patel <dipenp@nvidia.com>
