@@ -1,92 +1,164 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010055.outbound.protection.outlook.com [52.101.193.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A58E3BBFB6
-	for <timestamp@lists.linux.dev>; Sun, 30 Aug 2026 16:17:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788106682; cv=none; b=Sw7GVm+ZTlQRaBKUxm6u2DGMlIk9HSdg1cgb+ByRZqY04gaX6IWF0EGTOHR1t/7vKVkXNiZfGouQQgRf0mcFIxbKLUrAun8wBXLffjfLYN+RU6XRUsvwvkUl1rlvCt3oZUNXaArEdgcuNJ5OUCSuSq7i4i2hwTlcQuG+9j34U6s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788106682; c=relaxed/simple;
-	bh=S6ALsO99Mf8b4MLFFIHQIICD0ef6Ggwu0gNDps+5sOk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=rYUKAB4U7gc4bJKAaTFhlSkamCUw7DeBJmdoZcwFal4AOcOnK2gP5MColpnKDLMLovgN5/SAeoNblxgPV2cZhDXpiADI7IMG6PibHlt0aAbgA8PiX1br07O+VoAKMZseZqrt/+JXpmSaryHDwvmxa8KIDfSaZM1oTGBWyj11mDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=seu.edu.cn; spf=pass smtp.mailfrom=seu.edu.cn; dkim=pass (1024-bit key) header.d=seu.edu.cn header.i=@seu.edu.cn header.b=C6adnRX8; arc=none smtp.client-ip=45.254.49.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=seu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=seu.edu.cn
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A1F2EDD40
+	for <timestamp@lists.linux.dev>; Tue,  1 Sep 2026 04:49:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.55
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788238159; cv=fail; b=XXFWS3B6dGK4Oi9ZsDfjPg2hYkaVu955bRjA8JBGP6wnC6ElEaPYivD/hxxrR/MHo+kBFV6AKP/FLNTazY3D/V05TmMkWPaDd4EMI3WqqCDgsmsMyesQJhJuBg4DVHC7MjRfumT1uZPEhetWaV4VM2sSiJk02XdLvGFHsjxvA9g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788238159; c=relaxed/simple;
+	bh=YGpldCa+yHx1RAmWlVP18euXpiGShBbSl8GPrjOsTkU=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=jtq4E3jt5HlExHNMSK6wlhC3J9T0VrC6Dt983lrXXD+WMekKwKcH7d3EtinbG97QpfroPpiNaBA10/IHnHKLiHDDKFPiEVS44JEWSinC0dvXd7Fn7FuziOb6VrksRtfSF+nJ3y8uEDrzwSUcYtPAV9ApiwkfXhWZYWq/yy6EiS0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Y46yzzhp; arc=fail smtp.client-ip=52.101.193.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=seu.edu.cn header.i=@seu.edu.cn header.b="C6adnRX8"
-Received: from PC-202605011814.localdomain (unknown [58.241.16.34])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 4bd7e97c7;
-	Mon, 31 Aug 2026 00:17:54 +0800 (GMT+08:00)
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
-To: Dipen Patel <dipenp@nvidia.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>
-Cc: timestamp@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	runyu.xiao@seu.edu.cn,
-	jianhao.xu@seu.edu.cn,
-	stable@vger.kernel.org
-Subject: [PATCH] hte: tegra194: Initialize slice locks before registering chip
-Date: Mon, 31 Aug 2026 00:17:47 +0800
-Message-Id: <20260830161747.2719220-1-runyu.xiao@seu.edu.cn>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Y46yzzhp"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ixao86lrrGpv5c589s5obZXVPQdtgmEbw4Lc1VaYs1YPxpKLap5tctiMKKjn/0xXsKObj8dzn93EozZEtOekNnOPkttd2AjySHZ372Tnu32aSuuyCkVoqK30YTBVWmV5E4KjG/Y0jwD43/ztiOEIjhVha34a5/PgPJhMHh7XhDKI0mEj97XC3ck88t0ICgl16Nkd9VG7wqgC1OFSMNMg80ki9mL250ePD7gv4nAGP0vVCfr3nebY+s1GoBnA2TqGftD3OyFcKp4XLDErT8Bcyp6rxl4LThq1LTQObNJ637XinEr2HNC4CAOBiAj1ftVrhprz/6x7HWYduwtFJFKorA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lqlCGYHN5ifmi5ML8plrtfU+1QmDGp1JXbennJ9R7Lw=;
+ b=VGyQ1ljFaxnOycJhrZ/KEaDal07bpAyS2l6T2rSwc5wJiqe+LXlGR2QBiyKnlyvAHXsfHRC0TrbcMxS9mALsRr3mCKWQ0X2vnem4iYXZAjMdFOK+0R6LkuUWUoYfR31TVZ9Yfnip3+N4YzWL1tAqlhsoCuOvfOkNIOJdAkS6KdxevJvDfhLvmh7gHP0ysq9I/hrQyyZ0purPbmhbtbdjoYmn6f7poTy5Xs4eSGYCtUwdKKgFBtfUsFd03TkIqezlrLY68NvOlZvbMHGMTTlg+Wvr1aHUlMMm7gVtHKw1DBltPRdFerC+eMsFXLqpy0Yz9AkHTbybQ6g2G7J99VK5Lw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lqlCGYHN5ifmi5ML8plrtfU+1QmDGp1JXbennJ9R7Lw=;
+ b=Y46yzzhpLukBysevuUK89lyALC0cwWNRxykEdZuZdfTW+E1pU13m6kqzwyZq5L9ZFnLTLlUMyejTbcArvD7LF79zprADp9q0RBQEYG/gb6is+byX7T4L3uoahHogyRHH1V6wYG7Kro350OoAGJ1UQ295IlvcmY7c0cZLPW1iZa+GUsmpwUYhFQkDe9PaWd4kzkI8EBLhpI9b97AQBM/HgQsdCJVSG9e4tGUBENTnSaJm3zS697GUtLFhKBlrituxlcJQaqSTZzD8+dlb8e1hoLoi1/Le7XmJtB93K1JvhtwWbjZZM6DjtOr5sk4zL9eK61JnM9sBo8h+ZE27UeDBvw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA1PR12MB6329.namprd12.prod.outlook.com (2603:10b6:208:3e5::19)
+ by CH2PR12MB4120.namprd12.prod.outlook.com (2603:10b6:610:7b::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Tue, 1 Sep
+ 2026 04:49:14 +0000
+Received: from IA1PR12MB6329.namprd12.prod.outlook.com
+ ([fe80::eadc:c846:73e9:8ccc]) by IA1PR12MB6329.namprd12.prod.outlook.com
+ ([fe80::eadc:c846:73e9:8ccc%4]) with mapi id 15.21.0360.008; Tue, 1 Sep 2026
+ 04:49:14 +0000
+Message-ID: <ad6a2528-c2ca-452e-8648-27325ca3adf0@nvidia.com>
+Date: Mon, 31 Aug 2026 21:49:10 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hte: tegra194: Remove redundant dev_err()
+To: Pan Chuang <panchuang@vivo.com>,
+ Thierry Reding <thierry.reding@kernel.org>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ "open list:HTE SUBSYSTEM" <timestamp@lists.linux.dev>,
+ "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
+ open list <linux-kernel@vger.kernel.org>
+Cc: Mikko Perttunen <mperttunen@nvidia.com>
+References: <20260716073416.530829-1-panchuang@vivo.com>
+Content-Language: en-US
+X-Nvconfidentiality: public
+From: Dipen Patel <dipenp@nvidia.com>
+In-Reply-To: <20260716073416.530829-1-panchuang@vivo.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR03CA0320.namprd03.prod.outlook.com
+ (2603:10b6:303:dd::25) To IA1PR12MB6329.namprd12.prod.outlook.com
+ (2603:10b6:208:3e5::19)
 Precedence: bulk
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa05376928703a1kunmb280507910715e
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDSU1LVhlPGB5LTBodHh4ZSVYeHw
-	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlOQ1VJT0pVSk1VSE9ZV1kWGg8SFR0UWUFZT0tIVUpLSEpPSE
-	xVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=C6adnRX8KIlM01g51zYlO58R1tJ0paYcKBbJRkU5m8eyH/dDIohFCii/CGeEnjXBDSu7Wkk+rucYsqYm4wggBz7x8rHeH17KpOztjUrFAqS2VZAI0hzkuj2Kb8IT7SfiibPRaNYV0SIG7qUNvKgHx16d9K/gh1ZAsvR2xgBE6q4=; s=default; c=relaxed/relaxed; d=seu.edu.cn; v=1;
-	bh=+bGYSb5ANbtpow/T618bsKBQwWGrOFAzrHSouwdqQFY=;
-	h=date:mime-version:subject:message-id:from;
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB6329:EE_|CH2PR12MB4120:EE_
+X-MS-Office365-Filtering-Correlation-Id: 75dca0ea-00a3-4060-bfbf-08df07e45f15
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|6133799003|22082099003|18002099003|11063799006|56012099006|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	dHkNzC/UTj4BC2Ru6dETi/SESqT9K5DZnYR4wubSDsX9tNeE+TnCSLjeOzx6zQG+zAk5GmtZlscIc8S10yvwZ5zUKRTvT99wWi0ws2gGbvNZa8wGf+D4A2TJ3nkCW9uxjFQ+CUIcaQfAah7aSDqY4r05WmbousD0LxecKrHQ70gFT7/UNj6sbq3rS4jp304x8Br/RNpx5gJIOaiTwCJtKzqUtlpgRqMKRolFFV8n3buXETx5LpT7FW7xzQ8dm9dk3Le9JD27ZfNOipDHpx9BeuUuEB+ql1idE5jFJpdUkIY7AvzilYF4KqDxy4PcWUhP9C1vVNc/8TDTftvR53XkGTSt1kixHFmnEX/5Po3H4/nhoI2Tety7uqvPoOXjBGTceixDdWnCSWdiIcTplGQzdHXzBxoBj5CKmJaxi5G+c2iyu6W3rpptG0OuniqlLG8zFErNcXGnVpIpdOA6J8f9/zGxPgkxAwXHYkLr7fNI/gq/8kmuSYwT1sEpiX3vWbnQQGfp4dqa9H7BW6W8uoF4XcwZryqgo0WAF/jznUJqvblIoQpqkEWEP4I1Ba7GG9NikO62UHhTFY8HPEJukbuxEwzDqbvpM4FFRR8pZe8UcT9ZgMTdI5bnmgiDTbaBIlgpzPNJGIdluMXw+x/LiN3nciBTdwmkBGLzQ/Jh0WHVBxE=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB6329.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(6133799003)(22082099003)(18002099003)(11063799006)(56012099006)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?a1dLVWRSV20ydzlkQ0tHKzI1VVQrbDdJVE5pdGVNNytoQTY0UkV0ckZWTzNT?=
+ =?utf-8?B?Skdmck8rcFJsTlhSWEk2QndDVC9yS1duK3pkUVRpZkxTMmpEMGxNTzFMa2oy?=
+ =?utf-8?B?RTg3cEt4eDI4dmk3a216cjJCUjJYRllhMTdIRHdIVTlPTmdNWDZxOTkyWEtO?=
+ =?utf-8?B?ZHE0cnVxbHIvWDNSd0xCQ2pIb1pPYXBkZ29kbUsrbll1cXhHVWhuMjR4bWlW?=
+ =?utf-8?B?NEVqaktyNUIxTnR2MGZ5eWZaMm53elBFTDAzTS9nbmRSYm8rM2NJbkFzNVhT?=
+ =?utf-8?B?RnJTZHFmdldqMk9RNWZ1NlZJOXM2UE0xMy9NRWtaZVUzTUIwUWFCQm1FcGZT?=
+ =?utf-8?B?RVpSKzQ3YlFpSzB6cW4vQWV6WWZLNmQxSVZTUEgyQ2d3WFRwMWdSQXg2T1pq?=
+ =?utf-8?B?R1BBL1h5L0N6TFpJa0kzK21saENVbmdLTU1UdkowUzVLcWZOMzR4UDJ6Y1hZ?=
+ =?utf-8?B?V0U4UDBtbXdKTXVzTUJGcmRVNjMxWGY5QkxMSkxZVWVBdEJtK0lPR3BDWmZO?=
+ =?utf-8?B?cUh6WGhOa2NLZzFhQXVkR1czSHdLUUVnbFBodytjWUdBM25vV3QyT2NTSEZS?=
+ =?utf-8?B?MTg2Y3JDQ0Y3L25hLys4b0htRHNhYnU1MUZheEw3OHpNQ0tjRmljRGg1d2tq?=
+ =?utf-8?B?TWlxUUJWU0o3MldLWndPdlVTbmlPSE5vTzkwTzExTVNuWEtWdytBYTVELzE5?=
+ =?utf-8?B?K0JwUHpiQ0Y4VHprZHJpMU05WjkxSFRqWE1XUEhFanNWeU5iVWVGVVFyM2pz?=
+ =?utf-8?B?MXc4SmRTMGVoUE0xVDB2Q3NoVDNRTFl6Y0JvRXNxWk1YR0hkY2xiR0dLSEtF?=
+ =?utf-8?B?ajdVdHFVQTZDbCtpaWZQd2V2THQ0Q1ZxeURNREt0eGxRakI1SHZFRk95cmRt?=
+ =?utf-8?B?UUZRTkdodlRzVk81MWNpdWhMaTVUTlRxdUQzaWdFbnhUbzU0Y3BhVkVzZk5s?=
+ =?utf-8?B?MWI1ZG82c0V2UDhPTk5xNU9WSUtkM0FDYkdXUzhtdU53UXA1c1ZLTGFkTzBT?=
+ =?utf-8?B?UnB0VkwraWxyTXI4UU5mTUZrMHpXTXlZWnZ1c1BVWHJIU2NyM0RweU55RThh?=
+ =?utf-8?B?Wm5CMGFOL3dSVElsakNwWU5mWGgyWnM5SktzWU5VVHJTMHhNN2NPL0hOd2dN?=
+ =?utf-8?B?TktiYVQwaURiYWpmeENuY0drQnJCK2JjNENUbWVsZ2c1R0Y2TC9jRXZkRTJh?=
+ =?utf-8?B?ZllzYmpFdmU1a2FXOGY1RkEwZHhZT1lia25pcGRrZk9ZZ1FkaTJSRks2azFl?=
+ =?utf-8?B?S3Y2QmJoTmp1UHNDOElFdUxTUWVQL2JPbE8wZ0IvUncwKzNQaENRcWlDRVha?=
+ =?utf-8?B?cEdVdkRWNHo1WE5HT3B3cXRxd0k0TGdnd09JNFFqUVUxRUtCZVJ4ZHhlRkRJ?=
+ =?utf-8?B?ZWhsZDRCTlNOWjdPeHAxZ1F6UjZrdCtMVE9Sc3J4dDRHT3FIaE9LVUh1UnFt?=
+ =?utf-8?B?Z0hSNHIvTkxXSEF5a213aXhUQVl4b2kwb3R4dDNzaU5HemVlaUsrRi96MHBM?=
+ =?utf-8?B?TEh0VWgrNks0eWxKbSs3OTdNelhTVCtucmFTamJQcm9QVHcweWFSSzZybjJm?=
+ =?utf-8?B?NWVTUEREYXluZUVtSkI2Mm5ycVpqdDNlQjlRdDAwU1VwMUMxTVkvekQvcWY4?=
+ =?utf-8?B?QXhTa1JxMU9CTXdWNW9BQWdrUTZxdkZBZHdYaHNSYTlMVDVsQXB5M1BCYTFU?=
+ =?utf-8?B?dUpxTUV6RzJqL1lFVHEyTkpmc2puY0ZycGV5bmo5M1U1eXR6alZhc3NKL0NP?=
+ =?utf-8?B?TjI4cEFaMkdjck0rd3BvcWZpc3plNkgyRjJjSDQzMU5aajQ1OCtkWSsvL0M1?=
+ =?utf-8?B?SUhjdytNaHJUZnBOOUZ2cUhVUlZPV3FSK3hma0ZYRDFaK0JOY0JlN3c4NlRG?=
+ =?utf-8?B?RDlBQkZRT2ZDVEx6bmZOeEtVQkhmaEJDMmhDYnFiK0doelUyUytrNXhDV3JW?=
+ =?utf-8?B?Vm8xd1haYVk0b1FqL2tHeERvUlZoeEdwSU9NWC9mZkhiYzFFb1FLMGFWMGQ4?=
+ =?utf-8?B?QWFNbFFoYndDYXRTTS9mbEFyYWhsUVpFQzhnYkpsNDYzdmdITXJVWHpBS2J2?=
+ =?utf-8?B?NHpzRisyK3QrUUI5VnVXU1VJUmtNSm9sUmdmbFljc2lEd282dTIxRjZDcERm?=
+ =?utf-8?B?T0hsOVFyYlFFWDdsSkJMZ1FESTRHV1N1RnBWeDNvV0tIenhvcXMzWkZqRCtw?=
+ =?utf-8?B?eXNzN0dLaG8yOEJpOHFEbEpYNzUvVEtXQXZXbm1iLzdabW0rS0Z6TXloSkVH?=
+ =?utf-8?B?V2NJR1VrZURBNVZxUUpsalFOVWZnbURUMW80ejlFVlVncnN4cWdEMFE0Ri9C?=
+ =?utf-8?B?RUgzSC9oUnFkQkVIYXZEYjVyM1pPYXMvZ1JteVN0NHJHRVZnTm92Zz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 75dca0ea-00a3-4060-bfbf-08df07e45f15
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6329.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 04:49:14.0289
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9ARNfrHFKir5TlayBKDSB8cVjUlQAXTaJ0ojSvuyjGL4w05gJWZMaIddtcFnhfH3XDpTOK4kU/Boqu0Mf2ePew==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4120
 
-Registering the HTE chip publishes its request callbacks to consumers.
-Initialize every slice lock before registration so a concurrent HTE
-request cannot use an uninitialized lock.
-
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Fixes: 09574cca6ad6 ("hte: Add Tegra194 HTE kernel provider")
-Cc: stable@vger.kernel.org
----
- drivers/hte/hte-tegra194.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/hte/hte-tegra194.c b/drivers/hte/hte-tegra194.c
-index 4a7702b32..1612812ab 100644
---- a/drivers/hte/hte-tegra194.c
-+++ b/drivers/hte/hte-tegra194.c
-@@ -910,17 +910,17 @@ static int tegra_hte_probe(struct platform_device *pdev)
- 
- 	hte_dev->chip = gc;
- 
-+	for (i = 0; i < slices; i++) {
-+		hte_dev->sl[i].flags = 0;
-+		spin_lock_init(&hte_dev->sl[i].s_lock);
-+	}
-+
- 	ret = devm_hte_register_chip(hte_dev->chip);
- 	if (ret) {
- 		dev_err(gc->dev, "hte chip register failed");
- 		return ret;
- 	}
- 
--	for (i = 0; i < slices; i++) {
--		hte_dev->sl[i].flags = 0;
--		spin_lock_init(&hte_dev->sl[i].s_lock);
--	}
--
- 	val = HTE_TECTRL_ENABLE_ENABLE |
- 	      (HTE_TECTRL_INTR_ENABLE << HTE_TECTRL_INTR_SHIFT) |
- 	      (hte_dev->itr_thrshld << HTE_TECTRL_OCCU_SHIFT);
--- 
-2.34.1
+On 7/16/26 12:34 AM, Pan Chuang wrote:
+> Since commit 55b48e23f5c4 ("genirq/devres: Add error handling in
+> devm_request_*_irq()"), devm_request_irq() automatically logs
+> detailed error messages on failure. Remove the now-redundant
+> driver-specific dev_err() calls.
+> 
+> Signed-off-by: Pan Chuang <panchuang@vivo.com>
+> Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
+> ---
+>  drivers/hte/hte-tegra194.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/drivers/hte/hte-tegra194.c b/drivers/hte/hte-tegra194.c
+> index 4a7702b32b24..e29fb105ca2d 100644
+> --- a/drivers/hte/hte-tegra194.c
+> +++ b/drivers/hte/hte-tegra194.c
+> @@ -856,10 +856,8 @@ static int tegra_hte_probe(struct platform_device *pdev)
+>  	hte_dev->hte_irq = ret;
+>  	ret = devm_request_irq(dev, hte_dev->hte_irq, tegra_hte_isr, 0,
+>  			       dev_name(dev), hte_dev);
+> -	if (ret < 0) {
+> -		dev_err(dev, "request irq failed.\n");
+> +	if (ret < 0)
+>  		return ret;
+> -	}
+>  
+>  	gc->nlines = nlines;
+>  	gc->ops = &g_ops;
+Acked-by: Dipen Patel <dipenp@nvidia.com>
