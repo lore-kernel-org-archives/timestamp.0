@@ -1,179 +1,173 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.52.22
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792523763;
+	b=q46Gu4LpZ90qyPCQV2cwNaMZY8JcNEO1Bhx3zwlO9oaifPjmIiQi8DQiI0negrzEYUj/
+	 aZd9z4hG75C7v9gJK9+a4iikiC3HVVJL+nmmr+eND+jHFr8XMdo80hMDBIdYIDeE2iORk
+	 sbDsiF9Mc1Re+E0gdyaEmH8pCba50R4Ge8KXsPs7ITv/Y7lWN86OtgFy/flV5Z/XzAv80
+	 PFOS1UKj/BjTj9dLc4ddVxZ3IuLOSGX1Rkw634BzIyC8Owk7okf7Zko57fyfsXw98ben/
+	 jGTIDIsR1c5WpbL8x8m7KJuQaxGNwJukcnwix38iFrY96F6jC0MdoWIuzzeFLv8rgOQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792523763;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 Received:From:To:CC:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type:X-Originating-IP:
+	 X-ClientProxiedBy:X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=rtFSEmDaO2BH9INsik6bd0U//v8wiu2o0a3kDK0q5EQ=;
+	b=14Hcca2iOtcmVSjZJcWp4+Q2KEsv1Clf2gq5RmOoEbFePeUGMUHZH++625EZ+e+wk5hk
+	 Hn2XGdpaVL1HHFefGQEf2q3MbY7P6/JyCSZZk/YNEoy55aMmLubsgx9ZEhTDyBfFbrK9E
+	 JkVk2m9KfoSM8KqwZ1ofcdRNshRHfuiv3H3eWvR1Vez5MMqsgMZraijOrOw5HbIZsE6IM
+	 Qd3hPC2uIjfqeheYzSB1vgpQSFRI0LfWyTgPF3wTOLZGpFdQqLpt8BwkXub/FtB6Oghnx
+	 P6xNIHaoI3QAc3wz6ffvKbCvJKHPdxbZEbAY6DGckPALx5hHACtztvPLR8FRLXK/qeQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=FiNBAek2;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.52.22
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011022.outbound.protection.outlook.com [52.101.52.22])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0AF3E51D2
-	for <timestamp@lists.linux.dev>; Sun,  4 Oct 2026 03:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791085182; cv=none; b=e0isg/paMg1kK6MyPitVxWgcaeYim4eIr4Uo6dkKnT9vwG0LpUTBGNikr4GGi2GPD4OGA8S2sgC/g36BSwMR6Zd3ADbXHm9SRGVIPsCLZO391sgUR/Zzlbx3+PS+9wowRhcBFyMqlSShshb2gZ/qiN4Nrg1SNv+TobYXewu6zao=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791085182; c=relaxed/simple;
-	bh=z95tIApCMgMzMQtaz0iwv8U5sDTYv5+wpk5hvmgAC+0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ghphUo3xWuQIu59dTsvZutT+dDiKRlJBGWvnEDaltONUfqACsR2YEds3CBnO6Z0DPYSi5QGYviCmm4W+qNB8sjMLdxz61oLIV31Nnob87JLM/EKbHJ0brEUcaDa69yLzlv5EPT+5NQloQqS9zZvX5Rat6jUbTMM14iT02hq/QyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rohw8FfX; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35559606A31A
+	for <timestamp@lists.linux.dev>; Tue, 20 Oct 2026 19:16:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 35559606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rohw8FfX"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-9142e83204aso9896166d6.1
-        for <timestamp@lists.linux.dev>; Sat, 03 Oct 2026 20:39:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791085180; x=1791689980; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=zhk8BTSKwUwdy5UN+oAwyMBlhIqn2OVRwoj4KbDLpxI=;
-        b=rohw8FfXywen9tMHrkIMYPGNWBYLQeWwANZ2EaJsv8BQz8zeZMO77mzUF/EdSYqmSp
-         0NHMFF2KwazyuvcL4+jxhhcV6gSCxTWGHaPy1kPig1gKHhYeFn90kwp1dbvwS5HlkKPa
-         fKXCUDwMTtUahgGCvLUyhsex/j3URK9dx2GTXAGqV1QOqpwZP/MOl1+NrmGW1qp2mWjf
-         6AZFYG0DeSjpKjdiDHnC/NA8F4fFf7OGTuMJk8ezIAXPjnOJe13ScnejjgAGD90LNUsK
-         8kQ/wGmxg7etq+e5xs4P7a2BlmsMiNtIU2oUcZxLjh8yZfimmQPUaGKqBLHKsjY9B4HB
-         ZoeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791085180; x=1791689980;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=zhk8BTSKwUwdy5UN+oAwyMBlhIqn2OVRwoj4KbDLpxI=;
-        b=A50O6o4vgZz8tinm7Paq/WyrwKhYXb3nph2vbPF1Eov1Bsv5vLkCaJSfF9HkVh63+Y
-         VIAutvZsgcKeBLTXtTE0hJkS8LZZaccdXnSjCdMuO07l/SwnSl7OmkVK3x59fUN3p0NB
-         iTSz/O+8x4pgqVpc20xjUilBpqv+M3y4VOy5w2PEoB9i1v+wvdV/3LA3F6aOHZNbsP3N
-         5MtOLnvCCVHyCL7aLLLKHPwbAC/MMlXZLrF674W/XP/86aNwmV1ItNZJKL+VRlomoK2i
-         cEzQ05L3AcXFmO75cUHJ99nSqeaQ7CRyaG6qRBsVnKtuK6yMxueUtHFLR9wnySqQerKL
-         BqgQ==
-X-Forwarded-Encrypted: i=1; AKwUvBwejEG9Pr73L3iYFDseXtmO4QvmVgY7Bcb2ZUMR+6mO2HFuEKUyiNb2p9vJ+hsAZ0jtqMBjDLdzps8=@lists.linux.dev
-X-Gm-Message-State: AFuF++nS5jH5b9brYd7fDBqcb7VcWDaKUdrY1zNXdn1EVjFdiojPp+qS
-	TbDF7H15azz/Bewp4g95DD4tLVormGU/Nls5dJAOwi9izDaNJQ9TcHo=
-X-Gm-Gg: AYBFou3T9TyIRfsJaM1+o6tIzNeJVgL+SjQLZ5RlW+WJOXSWfHOYnhBQBzlFKZayQMr
-	9rXfmn67hFU1N6yZtervVQ9b5wR3iOudLU3fQZsu1b0YkoqBInm2erAfdTW/qbh7DEPqrjWOYHp
-	PIGR6s1eCm+MgkxK8Mn+B/cX9F0PzDEr9XcxrBmddubUz60CT4jT9IyheRHiUNQpsdnrtmDk1sD
-	zK/ewArVINH0KRt0uImefmzYjZlOAJ2A7TS9yIWWALhekC8VYdv5KXsjWF5+V61o5JslGiJ17QI
-	LhRTumQ0p1o16bkP3wiJkhkhke/qU2Bh7uM7FVxsXXe0I3WBcAPWBjN/ppHuEme75dwF+lciuui
-	OrlcfmsazNaQ2lRorA/LuQ7qAH1DbBB2ki/BOwhCyYWpkzsreAstAMEgsY43NpxzLi657TbMUx+
-	LVfZyz+6oKks9PHRWiRS+gxdT98cPkuCOit11SqfUp1xFkX97KTL+KmH298AXN81FLpwDlmQzJQ
-	OXRygK+tQSGXK7IJ7L8a/fwen3WwUu3x5q2YoJkNfBgpywnJhIOJZzSIpUYYZD05ze27CYYBQ9f
-	gKezfwGk/4WDtVxnYJonHcOGOTLZ
-X-Received: by 2002:a05:6214:85c5:10b0:917:a7a5:af08 with SMTP id 6a1803df08f44-917aa303f2amr145553496d6.25.1791085179220;
-        Sat, 03 Oct 2026 20:39:39 -0700 (PDT)
-Received: from i4-gl-tmk5904-1.ad.psu.edu ([130.203.156.90])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-917e0c11022sm57924096d6.41.2026.10.03.20.39.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Oct 2026 20:39:38 -0700 (PDT)
-From: Myeonghun Pak <mhun512@gmail.com>
-To: Dipen Patel <dipenp@nvidia.com>
-Cc: Thierry Reding <thierry.reding@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	timestamp@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	Ijae Kim <ae878000@gmail.com>
-Subject: [PATCH] hte: tegra194: stop IRQ before releasing provider state
-Date: Sat,  3 Oct 2026 23:39:35 -0400
-Message-ID: <20261004033935.1114168-1-mhun512@gmail.com>
-X-Mailer: git-send-email 2.53.0
-Precedence: bulk
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=FiNBAek2
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=p1gGmlfiWk3rXhn93RkxbN9V313F0cRpfZ4G3bZ5auqXby2lAtB8tuJaGF1fvrcy9KKKQrZlVUG/DwCxiIZHw4780iNtP1zowUkOubOOnsr3Vj5TINJjMGR5g1pVmh7HkIcHaHSvGBA9N25n69jWOS2WylmzZgBzRFp30rAhLQOVBA8X3GCH+HjxwOSmu52YI8a2zjbpfwMXOXkqSEtgsyyRcgMPA//9DMWgSxwOyeea5iGe2oYFeouGlubQKDYNEEnicxVeu7PsOb7THaVnJcbNAnxSc5xcH9tZ/MBBaPj5Q9oNlIRN0Oe3Ku72GLu7DNYHtlFBuuBYRYY1ZfAu7Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rtFSEmDaO2BH9INsik6bd0U//v8wiu2o0a3kDK0q5EQ=;
+ b=zTSvo4+lttaeBNnW2Uamg0sNL+B0pcVRjLS0JTkYGUrbNLAGlFPrneGBLrS3mCHNk7dBIJ/LJwiZXJs26/Eb3p39eLQR/Hh8SBcaqeBGkzb85qn2q/zp3W2NPk9MPNaCwJjyP2ibjQBUhluY07zOaUZ9Avv0n+qQsYDbnYNEwABQBirHiqbsVG5U/6aYdAiTM20yGqMKkQS6yDB3LGk+3SddMewOFsCVhPH8o0SSMgqRURO+EkEIF9nTkbrYWwg/wcHHTtyndm94pjeWrRinxzCdv2VCh5Sv6C8Bb4xaIyDyN9ZYEgESiFTfBjbMTkbozE+2xYmR3qkkb+oawkLexg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=linux-foundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rtFSEmDaO2BH9INsik6bd0U//v8wiu2o0a3kDK0q5EQ=;
+ b=FiNBAek2N8cPzBaYLyuXYX31dpBa5AAm5I4ouK08t9pnUmlF48/fW5ASTwD6BKZkwVooR0soF0eG2UZftjhXteXWCFsRsM7yTL2rwNhtntIq63314cE5qZXnSlWBcAgURxsEQZLTQGkRJFy6SVp5NeQsPl+YonIQ4uu8ROuT4xfv9qvi2BZ/gGzk25pP+F2FAb3dJ1UCA5f5247yfOw5UeAybieHy07tXtT2DSfPeAwctnWKlheZssi7GVpaPDZumM/KLs4QPJqYbshxXRTPCQDmtpwyFdmL28LaqVA3uRiJlW59klTuwhtKjrM9mPNaFna/26ljcM0aCa5+W8ZrtA==
+Received: from MN2PR05CA0063.namprd05.prod.outlook.com (2603:10b6:208:236::32)
+ by PH7PR12MB5927.namprd12.prod.outlook.com (2603:10b6:510:1da::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.19; Tue, 20 Oct
+ 2026 19:15:48 +0000
+Received: from BN3PEPF0000B371.namprd21.prod.outlook.com
+ (2603:10b6:208:236:cafe::22) by MN2PR05CA0063.outlook.office365.com
+ (2603:10b6:208:236::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.546.15 via Frontend Transport; Tue,
+ 20 Oct 2026 19:15:47 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 216.228.117.160) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN3PEPF0000B371.mail.protection.outlook.com (10.167.243.168) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.569.0 via Frontend Transport; Tue, 20 Oct 2026 19:15:47 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Tue, 20 Oct
+ 2026 12:15:23 -0700
+Received: from 717d7c0-lcedt.nvidia.com (10.126.231.37) by
+ rnnvmail201.nvidia.com (10.129.68.8) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Tue, 20 Oct 2026 12:15:22 -0700
+From: Dipen Patel <dipenp@nvidia.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+CC: <dipenp@nvidia.com>, <linux-kernel@vger.kernel.org>,
+	<timestamp@lists.linux.dev>, <runyu.xiao@seu.edu.cn>, <panchuang@vivo.com>
+Subject: [GIT PULL] hte: Changes for v7.4-rc1
+Date: Tue, 20 Oct 2026 12:15:05 -0700
+Message-ID: <20261020191505.3080042-1-dipenp@nvidia.com>
+X-Mailer: git-send-email 2.25.1
 X-Mailing-List: timestamp@lists.linux.dev
 List-Id: <timestamp.lists.linux.dev>
+List-Post: <mailto:timestamp@lists.linux.dev>
+List-Help: <mailto:timestamp+help@lists.linux.dev>
 List-Subscribe: <mailto:timestamp+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:timestamp+unsubscribe@lists.linux.dev>
+List-Owner: <mailto:timestamp+owner@lists.linux.dev>
+Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B371:EE_|PH7PR12MB5927:EE_
+X-MS-Office365-Filtering-Correlation-Id: dde2f594-cab7-4519-9c4b-08df2ede8c0b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|82310400026|376014|36860700016|13003099007|11063799006|56012099006|261009220027099003|261009221727099003|261009223027099003|261009221227099003|261009223327099003|10067099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	Falb3KV1Mtxej6JT9JWJdsyRYAMqJ+uFK64zZLmOGY2k/PeEbYDJXnIa4PAqY2M23XrAvmSuiDB7GSBX8wnS8VbUCslO+FNd7AXW5cZZxPNaWn+zPCJ0YUlUUTpju6lmJv3vt50BdCJ2bPsiA2IDQ6vFQZQO3RzXzS6wtZtRW9TjbJe5W+tJ33AqE2xdhsNyNLu71K0xoHCKEY7MNRLRnU2wi4/VM5a7vX8W66W+jfUrmDNIrW82s4gZUP4iqTorTOeJ00rHQiHSdh/ZX2/ikWvFnpSDbmsjx9knOLvGWIeB5QVN2IrOiBnPoP3aMd8c7FRmgAHOys4xIsEebriZWQHwB0mr5w9Gl5Lm+WdLWYZC1tpX40B5ud30XVLarV2Va+h0HBPC142BEF7nOMe9nFDtyFkxqn92ljOhKK2E67pYovUttWMC+Jn/iPKdvMVGg1WAZY502uWYlpiwgFyp6EbrmKJ4zjKvSeBa/ycu0fN2YXxAamg61Cloi2UO8xKcYPpPvuCiJIiatxbCwJtlYC/oqE8gukz4QkWms91m0UFso8FYWZVBjw7e6Skw1mga/WihnJ5I3eA2ZD67ekCEZ4PZ3iFc5LSv7tJAOBOdzvxxQx1F89x609F6r/HgNw2QqgCi3v6Dr8UGJqCeDgRsXWLa5qlHcD7q1BpppphRXYZ+bVuAorBtSNpMEITNeyToIFeQNkogXDnMIjNYAswrbg==
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(82310400026)(376014)(36860700016)(13003099007)(11063799006)(56012099006)(261009220027099003)(261009221727099003)(261009223027099003)(261009221227099003)(261009223327099003)(10067099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	hJmvPdRwqph9YjkOk35XQV2m+T9lqGwq8lX0HPIgdAHAQosmNpW9pQ/2/R1HmnQ13gMIrL7fMcoPcBqBu5LuA/WSEjlScYl6+IfziVL/mG6OZ0/+cuZJsLdGtvnbpeXKkOLryEWeexQsOLC2Xbn7XBQaHEK7gbdBbETqrwqlsPK5KO8oB9yxedpmfIsFwwMduO14nKoAAOzAW1m9xCoFHqY28vXhxQ0ENEuUnDYA8r+1AuAyu+DE+cuwTkEuEU9bCnXIWr+oC28gfOr25JUO9JjMPpBfwufN5dPeoRRi/8bcre7nND3u+vC6eSSHt1vPIV6G4Zln78Fg76Ts/aSHZifdvKyn+JxSYRd+HiCBpGCUWGy6eF8T7zIIrpIqlcrORmHgHmR9iqC3THQ17Ob/7t9+LqizBeo0n9QcJvb7aXK80/eYGHvssMx/Way24zeQ
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2026 19:15:47.5162
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: dde2f594-cab7-4519-9c4b-08df2ede8c0b
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN3PEPF0000B371.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5927
 
-Devres unregisters the HTE chip before releasing the IRQ. Disabling
-the controller does not wait for an already running FIFO handler,
-which can still call hte_push_ts_ns() after chip->gdev has been freed.
+The following changes since commit cee9395acd8043be0644b25c34bfa86623f2b935:
 
-Request the IRQ with IRQF_NO_AUTOEN after initializing its dependencies
-and enable it after chip registration. Add managed actions to stop the
-controller and disable and synchronize the IRQ before unregistering
-the chip.
+  Linux 7.3-rc1 (2026-08-30 13:34:40 -0700)
 
-This builds on the linked slice-lock fix in the HTE maintainer tree.
-The IRQ lifetime issue was found by static analysis.
+are available in the Git repository at:
 
-Fixes: 09574cca6ad6 ("hte: Add Tegra194 HTE kernel provider")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260830161747.2719220-1-runyu.xiao@seu.edu.cn/
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
----
-Based on HTE for-next at 30167fadbf87. This IRQ-only patch requires
-the slice-lock initialization fix:
-  1329abe1bae4 ("hte: tegra194: Initialize slice locks before registering chip")
-already applied to the HTE maintainer for-next tree. The same
-prerequisite is required when backporting onto older trees. The
-diff also preserves the earlier IRQ logging cleanup c21530a75b95;
-older trees without that cleanup need its context applied/adapted.
+  ssh://git@gitolite.kernel.org/pub/scm/linux/kernel/git/pateldipen1984/linux.git tags/for-7.4-rc1
 
- drivers/hte/hte-tegra194.c | 31 +++++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 8 deletions(-)
+for you to fetch changes up to 30167fadbf87fa901a2fee49c30a5c5a506a43e8:
 
-diff --git a/drivers/hte/hte-tegra194.c b/drivers/hte/hte-tegra194.c
-index 189f7fcffbe2..9fb16b6be231 100644
---- a/drivers/hte/hte-tegra194.c
-+++ b/drivers/hte/hte-tegra194.c
-@@ -799,6 +799,13 @@ static void tegra_gte_disable(void *data)
- 	tegra_hte_writel(gs, HTE_TECTRL, 0);
- }
- 
-+static void tegra_hte_disable_irq(void *data)
-+{
-+	struct tegra_hte_soc *gs = data;
-+
-+	disable_irq(gs->hte_irq);
-+}
-+
- static void tegra_hte_put_gpio_device(void *data)
- {
- 	struct gpio_device *gdev = data;
-@@ -854,10 +861,6 @@ static int tegra_hte_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return ret;
- 	hte_dev->hte_irq = ret;
--	ret = devm_request_irq(dev, hte_dev->hte_irq, tegra_hte_isr, 0,
--			       dev_name(dev), hte_dev);
--	if (ret < 0)
--		return ret;
- 
- 	gc->nlines = nlines;
- 	gc->ops = &g_ops;
-@@ -913,21 +916,33 @@ static int tegra_hte_probe(struct platform_device *pdev)
- 		spin_lock_init(&hte_dev->sl[i].s_lock);
- 	}
- 
-+	tegra_hte_writel(hte_dev, HTE_TECTRL, 0);
-+
-+	ret = devm_request_irq(dev, hte_dev->hte_irq, tegra_hte_isr,
-+			       IRQF_NO_AUTOEN, dev_name(dev), hte_dev);
-+	if (ret < 0)
-+		return ret;
-+
- 	ret = devm_hte_register_chip(hte_dev->chip);
- 	if (ret) {
- 		dev_err(gc->dev, "hte chip register failed");
- 		return ret;
- 	}
- 
-+	enable_irq(hte_dev->hte_irq);
-+	ret = devm_add_action_or_reset(dev, tegra_hte_disable_irq, hte_dev);
-+	if (ret)
-+		return ret;
-+
-+	ret = devm_add_action_or_reset(dev, tegra_gte_disable, pdev);
-+	if (ret)
-+		return ret;
-+
- 	val = HTE_TECTRL_ENABLE_ENABLE |
- 	      (HTE_TECTRL_INTR_ENABLE << HTE_TECTRL_INTR_SHIFT) |
- 	      (hte_dev->itr_thrshld << HTE_TECTRL_OCCU_SHIFT);
- 	tegra_hte_writel(hte_dev, HTE_TECTRL, val);
- 
--	ret = devm_add_action_or_reset(&pdev->dev, tegra_gte_disable, pdev);
--	if (ret)
--		return ret;
--
- 	dev_dbg(gc->dev, "lines: %d, slices:%d", gc->nlines, slices);
- 
- 	return 0;
+  hte: tegra194-test: shut down timer before GPIO release (2026-09-09 11:24:13 -0700)
+
+----------------------------------------------------------------
+hte: Changes for v7.4-rc1
+
+Updates minor fixes as follows:
+- prevent releasing GPIO before time expires in the test code
+- initialize spin lock before registering the chip in the
+provider driver
+
+----------------------------------------------------------------
+Pan Chuang (1):
+      hte: tegra194: Remove redundant dev_err()
+
+Runyu Xiao (2):
+      hte: tegra194: Initialize slice locks before registering chip
+      hte: tegra194-test: shut down timer before GPIO release
+
+ drivers/hte/hte-tegra194-test.c |  2 +-
+ drivers/hte/hte-tegra194.c      | 14 ++++++--------
+ 2 files changed, 7 insertions(+), 9 deletions(-)
